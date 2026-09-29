@@ -103,3 +103,61 @@ licences and download sources, and how the ~200 RVL-CDIP pages are sampled.
 **Sources.** [DocVQA question types](https://www.emergentmind.com/topics/docvqa-dataset) ·
 [mlx-vlm](https://github.com/Blaizzy/mlx-vlm) ·
 [mlx-community/Qwen3-VL-2B-Instruct-4bit](https://huggingface.co/mlx-community/Qwen3-VL-2B-Instruct-4bit)
+
+---
+
+## 3. Correction: DocVQA has almost no yes/no questions; RVL-CDIP labels are noisy
+
+*2026-09-28. Metadata checks only; no images downloaded, no model run.
+Corrects entry 2, finding 2.*
+
+**DocVQA yes/no subset is ~37 questions, not ~300 [E].** Pulled the question,
+answer and type fields for all 5,349 validation questions from
+`lmms-lab-encoder/DocVQA` (Apache-2.0 on Hugging Face; the old name
+`lmms-lab/DocVQA` redirects here). Question-type counts:
+
+| type | questions |
+|---|---|
+| layout | 1,995 |
+| table/list | 1,766 |
+| form | 1,024 |
+| free_text | 771 |
+| handwritten | 323 |
+| figure/diagram | 261 |
+| others | 241 |
+| Image/Photo | 98 |
+| **Yes/No** | **28** |
+
+A question can carry more than one type. Only **37** questions have "yes" or
+"no" as the first answer (19 yes, 18 no), which is 0.7% of the split. The "about
+6%" in entry 2 came from a secondary summary page and was wrong; entry 2
+should not have repeated it without a count. Thirty-seven questions are too few
+to measure coverage at ≤1% error, so **the DocVQA yes/no set cannot be Loop 0's
+noul set as planned.** The label is `Yes/No` in this copy (case-sensitive),
+not `yes/no`.
+
+**RVL-CDIP test labels are noisy [E, third party].** Larson et al. (EACL
+2023) estimate **8.1% label errors** in the RVL-CDIP test set: 1.6% for resume,
+up to 16.9% for letter. They also report many ambiguous or multi-label pages
+and a large overlap between the test and train splits. A later paper finds
+spurious ID-code cues in RVL-CDIP and Tobacco3482. This matters for our
+north-star metric: if about 8% of labels are wrong, a model that is always right
+still shows about 8% "error", so coverage at ≤1% error cannot be measured
+honestly on raw labels.
+
+**Other facts gathered for the Loop 0 decisions [E].**
+
+- `mlx-community/Qwen3-VL-2B-Instruct-bf16` exists (also 3/4/5/6/8-bit).
+- RVL-CDIP on Hugging Face (`aharley/rvl_cdip`): licence "other", not gated,
+  400k pages. There are small per-class samples from third parties, which we
+  would not trust without checking.
+- DUDE (41,541 human-annotated questions over 5,019 documents) includes yes/no
+  answers; its count has not been checked.
+
+**Status.** The Loop 0 set in entry 2 is on hold until the user decides where
+the noul questions come from and how to handle RVL-CDIP's label noise.
+
+**Sources.** [Larson et al., On Evaluation of Document Classification using RVL-CDIP](https://arxiv.org/abs/2306.12550) ·
+[Spurious Cues in RVL-CDIP and Tobacco3482: ID Codes](https://dl.acm.org/doi/10.1145/3704268.3748683) ·
+[DUDE](https://arxiv.org/abs/2305.08455) ·
+counts from the `datasets-server` rows API over `lmms-lab-encoder/DocVQA`, validation split.

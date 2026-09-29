@@ -1,6 +1,7 @@
 # DocJev — Research Plan
 
-Living document. Update the decision log and experiment table as results land.
+Draft written by an earlier session; not yet agreed. Decisions live only in
+[JOURNAL.md](../JOURNAL.md).
 
 ## 1. Motivation
 
@@ -112,19 +113,7 @@ Splits: `train`, `calib` (temperature fitting), `test`, and `ood` (held-out data
 | E4 | Heads-only vs LoRA, proper-score loss, multi-task mixture | RQ3 | |
 | E5 | Shared-prefix vs per-question; cross vs dual options | RQ4 | |
 
-## 8. Decision log
-
-| # | Date | Decision | Why |
-|---|------|----------|-----|
-| D1 | 2026-09-27 | North star = coverage at ≤1% / ≤5% risk | Captures accuracy × calibration as users experience it |
-| D2 | 2026-09-27 | Argmax decode only | Makes temperature scaling answer-invariant |
-| D3 | 2026-09-27 | Calibrate `max(p)`; fit T by NLL (report ECE) | NLL fit is stable; ECE-minimising fit is noisy |
-| D4 | 2026-09-27 | Evaluate before building (E0–E2 before any training) | Know the floor we must beat |
-| D5 | 2026-09-27 | Zero-shot first; per-domain tuning is the fallback | Project goal |
-| D6 | 2026-09-27 | MLX locally, Kaggle free tier, RunPod when needed (Unsloth); ≤ ~4B backbones | Budget |
-| D7 | 2026-09-27 | Runners emit logits; everything downstream is NumPy | Same eval on MLX and CUDA |
-
-## 9. Open questions
+## 8. Open questions
 
 - Which small VLMs to test in E2 (candidates to verify for MLX / T4 memory and quality:
   Qwen3-VL 2B/4B, Qwen2.5-VL-3B, SmolVLM2, Qwen3.5-0.8B).

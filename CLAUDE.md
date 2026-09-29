@@ -4,8 +4,8 @@ Research / hobby project, open source (Apache-2.0). Claude acts as assistant PI.
 Build from first principles; Jev, Laya, CLM, Visual Jev are inspirations only
 (notes in docs/prior_art.md). The original spec was advice, not a contract.
 
-Read first: docs/research_plan.md (motivation, RQs, experiment ladder, decision log).
-Update its decision log and experiment table whenever a decision or result lands.
+Read first: JOURNAL.md (dated, append-only; the only record of decisions).
+docs/research_plan.md is an unagreed draft from an earlier session.
 
 Goal: small model, document image + typed questions (noul / choice / score) ->
 calibrated distribution per question, single pass, no generation. Zero-shot first;

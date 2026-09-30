@@ -161,3 +161,35 @@ the noul questions come from and how to handle RVL-CDIP's label noise.
 [Spurious Cues in RVL-CDIP and Tobacco3482: ID Codes](https://dl.acm.org/doi/10.1145/3704268.3748683) ·
 [DUDE](https://arxiv.org/abs/2305.08455) ·
 counts from the `datasets-server` rows API over `lmms-lab-encoder/DocVQA`, validation split.
+
+---
+
+## 4. Loop 0 re-planned after entry 3
+
+*2026-09-29. Plan only; nothing run. Decided in a structured interview; replaces
+the Loop 0 set in entry 2.*
+
+**Decisions.**
+
+- **Noul questions come from RVL-CDIP [U].** The same pages are asked yes/no
+  questions ("Is this a letter?"). There is no new dataset and no conversion,
+  and we can check whether the model's choice and noul answers agree about the
+  same page. DocVQA's 37 yes/no questions are dropped from Loop 0.
+- **We hand-check the labels [U].** The user (IDP background) and Claude review
+  the sampled pages and fix or drop wrong labels, answering entry 3's ~8% noise.
+  The number of fixed and dropped labels is logged, and results are reported on
+  both raw and checked labels.
+- **Sample: balanced, 13 pages per class, 208 pages [U]**, drawn from the
+  RVL-CDIP test split with a fixed random seed.
+- **Try both ways of reading the choice answer [U].** On the same pages:
+  1. *Letters:* options listed A–P; read the probability of the next token
+     being each letter. One step per page.
+  2. *Full words:* score the log-probability of each full type name. No letter
+     bias, but longer names are penalised and it needs one check per option.
+
+  Compare accuracy and calibration between the two. For noul both ways are the
+  same: P("Yes") against P("No").
+
+**Proposed by C, to confirm.** In the letters run, shuffle the option order per
+page (fixed seed) so that a bias toward early letters shows up rather than
+hiding.

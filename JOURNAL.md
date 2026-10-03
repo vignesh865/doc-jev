@@ -193,3 +193,84 @@ the Loop 0 set in entry 2.*
 **Proposed by C, to confirm.** In the letters run, shuffle the option order per
 page (fixed seed) so that a bias toward early letters shows up rather than
 hiding.
+
+---
+
+## 5. New prior art: Cloudflare Clef, an open decision model with vision
+
+*2026-10-03. Desk research only; nothing downloaded except model cards, configs
+and code (no weights); nothing run. The user flagged the release [U].*
+
+**What it is [E].** Released 2026-10-01 by Cloudflare's Workers AI team, Apache
+2.0, weights on Hugging Face. Two models:
+
+| | Clef | Clef-flash |
+|---|---|---|
+| backbone | Qwen3.8-27B with its vision encoder | Qwen3.5-9B with its vision encoder |
+| total parameters (bf16) | 27.36B | 9.41B |
+| joint head | width 1024, 2 routing + 4 decoder layers, ~256 MB | same width and layers |
+| median / p95 latency (self-reported) | 209 / 239 ms | 39 / 122 ms |
+
+A page image plus a state and a schema of typed questions (`noul`, `choice`,
+`score`, the Jev API) in; one logit per allowed option per question out, in one
+forward pass, with no generation. Jev/SystemOne compatible. Context 64k, up to
+64 questions per request. Hosted on Workers AI as `@cf/cloudflare/clef` and
+`clef-flash` (Clef: $0.24 per M input tokens; up to 4 images per request, PNG,
+JPEG or WebP, base64 only, each ≤4 MiB and ≤16 MP).
+
+**How it works, from `joint_schema_model.py` [E].**
+
+- The prompt is: system prompt → `STATE:` → image tokens → state text →
+  `SCHEMA FIELDS:` listing every question and its options as JSON
+  (`{"option_id", "description"}`) → `JOINT SCHEMA DECISIONS:`. All questions sit
+  in **one sequence**, so later questions can see earlier ones (joint decoding).
+- `choice` options are **sorted alphabetically by ID** before encoding; `noul`
+  is a two-option choice (`true`/`false`) with default descriptions.
+- The head reads the backbone's last hidden states. Each option's span (mean of
+  its hidden states) plus its lexical embedding plus the question vector
+  becomes a query; 2 cross-attention "evidence routing" layers attend over the
+  whole sequence; 4 decoder layers mix the questions; each option gets
+  `prior (lexical cosine) + gate × (scaled cosine + MLP residual)`.
+- Output is a **raw softmax per question. No temperature or calibration step
+  ships in the code.** For `score`, the API reports the *expected* level as
+  `score`, plus max(p) as `confidence`.
+- Training (blog): rank-256 LoRA on the backbone (merged in the release) plus
+  the head, label-smoothed cross-entropy plus a Brier loss, then RLCD (partial
+  credit for adjacent ordinal levels, a reference penalty). Data: internal
+  synthetic sets that permute field order, prompts and schemas.
+
+**What is missing, which matters for us [E].**
+
+1. **No image or document benchmark.** All 41 Decision Index results and the 4
+   Typesafe workflows are text. The only image use cited is an internal domain
+   classification example (2.2 s vs 4.7 s for gpt-oss-120b), with no accuracy
+   figure. Nothing says whether the head ever saw images in training.
+2. **No calibration numbers.** The Decision Index leaderboard
+   (`clef-evals.workers-ai-mle.workers.dev`, 73 models) lists ECE and Brier for
+   most models (Jev: ECE 0.074, Brier 0.356), but **both are null for Clef and
+   Clef-flash**, whose scores are marked self-reported. The only
+   probability-quality number is ForecastBench Brier (Clef 13.9, flash 10.6, Jev
+   17.4).
+3. **Running it locally is not easy yet.** Custom PyTorch code, tested only with
+   torch 2.11 and transformers 5.10.2 on one H200. There is no MLX port.
+   Clef-flash's weights alone are ~19 GB in bf16.
+4. A third-party write-up (flaviocopes.com, one person's testing, not
+   verified) reports hosted image requests taking 13–30 s and a practical limit
+   of about 190 KB per image.
+
+**Self-reported text results, for scale [E].** Clef has the top Decision Index
+score (61.21) against Jev's 57.91; Clef-flash scores 57.07. Clef leads on
+BANKING77 (94.2 macro-F1 vs Jev 79.7); Jev leads on reasoning (GPQA Diamond 78.3
+vs 48.0, MMLU-Pro 82.7 vs 65.9). On Typesafe's invoice-processing workflow
+(text): Clef 64.7 exact actions vs Jev 61.8.
+
+**Status.** No decision yet. Loop 0 planning (entry 4) is paused until the user
+decides how Clef changes the plan.
+
+**Sources.** [Cloudflare blog](https://blog.cloudflare.com/clef-decision-models/) ·
+[Workers AI changelog](https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/) ·
+[Workers AI model page](https://developers.cloudflare.com/workers-ai/models/clef/) ·
+[HF Cloudflare/clef](https://huggingface.co/Cloudflare/clef) ·
+[HF Cloudflare/clef-flash](https://huggingface.co/Cloudflare/clef-flash) ·
+[Decision Index leaderboard data](https://clef-evals.workers-ai-mle.workers.dev/data/leaderboard.json) ·
+[flaviocopes deep dive](https://flaviocopes.com/clef/)

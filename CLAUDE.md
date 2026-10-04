@@ -5,6 +5,7 @@ Build from first principles; Jev, Laya, CLM, Visual Jev are inspirations only
 (notes in docs/prior_art.md). The original spec was advice, not a contract.
 
 Read first: JOURNAL.md (dated, append-only; the only record of decisions).
+LEARNING.md: plain-English lessons (learning + research project); add one when something is learned.
 docs/research_plan.md is an unagreed draft from an earlier session.
 
 Goal: small model, document image + typed questions (noul / choice / score) ->

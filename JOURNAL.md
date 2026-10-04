@@ -343,3 +343,55 @@ its top 3.
 On the empty page the model now picks the blank option with 0.76; on the clear
 letter it is right with 0.91. Caveat: the wording and the option changed
 together, so this test cannot say which change did what.
+
+---
+
+## 8. E01 started: clef-flash zero-shot, first 5 pages
+
+*2026-10-04. Experiment `E01` (`experiments/E01/config.json`): clef-flash, data
+`rvlcdip-v0` with questions q3, original PNG pages, pages over 185 KB skipped.
+15 calls, all succeeded; 14,399 input tokens (about $0.0013). Scores in
+`experiments/E01/metrics.json` and `results/tables/`.*
+
+**Set-up decisions.**
+
+- **Experiments have ids and grow by pages [U].** Settings are frozen per id;
+  `--pages N` takes the first N pages of a fixed order that deals one class
+  at a time, so 5 → 20 → 208 are nested. Runs resume and only retry failures.
+  Any change of setting means a new id.
+- **Small batch first [U].** Every growth step is shown before the next one.
+- **Image size: send what fits [U].** No lossless format brings every page
+  under the API's limit (entry 7): optimised PNG leaves 22 of 106 tested pages
+  over 150 KB, lossless WebP 16, and JPEG makes these speckled scans *larger*.
+  E01 sends the original PNG and skips pages over 185 KB: **23 of 208 pages**,
+  concentrated in scientific publication (7 of 13), handwritten, advertisement
+  and news article (3 each). The per-type results for those types rest on
+  fewer, simpler pages. If results are promising, the user will rent a GPU to
+  run Clef-flash without the limit [U].
+- **Yes/no wording asks about the page [U]:** "Is this scanned page a memo?"
+  (question version q3).
+
+**Results on 5 pages [E].** Too few for any conclusion; listed in full.
+
+| page | true | choice answer (p) | p(true) | yes/no on true type | yes/no on wrong type |
+|---|---|---|---|---|---|
+| p067 | scientific report | scientific_report 0.905 ✓ | 0.905 | 0.942 ✓ | 0.013 ✓ |
+| p196 | memo | memo 0.874 ✓ | 0.874 | 0.953 ✓ | 0.021 ✓ |
+| p187 | resume | resume 0.896 ✓ | 0.896 | 0.928 ✓ | 0.009 ✓ |
+| p021 | form | memo 0.381 ✗ | 0.229 | 0.329 ✗ | 0.021 ✓ |
+| p160 | presentation | blank_or_unreadable 0.360 ✗ | 0.041 | 0.061 ✗ | 0.011 ✓ |
+
+Looking at the two misses:
+
+- `p021` is a **fax cover sheet**: a printed header plus Date/To/Fax/From
+  fields. Labelled `form`; the model split between memo 0.38, form 0.23 and
+  letter 0.22. The page plausibly fits all three, and the model was unsure.
+- `p160` is a **presentation slide scanned sideways** (rotated 90°): a title
+  "PEL's" and one line of text on a mostly white page. The model picked
+  `blank_or_unreadable` 0.36. Rotation and sparse text may both play a part;
+  5 pages cannot say.
+
+The choice and yes/no answers agreed on every page (3 both right, 2 both
+wrong). Latency p50 0.57 s. The hosted `confidence` matched normalised
+concentration on all 5 choice replies (max difference 0.00007, which is
+rounding), confirming entry 6.

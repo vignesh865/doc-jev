@@ -34,8 +34,11 @@ LABELS = [
     "budget", "invoice", "presentation", "questionnaire", "resume", "memo",
 ]
 
+QUESTION_VERSION = "q3"  # q1: "What type of document is this?", 16 options; q2: page wording + blank option
+                         # (JOURNAL entry 7); q3: yes/no also asks about the page, not "this document"
 STATE = "A scanned document page."
-CHOICE_INSTRUCTIONS = "What type of document is this?"
+CHOICE_INSTRUCTIONS = "Which category best describes this scanned page?"
+EXTRA_OPTIONS = ["blank or unreadable"]  # our addition; not an RVL-CDIP label
 
 
 def option_id(label: str) -> str:
@@ -44,7 +47,7 @@ def option_id(label: str) -> str:
 
 def noul_instructions(label: str) -> str:
     article = "an" if label[0] in "aeiou" else "a"
-    return f"Is this document {article} {label}?"
+    return f"Is this scanned page {article} {label}?"
 
 
 def revision() -> str:
@@ -74,16 +77,31 @@ def questions(pages: list[dict], seed: int) -> list[dict]:
     for page in pages:
         gold = LABELS[page["label"]]
         wrong = LABELS[int(rng.choice([i for i in range(len(LABELS)) if i != page["label"]]))]
-        base = {"page_id": page["page_id"], "image": page["image"], "gold_label": gold, "state": STATE}
+        base = {"page_id": page["page_id"], "image": page["image"], "gold_label": gold, "state": STATE,
+                "question_version": QUESTION_VERSION}
         items.append({**base, "item_id": f"{page['page_id']}-choice", "kind": "choice",
                       "question": {"type": "choice", "instructions": CHOICE_INSTRUCTIONS,
-                                   "criteria": {option_id(l): None for l in LABELS}},
+                                   "criteria": {option_id(l): None for l in LABELS + EXTRA_OPTIONS}},
                       "answer": option_id(gold)})
         for kind, asked, ans in (("noul_true", gold, "true"), ("noul_false", wrong, "false")):
             items.append({**base, "item_id": f"{page['page_id']}-{kind}", "kind": kind, "asked_label": asked,
                           "question": {"type": "noul", "instructions": noul_instructions(asked)},
                           "answer": ans})
     return items
+
+
+def page_order(pages: list[dict], seed: int) -> list[str]:
+    """A fixed order for incremental runs: shuffle within each class, then deal one
+    page per class in turn, so any prefix covers the classes evenly."""
+    rng = np.random.default_rng(seed + 2)
+    by_class: dict[int, list[str]] = {}
+    for p in pages:
+        by_class.setdefault(p["label"], []).append(p["page_id"])
+    for ids in by_class.values():
+        rng.shuffle(ids)
+    class_order = list(by_class)
+    rng.shuffle(class_order)
+    return [by_class[c][i] for i in range(max(map(len, by_class.values()))) for c in class_order if i < len(by_class[c])]
 
 
 def stream_pages(url: str, wanted: dict[str, dict], out: Path) -> None:
@@ -145,9 +163,10 @@ def main() -> None:
         "sampling": {"per_class": args.per_class, "seed": args.seed, "classes": len(LABELS)},
         "labels": LABELS,
         "pages": [{"page_id": p["page_id"], "tif": p["tif"], "label": LABELS[p["label"]]} for p in pages],
-        "questions": {"state": STATE, "choice": CHOICE_INSTRUCTIONS,
-                      "choice_options": "16 RVL-CDIP names, spaces -> '_', no descriptions",
-                      "noul": "Is this document a/an <label>?",
+        "page_order": page_order(pages, args.seed),
+        "questions": {"version": QUESTION_VERSION, "state": STATE, "choice": CHOICE_INSTRUCTIONS,
+                      "choice_options": "16 RVL-CDIP names + 'blank or unreadable', spaces -> '_', no descriptions",
+                      "noul": "Is this scanned page a/an <label>?",
                       "noul_false": "one wrong label per page, uniform, seed + 1"},
         "counts": {"pages": len(pages), "items": len(items)},
         "labels_checked": False,

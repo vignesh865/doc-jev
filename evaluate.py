@@ -1,10 +1,12 @@
 """Score raw model replies against a data set.
 
-    .venv/bin/python evaluate.py --data rvlcdip-v0 --predictions outputs/clef-flash-rvlcdip-v0.jsonl --save
+    .venv/bin/python evaluate.py --exp E01 --save
 
-Reads data/<data>/items.jsonl and the raw replies, never calls a model. With
---save, writes experiments/<name>-<id>/metrics.json and appends one line to
-experiments/runs.jsonl (append-only; tables use the latest line per run id).
+Reads the experiment's config, its raw replies (outputs/<exp>.jsonl) and the data
+set's items; never calls a model. Experiments grow page by page, so scoring is
+over the pages sent so far. With --save, writes experiments/<exp>/metrics.json
+(the latest score) and appends one line to experiments/runs.jsonl (append-only
+history; tables use the latest line per experiment).
 
 Which confidence measure DocJev will use is undecided (JOURNAL entry 6), so
 risk-coverage numbers are reported for every candidate measure.
@@ -142,37 +144,38 @@ def jsonable(x):
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--data", default="rvlcdip-v0")
-    ap.add_argument("--predictions", type=Path, required=True)
+    ap.add_argument("--exp", required=True)
     ap.add_argument("--save", action="store_true")
     args = ap.parse_args()
 
-    manifest = json.loads((Path("data") / args.data / "manifest.json").read_text())
-    rows = load(args.data, args.predictions)
-    metrics = summarize(rows, manifest["counts"]["items"])
-    pred_sha = hashlib.sha256(args.predictions.read_bytes()).hexdigest()[:16]
-    name = args.predictions.stem
-    run_id = f"{name}-{pred_sha[:8]}"
-    first = json.loads(args.predictions.open().readline())
+    config = json.loads((Path("experiments") / args.exp / "config.json").read_text())
+    predictions = Path(config["outputs"])
+    manifest = json.loads((Path("data") / config["data"] / "manifest.json").read_text())
+    rows = load(config["data"], predictions)
+    sent_pages = {json.loads(l)["page_id"] for l in predictions.open()}
+    n_items = sum(1 for i in map(json.loads, (Path("data") / config["data"] / "items.jsonl").open())
+                  if i["page_id"] in sent_pages)
+    metrics = summarize(rows, n_items)
     record = jsonable({
-        "run_id": run_id,
+        "exp": args.exp,
         "scored_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "git_commit": subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip(),
-        "predictions": str(args.predictions), "predictions_sha256": pred_sha,
-        "model": first["model"], "model_version": "hosted Workers AI; not pinnable",
-        "produced_by": None,
-        "data": {"name": args.data, "source": manifest["source"], "labels_checked": manifest["labels_checked"]},
+        "predictions": str(predictions),
+        "predictions_sha256": hashlib.sha256(predictions.read_bytes()).hexdigest()[:16],
+        "pages": len(sent_pages),
+        "config": config,
+        "data": {"name": config["data"], "source": manifest["source"], "labels_checked": manifest["labels_checked"]},
         "p_floor": P_FLOOR,
         "metrics": metrics,
     })
-    print(json.dumps(record["metrics"]["groups"], indent=1)[:3000])
+    print(json.dumps({k: {m: round(v, 4) if isinstance(v, float) else v for m, v in g.items() if m != "by_measure"}
+                      for k, g in record["metrics"]["groups"].items()}, indent=1))
     if args.save:
-        folder = Path("experiments") / run_id
-        folder.mkdir(parents=True, exist_ok=True)
+        folder = Path("experiments") / args.exp
         (folder / "metrics.json").write_text(json.dumps(record, indent=1) + "\n")
         with open(Path("experiments") / "runs.jsonl", "a") as f:
             f.write(json.dumps(record) + "\n")
-        print(f"saved {folder}")
+        print(f"saved {folder}/metrics.json")
 
 
 if __name__ == "__main__":

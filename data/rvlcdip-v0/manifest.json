@@ -1,0 +1,1298 @@
+{
+ "name": "rvlcdip-v0",
+ "source": {
+  "repo": "aharley/rvl_cdip",
+  "revision": "03f14a4ad0a32413eff51ca10f9f511545f2bd5b",
+  "split": "test",
+  "labels_file": "data/test.txt",
+  "test_txt_sha256": "97699c1c56425c44"
+ },
+ "sampling": {
+  "per_class": 13,
+  "seed": 0,
+  "classes": 16
+ },
+ "labels": [
+  "letter",
+  "form",
+  "email",
+  "handwritten",
+  "advertisement",
+  "scientific report",
+  "scientific publication",
+  "specification",
+  "file folder",
+  "news article",
+  "budget",
+  "invoice",
+  "presentation",
+  "questionnaire",
+  "resume",
+  "memo"
+ ],
+ "pages": [
+  {
+   "page_id": "p000",
+   "tif": "imagese/e/m/f/emf35a00/502856931+-6933.tif",
+   "label": "letter"
+  },
+  {
+   "page_id": "p001",
+   "tif": "imagesh/h/h/q/hhq30a00/11275542_11275543.tif",
+   "label": "letter"
+  },
+  {
+   "page_id": "p002",
+   "tif": "imagesl/l/h/c/lhc31f00/0001452003.tif",
+   "label": "letter"
+  },
+  {
+   "page_id": "p003",
+   "tif": "imagesb/b/w/f/bwf94e00/1004864013.tif",
+   "label": "letter"
+  },
+  {
+   "page_id": "p004",
+   "tif": "imagesd/d/w/k/dwk54e00/1003475773.tif",
+   "label": "letter"
+  },
+  {
+   "page_id": "p005",
+   "tif": "imagesx/x/p/b/xpb30d00/520898117+-8129.tif",
+   "label": "letter"
+  },
+  {
+   "page_id": "p006",
+   "tif": "imagesi/i/g/o/igo85f00/0060135881.tif",
+   "label": "letter"
+  },
+  {
+   "page_id": "p007",
+   "tif": "imagesw/w/u/g/wug61e00/00488336_00488337.tif",
+   "label": "letter"
+  },
+  {
+   "page_id": "p008",
+   "tif": "imagesm/m/s/k/msk30f00/0012287926.tif",
+   "label": "letter"
+  },
+  {
+   "page_id": "p009",
+   "tif": "imagesm/m/v/r/mvr01a00/0060024328.tif",
+   "label": "letter"
+  },
+  {
+   "page_id": "p010",
+   "tif": "imagest/t/v/w/tvw19c00/2074836969.tif",
+   "label": "letter"
+  },
+  {
+   "page_id": "p011",
+   "tif": "imagesu/u/n/c/unc20e00/85684185.tif",
+   "label": "letter"
+  },
+  {
+   "page_id": "p012",
+   "tif": "imagesa/a/b/t/abt94e00/1003181507.tif",
+   "label": "letter"
+  },
+  {
+   "page_id": "p013",
+   "tif": "imagesi/i/u/v/iuv43c00/98000497.tif",
+   "label": "form"
+  },
+  {
+   "page_id": "p014",
+   "tif": "imagesh/h/k/v/hkv33c00/99382089.tif",
+   "label": "form"
+  },
+  {
+   "page_id": "p015",
+   "tif": "imagesm/m/a/g/mag90d00/521023291+-3291.tif",
+   "label": "form"
+  },
+  {
+   "page_id": "p016",
+   "tif": "imagesh/h/w/x/hwx82d00/516483591+-3630.tif",
+   "label": "form"
+  },
+  {
+   "page_id": "p017",
+   "tif": "imagesl/l/a/m/lam20d00/508863028+-3028.tif",
+   "label": "form"
+  },
+  {
+   "page_id": "p018",
+   "tif": "imagesq/q/h/a/qha44a00/99328991.tif",
+   "label": "form"
+  },
+  {
+   "page_id": "p019",
+   "tif": "imagesd/d/v/w/dvw84a00/2063248020_8025.tif",
+   "label": "form"
+  },
+  {
+   "page_id": "p020",
+   "tif": "imagesu/u/h/j/uhj94d00/505879387.tif",
+   "label": "form"
+  },
+  {
+   "page_id": "p021",
+   "tif": "imagesi/i/a/d/iad46c00/2070261632.tif",
+   "label": "form"
+  },
+  {
+   "page_id": "p022",
+   "tif": "imagesv/v/t/z/vtz06c00/2043487220.tif",
+   "label": "form"
+  },
+  {
+   "page_id": "p023",
+   "tif": "imagesx/x/b/w/xbw25c00/2505149051_9052.tif",
+   "label": "form"
+  },
+  {
+   "page_id": "p024",
+   "tif": "imagesl/l/l/z/llz75c00/2077654193.tif",
+   "label": "form"
+  },
+  {
+   "page_id": "p025",
+   "tif": "imagesb/b/g/c/bgc57d00/2048552252.tif",
+   "label": "form"
+  },
+  {
+   "page_id": "p026",
+   "tif": "imagest/t/r/v/trv80c00/2085799895b.tif",
+   "label": "email"
+  },
+  {
+   "page_id": "p027",
+   "tif": "imagesn/n/h/p/nhp55a00/531643262+-3264.tif",
+   "label": "email"
+  },
+  {
+   "page_id": "p028",
+   "tif": "imageso/o/e/m/oem10c00/2085286438.tif",
+   "label": "email"
+  },
+  {
+   "page_id": "p029",
+   "tif": "imagesn/n/h/f/nhf37d00/2074066151.tif",
+   "label": "email"
+  },
+  {
+   "page_id": "p030",
+   "tif": "imagesf/f/l/p/flp20c00/2080787169.tif",
+   "label": "email"
+  },
+  {
+   "page_id": "p031",
+   "tif": "imagesa/a/v/v/avv67c00/2078799932c.tif",
+   "label": "email"
+  },
+  {
+   "page_id": "p032",
+   "tif": "imagesi/i/n/f/inf20c00/2085786116a.tif",
+   "label": "email"
+  },
+  {
+   "page_id": "p033",
+   "tif": "imagesv/v/q/t/vqt66c00/2074378233b.tif",
+   "label": "email"
+  },
+  {
+   "page_id": "p034",
+   "tif": "imagesf/f/z/p/fzp65c00/2081520969a.tif",
+   "label": "email"
+  },
+  {
+   "page_id": "p035",
+   "tif": "imagesz/z/e/p/zep66c00/2074535022.tif",
+   "label": "email"
+  },
+  {
+   "page_id": "p036",
+   "tif": "imagesa/a/b/p/abp08c00/527885324+-5324.tif",
+   "label": "email"
+  },
+  {
+   "page_id": "p037",
+   "tif": "imagesh/h/f/h/hfh10c00/2085135834.tif",
+   "label": "email"
+  },
+  {
+   "page_id": "p038",
+   "tif": "imagesv/v/c/s/vcs35c00/2083648404a.tif",
+   "label": "email"
+  },
+  {
+   "page_id": "p039",
+   "tif": "imagesd/d/q/m/dqm21d00/517725826+-5829.tif",
+   "label": "handwritten"
+  },
+  {
+   "page_id": "p040",
+   "tif": "imagesa/a/u/t/aut33a00/504363180+-3182.tif",
+   "label": "handwritten"
+  },
+  {
+   "page_id": "p041",
+   "tif": "imagesd/d/d/q/ddq58d00/504211478.tif",
+   "label": "handwritten"
+  },
+  {
+   "page_id": "p042",
+   "tif": "imagesn/n/o/u/nou28c00/507710859+-0861.tif",
+   "label": "handwritten"
+  },
+  {
+   "page_id": "p043",
+   "tif": "imagesk/k/v/x/kvx70d00/517757230+-7231.tif",
+   "label": "handwritten"
+  },
+  {
+   "page_id": "p044",
+   "tif": "imagesv/v/r/a/vra50d00/524115769+-5775.tif",
+   "label": "handwritten"
+  },
+  {
+   "page_id": "p045",
+   "tif": "imagesr/r/q/l/rql23a00/501067508+-7515.tif",
+   "label": "handwritten"
+  },
+  {
+   "page_id": "p046",
+   "tif": "imagesx/x/r/f/xrf90d00/520761677+-1680.tif",
+   "label": "handwritten"
+  },
+  {
+   "page_id": "p047",
+   "tif": "imagesk/k/f/i/kfi31d00/506452582+-2582.tif",
+   "label": "handwritten"
+  },
+  {
+   "page_id": "p048",
+   "tif": "imagesb/b/o/v/bov80d00/522813653+-3656.tif",
+   "label": "handwritten"
+  },
+  {
+   "page_id": "p049",
+   "tif": "imagesz/z/e/t/zet70d00/518306103+-6106.tif",
+   "label": "handwritten"
+  },
+  {
+   "page_id": "p050",
+   "tif": "imagesl/l/g/u/lgu70d00/518228012+-8013.tif",
+   "label": "handwritten"
+  },
+  {
+   "page_id": "p051",
+   "tif": "imagesx/x/z/x/xzx94d00/505798056.tif",
+   "label": "handwritten"
+  },
+  {
+   "page_id": "p052",
+   "tif": "imagesg/g/n/l/gnl25d00/505300904.tif",
+   "label": "advertisement"
+  },
+  {
+   "page_id": "p053",
+   "tif": "imagesg/g/u/d/gud71f00/2503021405.tif",
+   "label": "advertisement"
+  },
+  {
+   "page_id": "p054",
+   "tif": "imagesj/j/r/v/jrv33a00/501708240+-8250.tif",
+   "label": "advertisement"
+  },
+  {
+   "page_id": "p055",
+   "tif": "imagesz/z/b/q/zbq29d00/501948370.tif",
+   "label": "advertisement"
+  },
+  {
+   "page_id": "p056",
+   "tif": "imagesl/l/i/e/lie96c00/2070711602_1603.tif",
+   "label": "advertisement"
+  },
+  {
+   "page_id": "p057",
+   "tif": "imagesz/z/f/a/zfa30c00/2081145368.tif",
+   "label": "advertisement"
+  },
+  {
+   "page_id": "p058",
+   "tif": "imagesv/v/b/m/vbm03f00/tob00603.85.tif",
+   "label": "advertisement"
+  },
+  {
+   "page_id": "p059",
+   "tif": "imagesn/n/o/o/noo44a00/00001014.tif",
+   "label": "advertisement"
+  },
+  {
+   "page_id": "p060",
+   "tif": "imageso/o/c/l/ocl35e00/2040646973.tif",
+   "label": "advertisement"
+  },
+  {
+   "page_id": "p061",
+   "tif": "imagesa/a/s/c/asc80e00/92127899.tif",
+   "label": "advertisement"
+  },
+  {
+   "page_id": "p062",
+   "tif": "imagesd/d/p/q/dpq29d00/501948084.tif",
+   "label": "advertisement"
+  },
+  {
+   "page_id": "p063",
+   "tif": "imagesy/y/e/p/yep91e00/93444866.tif",
+   "label": "advertisement"
+  },
+  {
+   "page_id": "p064",
+   "tif": "imagesu/u/m/b/umb74c00/91546647_6648.tif",
+   "label": "advertisement"
+  },
+  {
+   "page_id": "p065",
+   "tif": "imagesc/c/a/v/cav64e00/1000121926_1000121931.tif",
+   "label": "scientific report"
+  },
+  {
+   "page_id": "p066",
+   "tif": "imagesz/z/y/s/zys46c00/2082042499_2508.tif",
+   "label": "scientific report"
+  },
+  {
+   "page_id": "p067",
+   "tif": "imagesu/u/l/h/ulh39e00/2501507358.tif",
+   "label": "scientific report"
+  },
+  {
+   "page_id": "p068",
+   "tif": "imagesa/a/f/c/afc24c00/2048396759_6767.tif",
+   "label": "scientific report"
+  },
+  {
+   "page_id": "p069",
+   "tif": "imagesi/i/m/g/img45d00/1000343782_3794.tif",
+   "label": "scientific report"
+  },
+  {
+   "page_id": "p070",
+   "tif": "imagest/t/q/d/tqd73e00/2024440363_2024440368.tif",
+   "label": "scientific report"
+  },
+  {
+   "page_id": "p071",
+   "tif": "imagesj/j/u/x/jux44e00/2022164327.tif",
+   "label": "scientific report"
+  },
+  {
+   "page_id": "p072",
+   "tif": "imagesx/x/e/k/xek27e00/2028726194.tif",
+   "label": "scientific report"
+  },
+  {
+   "page_id": "p073",
+   "tif": "imagesv/v/y/k/vyk94c00/2505519512_9517.tif",
+   "label": "scientific report"
+  },
+  {
+   "page_id": "p074",
+   "tif": "imagesi/i/z/x/izx68e00/2001222356_2001222360.tif",
+   "label": "scientific report"
+  },
+  {
+   "page_id": "p075",
+   "tif": "imagesn/n/v/k/nvk40e00/81305204.tif",
+   "label": "scientific report"
+  },
+  {
+   "page_id": "p076",
+   "tif": "imagesx/x/o/y/xoy70c00/1001402293.tif",
+   "label": "scientific report"
+  },
+  {
+   "page_id": "p077",
+   "tif": "imagesj/j/w/d/jwd29e00/2501277849_2501277861.tif",
+   "label": "scientific report"
+  },
+  {
+   "page_id": "p078",
+   "tif": "imagesl/l/r/s/lrs23e00/2057827078_2057827094.tif",
+   "label": "scientific publication"
+  },
+  {
+   "page_id": "p079",
+   "tif": "imagesb/b/c/n/bcn49e00/2501666224.tif",
+   "label": "scientific publication"
+  },
+  {
+   "page_id": "p080",
+   "tif": "imagesk/k/j/o/kjo06d00/50515990-6006.tif",
+   "label": "scientific publication"
+  },
+  {
+   "page_id": "p081",
+   "tif": "imagesz/z/h/i/zhi37e00/2029031429_2029031430.tif",
+   "label": "scientific publication"
+  },
+  {
+   "page_id": "p082",
+   "tif": "imagesn/n/t/i/nti78e00/2023694606_2023694623.tif",
+   "label": "scientific publication"
+  },
+  {
+   "page_id": "p083",
+   "tif": "imagesl/l/x/r/lxr67e00/2063579692_2063579701.tif",
+   "label": "scientific publication"
+  },
+  {
+   "page_id": "p084",
+   "tif": "imagest/t/u/r/tur95d00/50469946-9946.tif",
+   "label": "scientific publication"
+  },
+  {
+   "page_id": "p085",
+   "tif": "imagesl/l/s/d/lsd10a00/10360662_10360665.tif",
+   "label": "scientific publication"
+  },
+  {
+   "page_id": "p086",
+   "tif": "imagesd/d/m/d/dmd59c00/PUBLICATIONS013695-3.tif",
+   "label": "scientific publication"
+  },
+  {
+   "page_id": "p087",
+   "tif": "imagesb/b/e/f/bef10d00/50373416-3426.tif",
+   "label": "scientific publication"
+  },
+  {
+   "page_id": "p088",
+   "tif": "imagesn/n/f/t/nft37e00/2029114745.tif",
+   "label": "scientific publication"
+  },
+  {
+   "page_id": "p089",
+   "tif": "imagest/t/j/c/tjc47e00/2024988831.tif",
+   "label": "scientific publication"
+  },
+  {
+   "page_id": "p090",
+   "tif": "imagesn/n/l/i/nli98d00/50374819-4819.tif",
+   "label": "scientific publication"
+  },
+  {
+   "page_id": "p091",
+   "tif": "imagest/t/q/s/tqs14c00/2069720004.tif",
+   "label": "specification"
+  },
+  {
+   "page_id": "p092",
+   "tif": "imagesm/m/m/g/mmg71a00/2057426441_2057426445.tif",
+   "label": "specification"
+  },
+  {
+   "page_id": "p093",
+   "tif": "imagesl/l/e/x/lex86e00/2057672556.tif",
+   "label": "specification"
+  },
+  {
+   "page_id": "p094",
+   "tif": "imagest/t/j/z/tjz61a00/2057408592_2057408594.tif",
+   "label": "specification"
+  },
+  {
+   "page_id": "p095",
+   "tif": "imagesh/h/f/t/hft07e00/2031298796.tif",
+   "label": "specification"
+  },
+  {
+   "page_id": "p096",
+   "tif": "imagesz/z/w/m/zwm34d00/507064467_507064468.tif",
+   "label": "specification"
+  },
+  {
+   "page_id": "p097",
+   "tif": "imagesj/j/u/t/jut60d00/525441705+-1726.tif",
+   "label": "specification"
+  },
+  {
+   "page_id": "p098",
+   "tif": "imagesc/c/z/y/czy21f00/0001454207.tif",
+   "label": "specification"
+  },
+  {
+   "page_id": "p099",
+   "tif": "imagesy/y/f/k/yfk35d00/505020794_505020796.tif",
+   "label": "specification"
+  },
+  {
+   "page_id": "p100",
+   "tif": "imagesa/a/r/a/ara81a00/2057484399.tif",
+   "label": "specification"
+  },
+  {
+   "page_id": "p101",
+   "tif": "imagesn/n/k/c/nkc71a00/2057415482_2057415484.tif",
+   "label": "specification"
+  },
+  {
+   "page_id": "p102",
+   "tif": "imagesk/k/s/n/ksn61f00/2051519898_2051519901.tif",
+   "label": "specification"
+  },
+  {
+   "page_id": "p103",
+   "tif": "imagesq/q/m/n/qmn71a00/2057444175_2057444179.tif",
+   "label": "specification"
+  },
+  {
+   "page_id": "p104",
+   "tif": "imagesc/c/m/g/cmg33e00/2063121219.tif",
+   "label": "file folder"
+  },
+  {
+   "page_id": "p105",
+   "tif": "imagesm/m/x/o/mxo29e00/2501102746.tif",
+   "label": "file folder"
+  },
+  {
+   "page_id": "p106",
+   "tif": "imagesv/v/t/o/vto31a00/0071036018.tif",
+   "label": "file folder"
+  },
+  {
+   "page_id": "p107",
+   "tif": "imagesb/b/p/z/bpz3aa00/10400349.tif",
+   "label": "file folder"
+  },
+  {
+   "page_id": "p108",
+   "tif": "imagesn/n/t/w/ntw17e00/2024484286.tif",
+   "label": "file folder"
+  },
+  {
+   "page_id": "p109",
+   "tif": "imagesv/v/q/x/vqx24e00/2024258448.tif",
+   "label": "file folder"
+  },
+  {
+   "page_id": "p110",
+   "tif": "imagesj/j/v/v/jvv05f00/0060169690.tif",
+   "label": "file folder"
+  },
+  {
+   "page_id": "p111",
+   "tif": "imagesr/r/j/e/rje6aa00/11311005.tif",
+   "label": "file folder"
+  },
+  {
+   "page_id": "p112",
+   "tif": "imagesu/u/o/t/uot57e00/2031292037.tif",
+   "label": "file folder"
+  },
+  {
+   "page_id": "p113",
+   "tif": "imagesx/x/a/l/xal63e00/2030089269.tif",
+   "label": "file folder"
+  },
+  {
+   "page_id": "p114",
+   "tif": "imagesm/m/f/i/mfi43e00/2040535213.tif",
+   "label": "file folder"
+  },
+  {
+   "page_id": "p115",
+   "tif": "imagesw/w/k/n/wkn84f00/0060361630.tif",
+   "label": "file folder"
+  },
+  {
+   "page_id": "p116",
+   "tif": "imagesm/m/f/x/mfx99c00/50299523-9523.tif",
+   "label": "file folder"
+  },
+  {
+   "page_id": "p117",
+   "tif": "imagesc/c/x/u/cxu36e00/2023269923.tif",
+   "label": "news article"
+  },
+  {
+   "page_id": "p118",
+   "tif": "imagesu/u/r/f/urf48d00/2062205523a.tif",
+   "label": "news article"
+  },
+  {
+   "page_id": "p119",
+   "tif": "imagesd/d/s/b/dsb08d00/2072114483.tif",
+   "label": "news article"
+  },
+  {
+   "page_id": "p120",
+   "tif": "imagesw/w/u/a/wua38d00/2070122742_2743.tif",
+   "label": "news article"
+  },
+  {
+   "page_id": "p121",
+   "tif": "imagesv/v/c/v/vcv51e00/03760004_03760005.tif",
+   "label": "news article"
+  },
+  {
+   "page_id": "p122",
+   "tif": "imagesf/f/g/p/fgp76d00/ti30859156.tif",
+   "label": "news article"
+  },
+  {
+   "page_id": "p123",
+   "tif": "imagesz/z/o/f/zof65c00/2083133400.tif",
+   "label": "news article"
+  },
+  {
+   "page_id": "p124",
+   "tif": "imagesg/g/k/b/gkb74a00/2057341409.tif",
+   "label": "news article"
+  },
+  {
+   "page_id": "p125",
+   "tif": "imagesf/f/y/h/fyh87e00/2047635547.tif",
+   "label": "news article"
+  },
+  {
+   "page_id": "p126",
+   "tif": "imagesm/m/q/o/mqo92f00/tob04119.27.tif",
+   "label": "news article"
+  },
+  {
+   "page_id": "p127",
+   "tif": "imagesw/w/a/j/waj43f00/0000940186.tif",
+   "label": "news article"
+  },
+  {
+   "page_id": "p128",
+   "tif": "imagesv/v/l/b/vlb90e00/92348839.tif",
+   "label": "news article"
+  },
+  {
+   "page_id": "p129",
+   "tif": "imagest/t/m/n/tmn62f00/tob12404.06.tif",
+   "label": "news article"
+  },
+  {
+   "page_id": "p130",
+   "tif": "imagesz/z/d/o/zdo05c00/2057556508_6512.tif",
+   "label": "budget"
+  },
+  {
+   "page_id": "p131",
+   "tif": "imagesg/g/o/d/god07e00/2060319099.tif",
+   "label": "budget"
+  },
+  {
+   "page_id": "p132",
+   "tif": "imagese/e/x/g/exg44c00/86650905_0906.tif",
+   "label": "budget"
+  },
+  {
+   "page_id": "p133",
+   "tif": "imagesl/l/y/k/lyk13f00/0000443041.tif",
+   "label": "budget"
+  },
+  {
+   "page_id": "p134",
+   "tif": "imagesa/a/b/u/abu26c00/2071385404.tif",
+   "label": "budget"
+  },
+  {
+   "page_id": "p135",
+   "tif": "imagesw/w/w/u/wwu48d00/2063185525_5601.tif",
+   "label": "budget"
+  },
+  {
+   "page_id": "p136",
+   "tif": "imagesn/n/j/a/nja88c00/95732858.tif",
+   "label": "budget"
+  },
+  {
+   "page_id": "p137",
+   "tif": "imagesz/z/a/b/zab32f00/tim01049.09.tif",
+   "label": "budget"
+  },
+  {
+   "page_id": "p138",
+   "tif": "imagesk/k/v/y/kvy47c00/2072651663.tif",
+   "label": "budget"
+  },
+  {
+   "page_id": "p139",
+   "tif": "imagesa/a/a/v/aav57c00/2073360869.tif",
+   "label": "budget"
+  },
+  {
+   "page_id": "p140",
+   "tif": "imagese/e/l/p/elp84c00/93323536.tif",
+   "label": "budget"
+  },
+  {
+   "page_id": "p141",
+   "tif": "imagese/e/j/q/ejq82f00/tob07119.78.tif",
+   "label": "budget"
+  },
+  {
+   "page_id": "p142",
+   "tif": "imagesf/f/v/b/fvb17d00/tnwl0004148.tif",
+   "label": "budget"
+  },
+  {
+   "page_id": "p143",
+   "tif": "imagesp/p/h/i/phi15e00/2022924975.tif",
+   "label": "invoice"
+  },
+  {
+   "page_id": "p144",
+   "tif": "imagesl/l/o/o/loo51c00/521421975+-1978.tif",
+   "label": "invoice"
+  },
+  {
+   "page_id": "p145",
+   "tif": "imagesu/u/t/n/utn53c00/95602645.tif",
+   "label": "invoice"
+  },
+  {
+   "page_id": "p146",
+   "tif": "imagesl/l/c/l/lcl84c00/95824452.tif",
+   "label": "invoice"
+  },
+  {
+   "page_id": "p147",
+   "tif": "imagesf/f/g/l/fgl65f00/0060083495.tif",
+   "label": "invoice"
+  },
+  {
+   "page_id": "p148",
+   "tif": "imagesm/m/a/i/mai35f00/0060031775.tif",
+   "label": "invoice"
+  },
+  {
+   "page_id": "p149",
+   "tif": "imagesp/p/b/u/pbu10c00/2085532476.tif",
+   "label": "invoice"
+  },
+  {
+   "page_id": "p150",
+   "tif": "imagesr/r/h/f/rhf86d00/ti16310523.tif",
+   "label": "invoice"
+  },
+  {
+   "page_id": "p151",
+   "tif": "imagesf/f/t/p/ftp99e00/0000383290.tif",
+   "label": "invoice"
+  },
+  {
+   "page_id": "p152",
+   "tif": "imageso/o/p/u/opu62d00/86087439.tif",
+   "label": "invoice"
+  },
+  {
+   "page_id": "p153",
+   "tif": "imagesg/g/o/e/goe70d00/524412968+-2974.tif",
+   "label": "invoice"
+  },
+  {
+   "page_id": "p154",
+   "tif": "imagesh/h/g/b/hgb71e00/03725199.tif",
+   "label": "invoice"
+  },
+  {
+   "page_id": "p155",
+   "tif": "imagesa/a/z/k/azk27e00/2028727366.tif",
+   "label": "invoice"
+  },
+  {
+   "page_id": "p156",
+   "tif": "imagese/e/j/p/ejp92c00/2083149100_9101.tif",
+   "label": "presentation"
+  },
+  {
+   "page_id": "p157",
+   "tif": "imagesa/a/j/s/ajs41a00/0013230994.tif",
+   "label": "presentation"
+  },
+  {
+   "page_id": "p158",
+   "tif": "imagesx/x/s/h/xsh75c00/2080133963_3965.tif",
+   "label": "presentation"
+  },
+  {
+   "page_id": "p159",
+   "tif": "imagesq/q/p/p/qpp63c00/2065329365_9368.tif",
+   "label": "presentation"
+  },
+  {
+   "page_id": "p160",
+   "tif": "imagesl/l/x/z/lxz03e00/2060576262_2060576306.tif",
+   "label": "presentation"
+  },
+  {
+   "page_id": "p161",
+   "tif": "imagesx/x/z/r/xzr24f00/0000007183.tif",
+   "label": "presentation"
+  },
+  {
+   "page_id": "p162",
+   "tif": "imagesq/q/a/j/qaj76c00/2077131298_1321.tif",
+   "label": "presentation"
+  },
+  {
+   "page_id": "p163",
+   "tif": "imagest/t/r/j/trj13f00/0000458020.tif",
+   "label": "presentation"
+  },
+  {
+   "page_id": "p164",
+   "tif": "imagesc/c/k/a/cka05f00/0060166802.tif",
+   "label": "presentation"
+  },
+  {
+   "page_id": "p165",
+   "tif": "imagesn/n/w/r/nwr80f00/0011911329.tif",
+   "label": "presentation"
+  },
+  {
+   "page_id": "p166",
+   "tif": "imagest/t/w/h/twh24f00/0000165078.tif",
+   "label": "presentation"
+  },
+  {
+   "page_id": "p167",
+   "tif": "imagesy/y/m/q/ymq54c00/85541498_1500.tif",
+   "label": "presentation"
+  },
+  {
+   "page_id": "p168",
+   "tif": "imageso/o/e/z/oez78e00/2020372441_2020372462.tif",
+   "label": "presentation"
+  },
+  {
+   "page_id": "p169",
+   "tif": "imagesd/d/h/n/dhn35e00/2040734541.tif",
+   "label": "questionnaire"
+  },
+  {
+   "page_id": "p170",
+   "tif": "imagesu/u/i/d/uid89d00/500294127+-4127.tif",
+   "label": "questionnaire"
+  },
+  {
+   "page_id": "p171",
+   "tif": "imagest/t/n/x/tnx18c00/506049896+-9902.tif",
+   "label": "questionnaire"
+  },
+  {
+   "page_id": "p172",
+   "tif": "imagesi/i/y/t/iyt88c00/84457074_7080.tif",
+   "label": "questionnaire"
+  },
+  {
+   "page_id": "p173",
+   "tif": "imagese/e/o/m/eom40f00/0000331377.tif",
+   "label": "questionnaire"
+  },
+  {
+   "page_id": "p174",
+   "tif": "imagese/e/p/z/epz79e00/0000176359.tif",
+   "label": "questionnaire"
+  },
+  {
+   "page_id": "p175",
+   "tif": "imagesd/d/c/p/dcp66e00/2060047706_2060047715.tif",
+   "label": "questionnaire"
+  },
+  {
+   "page_id": "p176",
+   "tif": "imagesx/x/s/l/xsl01e00/88017236_88017237.tif",
+   "label": "questionnaire"
+  },
+  {
+   "page_id": "p177",
+   "tif": "imagesu/u/t/h/uth75e00/2040809586_2040809606.tif",
+   "label": "questionnaire"
+  },
+  {
+   "page_id": "p178",
+   "tif": "imagest/t/v/c/tvc23f00/0000166309.tif",
+   "label": "questionnaire"
+  },
+  {
+   "page_id": "p179",
+   "tif": "imagesh/h/m/s/hms80d00/523779582+-9584.tif",
+   "label": "questionnaire"
+  },
+  {
+   "page_id": "p180",
+   "tif": "imagesf/f/b/x/fbx16e00/2049049245.tif",
+   "label": "questionnaire"
+  },
+  {
+   "page_id": "p181",
+   "tif": "imagesu/u/w/l/uwl50f00/0000244481.tif",
+   "label": "questionnaire"
+  },
+  {
+   "page_id": "p182",
+   "tif": "imagesd/d/c/z/dcz98d00/50420594-0596.tif",
+   "label": "resume"
+  },
+  {
+   "page_id": "p183",
+   "tif": "imagesi/i/b/g/ibg46d00/50708768-8769.tif",
+   "label": "resume"
+  },
+  {
+   "page_id": "p184",
+   "tif": "imagesh/h/a/u/hau36d00/50614299-4301.tif",
+   "label": "resume"
+  },
+  {
+   "page_id": "p185",
+   "tif": "imagesb/b/e/v/bev79c00/50237584-7585.tif",
+   "label": "resume"
+  },
+  {
+   "page_id": "p186",
+   "tif": "imagesa/a/h/w/ahw84e00/1000313543_1000313544.tif",
+   "label": "resume"
+  },
+  {
+   "page_id": "p187",
+   "tif": "imageso/o/c/e/oce06d00/50502176-2177.tif",
+   "label": "resume"
+  },
+  {
+   "page_id": "p188",
+   "tif": "imagesd/d/c/o/dco13c00/85686616_6632.tif",
+   "label": "resume"
+  },
+  {
+   "page_id": "p189",
+   "tif": "imagesd/d/j/y/djy36d00/50650706-0707.tif",
+   "label": "resume"
+  },
+  {
+   "page_id": "p190",
+   "tif": "imagesd/d/u/b/dub09e00/2046316353_2046316367.tif",
+   "label": "resume"
+  },
+  {
+   "page_id": "p191",
+   "tif": "imagesg/g/r/t/grt26d00/50668757-8757.tif",
+   "label": "resume"
+  },
+  {
+   "page_id": "p192",
+   "tif": "imagesb/b/y/o/byo98d00/50393196-3197.tif",
+   "label": "resume"
+  },
+  {
+   "page_id": "p193",
+   "tif": "imagesc/c/x/v/cxv94c00/2085797177.tif",
+   "label": "resume"
+  },
+  {
+   "page_id": "p194",
+   "tif": "imagesd/d/v/o/dvo89c00/50276549-6550.tif",
+   "label": "resume"
+  },
+  {
+   "page_id": "p195",
+   "tif": "imagesm/m/b/a/mba07e00/2060277707_2060277708.tif",
+   "label": "memo"
+  },
+  {
+   "page_id": "p196",
+   "tif": "imagesj/j/f/p/jfp95d00/50464963-4965.tif",
+   "label": "memo"
+  },
+  {
+   "page_id": "p197",
+   "tif": "imagesd/d/h/b/dhb11a00/0011848575.tif",
+   "label": "memo"
+  },
+  {
+   "page_id": "p198",
+   "tif": "imagesu/u/j/c/ujc95c00/2073576362.tif",
+   "label": "memo"
+  },
+  {
+   "page_id": "p199",
+   "tif": "imagesb/b/z/n/bzn88e00/2020238843.tif",
+   "label": "memo"
+  },
+  {
+   "page_id": "p200",
+   "tif": "imagesj/j/q/l/jql97e00/1000080006.tif",
+   "label": "memo"
+  },
+  {
+   "page_id": "p201",
+   "tif": "imagesw/w/n/i/wni87d00/2044029838_9839.tif",
+   "label": "memo"
+  },
+  {
+   "page_id": "p202",
+   "tif": "imagesm/m/r/a/mra06e00/2043225917_2043225919.tif",
+   "label": "memo"
+  },
+  {
+   "page_id": "p203",
+   "tif": "imagesx/x/u/i/xui85f00/0060116065.tif",
+   "label": "memo"
+  },
+  {
+   "page_id": "p204",
+   "tif": "imagesm/m/d/q/mdq15f00/0060171841.tif",
+   "label": "memo"
+  },
+  {
+   "page_id": "p205",
+   "tif": "imagese/e/z/d/ezd26e00/2054529258.tif",
+   "label": "memo"
+  },
+  {
+   "page_id": "p206",
+   "tif": "imagesw/w/b/w/wbw30f00/0012229292.tif",
+   "label": "memo"
+  },
+  {
+   "page_id": "p207",
+   "tif": "imagesr/r/z/t/rzt34f00/0060278359.tif",
+   "label": "memo"
+  }
+ ],
+ "page_order": [
+  "p067",
+  "p196",
+  "p187",
+  "p160",
+  "p021",
+  "p117",
+  "p035",
+  "p106",
+  "p045",
+  "p054",
+  "p095",
+  "p002",
+  "p140",
+  "p145",
+  "p172",
+  "p089",
+  "p075",
+  "p204",
+  "p188",
+  "p163",
+  "p016",
+  "p125",
+  "p033",
+  "p104",
+  "p049",
+  "p055",
+  "p094",
+  "p010",
+  "p134",
+  "p144",
+  "p174",
+  "p079",
+  "p069",
+  "p201",
+  "p182",
+  "p161",
+  "p018",
+  "p123",
+  "p031",
+  "p114",
+  "p040",
+  "p064",
+  "p098",
+  "p007",
+  "p142",
+  "p149",
+  "p175",
+  "p087",
+  "p076",
+  "p198",
+  "p193",
+  "p157",
+  "p013",
+  "p119",
+  "p029",
+  "p112",
+  "p048",
+  "p060",
+  "p101",
+  "p000",
+  "p133",
+  "p150",
+  "p169",
+  "p083",
+  "p072",
+  "p203",
+  "p185",
+  "p158",
+  "p017",
+  "p122",
+  "p027",
+  "p111",
+  "p046",
+  "p052",
+  "p100",
+  "p006",
+  "p130",
+  "p153",
+  "p179",
+  "p088",
+  "p066",
+  "p206",
+  "p190",
+  "p167",
+  "p020",
+  "p126",
+  "p032",
+  "p116",
+  "p050",
+  "p061",
+  "p093",
+  "p009",
+  "p138",
+  "p154",
+  "p176",
+  "p082",
+  "p070",
+  "p205",
+  "p186",
+  "p156",
+  "p019",
+  "p124",
+  "p028",
+  "p115",
+  "p042",
+  "p058",
+  "p099",
+  "p012",
+  "p136",
+  "p147",
+  "p180",
+  "p085",
+  "p077",
+  "p195",
+  "p189",
+  "p168",
+  "p014",
+  "p128",
+  "p038",
+  "p105",
+  "p043",
+  "p059",
+  "p091",
+  "p011",
+  "p137",
+  "p148",
+  "p178",
+  "p086",
+  "p065",
+  "p197",
+  "p192",
+  "p162",
+  "p025",
+  "p120",
+  "p036",
+  "p110",
+  "p044",
+  "p063",
+  "p102",
+  "p005",
+  "p131",
+  "p143",
+  "p181",
+  "p078",
+  "p071",
+  "p200",
+  "p184",
+  "p159",
+  "p022",
+  "p121",
+  "p030",
+  "p113",
+  "p041",
+  "p053",
+  "p092",
+  "p003",
+  "p132",
+  "p146",
+  "p173",
+  "p084",
+  "p073",
+  "p202",
+  "p194",
+  "p166",
+  "p015",
+  "p129",
+  "p037",
+  "p109",
+  "p047",
+  "p062",
+  "p097",
+  "p004",
+  "p141",
+  "p155",
+  "p170",
+  "p081",
+  "p074",
+  "p199",
+  "p183",
+  "p164",
+  "p024",
+  "p127",
+  "p026",
+  "p107",
+  "p039",
+  "p056",
+  "p096",
+  "p008",
+  "p135",
+  "p152",
+  "p171",
+  "p090",
+  "p068",
+  "p207",
+  "p191",
+  "p165",
+  "p023",
+  "p118",
+  "p034",
+  "p108",
+  "p051",
+  "p057",
+  "p103",
+  "p001",
+  "p139",
+  "p151",
+  "p177",
+  "p080"
+ ],
+ "questions": {
+  "version": "q3",
+  "state": "A scanned document page.",
+  "choice": "Which category best describes this scanned page?",
+  "choice_options": "16 RVL-CDIP names + 'blank or unreadable', spaces -> '_', no descriptions",
+  "noul": "Is this scanned page a/an <label>?",
+  "noul_false": "one wrong label per page, uniform, seed + 1"
+ },
+ "counts": {
+  "pages": 208,
+  "items": 624
+ },
+ "labels_checked": false
+}

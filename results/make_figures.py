@@ -1,10 +1,11 @@
 """Build results/figures/*.png from raw replies. Never edit the figures by hand.
 
-    .venv/bin/python results/make_figures.py --data rvlcdip-v0 --predictions outputs/clef-flash-rvlcdip-v0.jsonl
+    .venv/bin/python results/make_figures.py --exp E01
 """
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -35,11 +36,11 @@ def reliability(ax, rows, title):
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--data", default="rvlcdip-v0")
-    ap.add_argument("--predictions", type=Path, required=True)
+    ap.add_argument("--exp", required=True)
     args = ap.parse_args()
-    rows = load(args.data, args.predictions)
-    name = args.predictions.stem
+    config = json.loads((Path("experiments") / args.exp / "config.json").read_text())
+    rows = load(config["data"], Path(config["outputs"]))
+    name = args.exp
     OUT.mkdir(parents=True, exist_ok=True)
 
     choice = [r for r in rows if r["kind"] == "choice"]

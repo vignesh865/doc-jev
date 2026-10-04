@@ -216,3 +216,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# DocJev data (images are not redistributed; rebuild with prepare_data.py)
+data/*/pages/
+logs/

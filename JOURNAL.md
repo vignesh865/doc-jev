@@ -300,3 +300,46 @@ described "calibrate max(p)" as agreed; it came from the earlier session's
 draft, not from us. CLAUDE.md now lists such draft assumptions as not agreed.
 Until it is decided, the baseline saves the full probability vector for every
 question, so any measure can be computed later without re-running.
+
+---
+
+## 7. First image calls: the question was wrong for RVL-CDIP; a blank option added
+
+*2026-10-04. Five image calls to clef-flash in total (2 + 1 rejected + 2), all
+choice questions, PNG pages. Under $0.001.*
+
+**Large images are refused [E].** A 398 KB PNG (`p157`) returned HTTP 413:
+"estimated 136,060 tokens exceeded the 65,536 context window". The real cost of
+a page is about 1,050 tokens, so the API's pre-check estimates tokens from the
+base64 length (≈ 4 characters per token). In practice, images over about
+190 KB are refused. Plan: send pages as JPEG at one fixed quality (recorded
+per call), chosen once all 208 pages are in.
+
+**The question did not fit the data [U, spotted by the user].** First question:
+"What type of document is this?" with the 16 RVL-CDIP names. Page `p107`
+(label `file folder`) is a nearly empty scan of a folder tab, with only a tiny
+sideways handwritten note. Nothing on it says "file folder", and there was no
+way to answer "blank". RVL-CDIP labels mix what a document *is* (letter,
+invoice), the *object* scanned (file folder) and *how it was written*
+(handwritten). Clef-flash answered `handwritten` 0.38, with `file_folder` not in
+its top 3.
+
+**Changes.**
+
+- Add a 17th option, `blank_or_unreadable` [U]. RVL-CDIP has no such label,
+  so it is our addition. A page whose true label cannot be seen will be
+  handled in the hand-check.
+- Reword to "Which category best describes this scanned page?" [C], because
+  the old wording assumed every page is a document. Options still have no
+  descriptions [C, open].
+
+**Re-test, same two-page idea [E].**
+
+| page | true label | top answer | p(top) | p(true label) | p(blank) |
+|---|---|---|---|---|---|
+| p107 | file folder (nearly empty) | blank_or_unreadable | 0.758 | 0.010 | 0.758 |
+| p003 | letter (clear, typed) | letter | 0.914 | 0.914 | 0.005 |
+
+On the empty page the model now picks the blank option with 0.76; on the clear
+letter it is right with 0.91. Caveat: the wording and the option changed
+together, so this test cannot say which change did what.

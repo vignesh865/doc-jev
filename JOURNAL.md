@@ -449,3 +449,62 @@ the user asks. What is tracked for every experiment: raw replies in
 `outputs/<exp>.jsonl`, latest scores in `experiments/<exp>/metrics.json`, and
 the scoring history in `experiments/runs.jsonl`. Entries 8–9 mention
 `results/tables/`; that no longer exists.
+
+---
+
+## 10. E01 at 60 pages: a cautious model; most confident misses are label problems
+
+*2026-10-04. `E01` grown from 20 to 60 sent pages (10 skipped as too big so
+far). 120 new calls, all succeeded; 171,874 input tokens in total for E01
+(≈ $0.015). Scores: `experiments/E01/metrics.json`.*
+
+**Results on 60 pages [E].**
+
+| group | n | accuracy | NLL | Brier | ECE |
+|---|---|---|---|---|---|
+| choice (17 options) | 60 | 0.567 | 1.52 | 0.60 | 0.19 |
+| yes/no, true type | 60 | 0.600 | 1.22 | 0.68 | 0.31 |
+| yes/no, random wrong type | 60 | 0.983 | 0.06 | 0.03 | 0.03 |
+
+- Yes/no as a detector: 36 hits, 24 misses, 1 false alarm, 59 correct
+  rejections → **precision 0.97, recall 0.60** (precision only against random,
+  easy negatives; see LEARNING lesson 2).
+- Choice and yes/no-on-true-type agree on 56 of 60 pages (33 both right,
+  23 both wrong).
+- Choice accuracy by the model's top probability:
+
+  | top p | pages | accuracy |
+  |---|---|---|
+  | < 0.50 | 13 | 0.31 |
+  | 0.50–0.70 | 8 | 0.12 |
+  | 0.70–0.85 | 16 | 0.56 |
+  | ≥ 0.85 | 23 | 0.87 |
+
+  Higher confidence does mean more often right, but answers in 0.70–0.85 are
+  right only about half the time. Coverage at ≤1% and ≤5% error is 0.08 for
+  every confidence measure, on raw labels.
+- Per type (choice, 3–5 pages each, so very rough): email and news article
+  were all right; budget and file folder all wrong (budget → invoice ×2; file
+  folder → blank ×2).
+
+**Ten confident choice misses (top p ≥ 0.70).** Four were viewed this time,
+two in entry 9:
+
+| page | label | model (p) | what the page shows | verdict [C] |
+|---|---|---|---|---|
+| p000 | letter | memo 0.945 | headed "Interoffice Memorandum", To/From/Subject | **label wrong**: it is a memo |
+| p069 | scientific report | blank_or_unreadable 0.849 | nearly blank scan, one number "1151" | **label not visible**: the model's answer is fair |
+| p182 | resume | blank_or_unreadable 0.766 | a page with only the word "APPENDIX" | **label not visible** |
+| p158 | presentation | budget 0.877 | sideways slide: "Boys & Girls Club Budget 2000-2001" | **ambiguous**: a slide about a budget |
+| p016 | form | handwritten 0.815 | hand-lettered cover sheet (entry 9) | ambiguous / label doubtful |
+| p045 | handwritten | scientific_report 0.827 | handwritten research report (entry 9) | ambiguous: both true |
+
+Not yet viewed: p104 (file folder → blank 0.73), p142 (budget → invoice 0.79),
+p150 (invoice → form 0.86), p169 (questionnaire → form 0.79).
+
+**Reading [C].** In all 6 confident misses looked at, the model's answer is a
+fair description of the page, and the RVL-CDIP label is wrong, not visible
+on the page, or one of two true answers. On raw labels the model looks
+overconfident; much of that may be the labels. **The hand-check (entry 4) is now
+the most important next step**: without it, the calibration and
+coverage-at-risk numbers measure label noise as much as the model.

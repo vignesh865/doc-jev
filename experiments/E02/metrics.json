@@ -1,0 +1,281 @@
+{
+ "exp": "E02",
+ "scored_at": "2026-10-04T23:33:07+00:00",
+ "git_commit": "707b362",
+ "predictions": "outputs/E02.jsonl",
+ "predictions_sha256": "97a05d2b622b554e",
+ "pages": 60,
+ "config": {
+  "exp": "E02",
+  "data": "rvlcdip-v0",
+  "model": "clef",
+  "jpeg_quality": null,
+  "max_image_kb": 185,
+  "question_version": "q3",
+  "endpoint": "https://api.cloudflare.com/client/v4/accounts/<account>/ai/run/@cf/cloudflare/clef",
+  "model_version": "hosted Workers AI; not pinnable",
+  "one_request_per_question": true,
+  "created_at": "2026-10-04T23:19:08+00:00",
+  "git_commit": "707b362",
+  "outputs": "outputs/E02.jsonl",
+  "note": "clef 27B zero-shot; same settings and pages as E01"
+ },
+ "data": {
+  "name": "rvlcdip-v0",
+  "source": {
+   "repo": "aharley/rvl_cdip",
+   "revision": "03f14a4ad0a32413eff51ca10f9f511545f2bd5b",
+   "split": "test",
+   "labels_file": "data/test.txt",
+   "test_txt_sha256": "97699c1c56425c44"
+  },
+  "labels_checked": false
+ },
+ "p_floor": 5e-05,
+ "metrics": {
+  "items": 180,
+  "scored": 180,
+  "missing": 0,
+  "groups": {
+   "choice": {
+    "n": 60,
+    "accuracy": 0.6333333333333333,
+    "nll": 1.3758279941647764,
+    "brier": 0.5395558216666668,
+    "ece": 0.20436333333333334,
+    "aurc": 0.18834708765589395,
+    "cov@0.01": 0.18333333333333332,
+    "cov@0.05": 0.18333333333333332,
+    "by_measure": {
+     "top": {
+      "aurc": 0.18834708765589395,
+      "cov@0.01": 0.18333333333333332,
+      "cov@0.05": 0.18333333333333332
+     },
+     "margin": {
+      "aurc": 0.1925370583974874,
+      "cov@0.01": 0.16666666666666666,
+      "cov@0.05": 0.16666666666666666
+     },
+     "lead_vs_mean": {
+      "aurc": 0.18834708765589395,
+      "cov@0.01": 0.18333333333333332,
+      "cov@0.05": 0.18333333333333332
+     },
+     "concentration": {
+      "aurc": 0.18620516442438093,
+      "cov@0.01": 0.18333333333333332,
+      "cov@0.05": 0.18333333333333332
+     }
+    }
+   },
+   "noul": {
+    "n": 120,
+    "accuracy": 0.8083333333333333,
+    "nll": 0.6066263061653587,
+    "brier": 0.32590532033333325,
+    "ece": 0.15737666666666675,
+    "aurc": 0.06870159864830674,
+    "cov@0.01": 0.15833333333333333,
+    "cov@0.05": 0.5083333333333333,
+    "by_measure": {
+     "top": {
+      "aurc": 0.06870159864830674,
+      "cov@0.01": 0.15833333333333333,
+      "cov@0.05": 0.5083333333333333
+     },
+     "margin": {
+      "aurc": 0.06870159864830674,
+      "cov@0.01": 0.15833333333333333,
+      "cov@0.05": 0.5083333333333333
+     },
+     "lead_vs_mean": {
+      "aurc": 0.06870159864830674,
+      "cov@0.01": 0.15833333333333333,
+      "cov@0.05": 0.5083333333333333
+     },
+     "concentration": {
+      "aurc": 0.06870159864830674,
+      "cov@0.01": 0.15833333333333333,
+      "cov@0.05": 0.5083333333333333
+     }
+    }
+   },
+   "noul_false": {
+    "n": 60,
+    "accuracy": 0.9833333333333333,
+    "nll": 0.05412105584245667,
+    "brier": 0.03275032233333333,
+    "ece": 0.03673833333333329,
+    "aurc": 0.0008476199753230729,
+    "cov@0.01": 0.95,
+    "cov@0.05": 1.0,
+    "by_measure": {
+     "top": {
+      "aurc": 0.0008476199753230729,
+      "cov@0.01": 0.95,
+      "cov@0.05": 1.0
+     },
+     "margin": {
+      "aurc": 0.0008476199753230729,
+      "cov@0.01": 0.95,
+      "cov@0.05": 1.0
+     },
+     "lead_vs_mean": {
+      "aurc": 0.0008476199753230729,
+      "cov@0.01": 0.95,
+      "cov@0.05": 1.0
+     },
+     "concentration": {
+      "aurc": 0.0008476199753230729,
+      "cov@0.01": 0.95,
+      "cov@0.05": 1.0
+     }
+    }
+   },
+   "noul_true": {
+    "n": 60,
+    "accuracy": 0.6333333333333333,
+    "nll": 1.1591315564882607,
+    "brier": 0.6190603183333333,
+    "ece": 0.3086349999999999,
+    "aurc": 0.2802509484921108,
+    "cov@0.01": 0.0,
+    "cov@0.05": 0.0,
+    "by_measure": {
+     "top": {
+      "aurc": 0.2802509484921108,
+      "cov@0.01": 0.0,
+      "cov@0.05": 0.0
+     },
+     "margin": {
+      "aurc": 0.2802509484921108,
+      "cov@0.01": 0.0,
+      "cov@0.05": 0.0
+     },
+     "lead_vs_mean": {
+      "aurc": 0.2802509484921108,
+      "cov@0.01": 0.0,
+      "cov@0.05": 0.0
+     },
+     "concentration": {
+      "aurc": 0.2802509484921108,
+      "cov@0.01": 0.0,
+      "cov@0.05": 0.0
+     }
+    }
+   }
+  },
+  "choice_accuracy_by_class": {
+   "advertisement": 0.5,
+   "budget": 0.0,
+   "email": 1.0,
+   "file folder": 0.25,
+   "form": 0.8,
+   "handwritten": 0.3333333333333333,
+   "invoice": 0.25,
+   "letter": 0.75,
+   "memo": 1.0,
+   "news article": 1.0,
+   "presentation": 0.25,
+   "questionnaire": 0.75,
+   "resume": 0.75,
+   "scientific report": 0.6,
+   "specification": 1.0
+  },
+  "choice_confusions": [
+   {
+    "gold": "file folder",
+    "pred": "blank_or_unreadable",
+    "n": 2
+   },
+   {
+    "gold": "budget",
+    "pred": "form",
+    "n": 2
+   },
+   {
+    "gold": "invoice",
+    "pred": "memo",
+    "n": 2
+   },
+   {
+    "gold": "letter",
+    "pred": "memo",
+    "n": 1
+   },
+   {
+    "gold": "form",
+    "pred": "handwritten",
+    "n": 1
+   },
+   {
+    "gold": "handwritten",
+    "pred": "scientific_report",
+    "n": 1
+   },
+   {
+    "gold": "handwritten",
+    "pred": "letter",
+    "n": 1
+   },
+   {
+    "gold": "advertisement",
+    "pred": "presentation",
+    "n": 1
+   },
+   {
+    "gold": "scientific report",
+    "pred": "blank_or_unreadable",
+    "n": 1
+   },
+   {
+    "gold": "scientific report",
+    "pred": "form",
+    "n": 1
+   },
+   {
+    "gold": "file folder",
+    "pred": "memo",
+    "n": 1
+   },
+   {
+    "gold": "budget",
+    "pred": "blank_or_unreadable",
+    "n": 1
+   },
+   {
+    "gold": "budget",
+    "pred": "scientific_report",
+    "n": 1
+   },
+   {
+    "gold": "invoice",
+    "pred": "form",
+    "n": 1
+   },
+   {
+    "gold": "presentation",
+    "pred": "budget",
+    "n": 1
+   }
+  ],
+  "hosted_confidence_vs_concentration_max_abs_diff": 0.00013524250000007676,
+  "choice_vs_noul_true": {
+   "pages": 60,
+   "both_right": 35,
+   "choice_only": 3,
+   "noul_only": 3,
+   "both_wrong": 19
+  },
+  "latency_s": {
+   "p50": 0.7124999999999999,
+   "p95": 1.2509999999999997,
+   "max": 2.326
+  },
+  "input_tokens": {
+   "total": 171874,
+   "per_request_median": 896.0
+  }
+ }
+}

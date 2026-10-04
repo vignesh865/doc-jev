@@ -550,3 +550,58 @@ got right were not reviewed.
 **Open [U, pending].** (1) Accept, change or reject each proposed label. (2) How
 to score pages where more than one category is true: strict single label, or
 any fitting label.
+
+---
+
+## 12. E02: Clef 27B on the same 60 pages
+
+*2026-10-05. `E02` (`experiments/E02/config.json`): the same as E01 except
+model `clef` (27B). Same page order and the same 10 skipped pages, so the 60
+pages are identical and paired. First 5 pages shown to the user, then the
+other 55 [U]. 180 calls, all succeeded; 171,874 input tokens (≈ $0.041).
+p50 latency 0.71 s (Flash 0.54 s).*
+
+**Motivation [U].** Clef-flash is weak on the Decision Index's text benchmark
+with a "none fits" option (CLINC150+OOS 0.67 vs Clef 0.97); E01's trouble
+pages looked similar (near-blank or bare pages).
+
+**Results, raw labels [E].**
+
+| group | E01 Flash | E02 27B |
+|---|---|---|
+| choice accuracy | 0.567 | **0.633** |
+| choice NLL / Brier / ECE | 1.52 / 0.60 / 0.19 | 1.38 / 0.54 / 0.20 |
+| yes/no true type (recall) | 0.600 | 0.633 |
+| yes/no wrong type | 0.983 | 0.983 |
+| yes/no precision | 0.97 | 0.97 |
+| choice AURC (top p) | 0.208 | 0.188 |
+| choice coverage at ≤5% error (top p, oracle) | 0.08 | 0.18 |
+
+**Paired, choice [E].** Both right 32, only 27B right 6, only Flash right 2,
+both wrong 20. 6 vs 2 is not statistically significant at this size (exact
+two-sided sign test p ≈ 0.29).
+
+- The 6 pages only 27B got right (p013, p021, p094, p101, p106, p203) are all
+  pages where the blind review called the dataset label correct and Flash had
+  been wrong at low confidence (0.28–0.56). 27B fixes them at moderate
+  confidence (0.42–0.69).
+- Flash only right: p049 (handwritten; 27B said letter 0.56), p145 (invoice;
+  27B said memo 0.59).
+
+**With the blind review's labels (entry 11, still proposals) [E].**
+Reviewer's best label: Flash 41/60, 27B 44/60. Any fitting category: Flash
+49/60, 27B 52/60. (Two pages 27B missed but Flash got right were never
+reviewed; they use the raw label.)
+
+**Confident misses (top p ≥ 0.70): 9 for 27B.** For 8 of them, the blind
+reviewer independently listed the model's answer as fitting the page. The
+exception is **p112** (file folder → blank_or_unreadable 0.71), where the
+reviewer says the folder is visible: the one confident real error so far.
+
+**On the motivation.** 27B also answers `blank_or_unreadable` on the
+near-empty pages (p069, p104, p182), and the reviewer agrees with that. So
+the "none fits" behaviour is similar in both models. 27B's gain comes from
+pages with real content that Flash misread at low confidence.
+
+**Hosted `confidence` = normalised concentration** held for 27B too (max
+difference 0.00014, rounding).

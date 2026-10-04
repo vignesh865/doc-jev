@@ -121,3 +121,52 @@ DocJev, and it is **still open** (see `JOURNAL.md`).
 The API rounds every probability to 4 decimals, so a very confident wrong answer
 can come back as exactly 0.0000. Some scores take a log of the probability, and
 log(0) is minus infinity, so our scoring code must replace 0 with a tiny number.
+
+---
+
+## 2. Precision and recall: "can I trust a yes?" vs "does it find them all?"
+
+*2026-10-04. From E01 at 20 pages. (The first reading had them swapped; easy
+to do.)*
+
+### The setup
+
+We asked 40 yes/no questions. For 20, the right answer was **yes** ("Is this
+scanned page a memo?" on a memo). For the other 20 it was **no** (the same page,
+asked about a random wrong type).
+
+|  | model said **yes** | model said **no** |
+|---|---|---|
+| **should be yes** | 13 ✓ (hit) | 7 ✗ (miss) |
+| **should be no** | 0 ✗ (false alarm) | 20 ✓ |
+
+### Two different questions about the same table
+
+**Precision: "When it says yes, can I trust it?"** Look only at the *yes
+column*: 13 right, 0 wrong → 13/13 = **100%**.
+
+**Recall: "Of the real yeses, how many did it find?"** Look only at the
+*should-be-yes row*: 13 found, 7 missed → 13/20 = **65%**.
+
+A picture that helps: a fisherman with a net.
+
+- Precision = of the things in the net, how many are fish (not boots)?
+- Recall = of all the fish in the lake, how many ended up in the net?
+
+A careful fisherman with a small net gets almost only fish (high precision)
+but leaves many fish behind (low recall). That is our model on these 20
+pages: **cautious**. Its "yes" is reliable, but it often fails to say yes.
+
+### Why the 100% is probably too good
+
+Every "should be no" question used a **random** wrong type, like asking a memo
+page "is this a presentation?". Those are easy noes: there were no boots near
+the fish. A harder test asks about **look-alikes** ("is this memo a
+letter?"), or asks all 16 types per page as a real system would. Precision
+can only be trusted after that harder test.
+
+### And for the choice question?
+
+There is exactly one answer per page. A wrong answer is a miss for the true
+type *and* a false alarm for the type it picked, so precision and recall come
+out the same: **12/20 = 60%**, which is just accuracy.

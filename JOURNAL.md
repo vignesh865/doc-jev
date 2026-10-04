@@ -441,3 +441,11 @@ picks a different side of an overlap (handwritten vs. its purpose; a
 hand-lettered cover vs. "form"). This is the label problem from entry 3
 (ambiguous and multi-label pages), seen first-hand. It supports doing the
 hand-check before reading anything into the confident-error numbers.
+
+**Correction (same day) [U].** `results/tables/*.md` and `results/figures/*.png`
+are blog material, derived purely from `experiments/`. They are removed (with
+their scripts; recoverable from git at `1136b5c`) and will be made only when
+the user asks. What is tracked for every experiment: raw replies in
+`outputs/<exp>.jsonl`, latest scores in `experiments/<exp>/metrics.json`, and
+the scoring history in `experiments/runs.jsonl`. Entries 8–9 mention
+`results/tables/`; that no longer exists.

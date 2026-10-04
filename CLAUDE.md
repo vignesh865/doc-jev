@@ -12,8 +12,10 @@ Read first:
 Agreed so far (see JOURNAL.md for detail): a Jev-style typed-decision model for
 document page images (noul / choice / score -> a distribution per question, no
 generation); trustworthy confidence is the core problem; documents first.
-Experiments follow the chain data -> raw outputs -> experiments/ + runs.jsonl ->
-tables and figures made by scripts. Never type a result by hand. Push to main.
+Experiments follow the chain data -> raw outputs (outputs/<exp>.jsonl) ->
+experiments/<exp>/metrics.json + experiments/runs.jsonl. No results/ tables or
+figures for now: those are blog material, made later only when the user asks.
+Never type a result by hand. Push to main.
 
 NOT agreed. These are assumptions from an earlier session; raise them for
 discussion, don't apply them silently:

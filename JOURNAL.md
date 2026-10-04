@@ -274,3 +274,29 @@ decides how Clef changes the plan.
 [HF Cloudflare/clef-flash](https://huggingface.co/Cloudflare/clef-flash) ·
 [Decision Index leaderboard data](https://clef-evals.workers-ai-mle.workers.dev/data/leaderboard.json) ·
 [flaviocopes deep dive](https://flaviocopes.com/clef/)
+
+---
+
+## 6. Clef-flash API reachable; which "confidence" to use is open
+
+*2026-10-04. One text-only call (248 input tokens, under $0.0001).*
+
+**API works [E].** After two token attempts (an account token without working
+Workers AI access returned 401 on every Workers AI endpoint), a token made from
+the Workers AI "Use REST API" page works. First call: 200 in 0.42 s.
+
+**The hosted `confidence` field is not the top probability [E].** Reply:
+technical 0.9601, billing 0.0327, sales 0.0072, `confidence` 0.8844. Of the
+measures tried, only the normalised concentration (K·Σp² − 1)/(K − 1) gives
+0.8844 (to 4 decimals). The open-source code on Hugging Face instead returns
+confidence = max(p). Probabilities are rounded to 4 decimals. To be confirmed on
+every reply in the baseline. Explained in LEARNING.md lesson 1.
+
+**Open question [U].** Which confidence measure DocJev should calibrate and set
+thresholds on (top probability, lead over the runner-up, lead over the average
+loser, concentration, entropy) is **undecided**. The user had not seen the
+alternatives before, and wants to discuss it later. Claude had wrongly
+described "calibrate max(p)" as agreed; it came from the earlier session's
+draft, not from us. CLAUDE.md now lists such draft assumptions as not agreed.
+Until it is decided, the baseline saves the full probability vector for every
+question, so any measure can be computed later without re-running.

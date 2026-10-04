@@ -1,27 +1,27 @@
 # DocJev — context for Claude sessions
 
-Research / hobby project, open source (Apache-2.0). Claude acts as assistant PI.
-Build from first principles; Jev, Laya, CLM, Visual Jev are inspirations only
-(notes in docs/prior_art.md). The original spec was advice, not a contract.
+Research + learning hobby project, open source (Apache-2.0). Discuss before
+building: the user and Claude debate ideas from first principles; nothing is
+decided until it is in JOURNAL.md with a [U]/[C]/[E] tag.
 
-Read first: JOURNAL.md (dated, append-only; the only record of decisions).
-LEARNING.md: plain-English lessons (learning + research project); add one when something is learned.
-docs/research_plan.md is an unagreed draft from an earlier session.
+Read first:
+- JOURNAL.md: dated, append-only; the only record of decisions and results.
+- LEARNING.md: lessons in plain words, intuition first and formula second, with
+  worked examples. Add one whenever something new is learned.
 
-Goal: small model, document image + typed questions (noul / choice / score) ->
-calibrated distribution per question, single pass, no generation. Zero-shot first;
-per-domain tuning is the fallback.
+Agreed so far (see JOURNAL.md for detail): a Jev-style typed-decision model for
+document page images (noul / choice / score -> a distribution per question, no
+generation); trustworthy confidence is the core problem; documents first.
+Experiments follow the chain data -> raw outputs -> experiments/ + runs.jsonl ->
+tables and figures made by scripts. Never type a result by hand. Push to main.
 
-Rules:
-- Argmax decode only; calibrate max(p); fit temperature by NLL, report ECE.
-- North-star metric: coverage at <=1% / <=5% risk, always with accuracy, NLL, Brier, ECE.
-- Evaluate before building: benchmark + zero-shot baseline before any training.
-- Test labels come from human-annotated datasets only, never from LLM-generated labels.
-- Budget: MLX locally (Apple Silicon), then Kaggle (2xT4), then RunPod; Unsloth. Backbones <= ~4B.
-- Model runners emit per-question logits as NumPy; data/metrics/calibration stay pure NumPy.
+NOT agreed. These are assumptions from an earlier session; raise them for
+discussion, don't apply them silently:
+- Which confidence measure to calibrate and set thresholds on (max(p), margin,
+  concentration, ...). This is OPEN; see LEARNING.md lesson 1.
+- Temperature fitting by NLL; ECE settings; coverage at <=1% / <=5% risk as the
+  north star.
+- Budget and backbone limits (MLX / Kaggle / RunPod, <= ~4B).
+- docs/research_plan.md as a whole.
 
-Status: E0 (src/docjev/metrics.py + tests) done. Next: E1 benchmark v0 builders
-(RVL-CDIP, DocVQA, FUNSD/CORD/SROIE, held-out OOD dataset), then E2 zero-shot
-VLM LM-head readout on MLX.
-
-Dev: `pip install -e '.[dev]' && pytest`
+Dev: `pip install -e '.[dev]' && pytest`. Secrets in .env (git-ignored).

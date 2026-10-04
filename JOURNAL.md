@@ -395,3 +395,49 @@ The choice and yes/no answers agreed on every page (3 both right, 2 both
 wrong). Latency p50 0.57 s. The hosted `confidence` matched normalised
 concentration on all 5 choice replies (max difference 0.00007, which is
 rounding), confirming entry 6.
+
+---
+
+## 9. E01 grown to 20 pages; confident misses are label ambiguity
+
+*2026-10-04. `E01` extended from 5 to 20 pages (1 page skipped as too big:
+p089, 273 KB). 45 new calls, all succeeded. Scores in
+`experiments/E01/metrics.json` (latest) and `experiments/runs.jsonl` (history).*
+
+**Direction noted [U].** These RVL-CDIP experiments ask about a document's
+**metadata** (what kind of page it is). A later stage must ask questions about
+the document's **content** (fields, values, checks), which is where most IDP
+decisions sit.
+
+**Results on 20 pages [E].** Still small; read as a first look, not a measurement.
+
+| group | n | accuracy | NLL | Brier | ECE |
+|---|---|---|---|---|---|
+| choice (17 options) | 20 | 0.60 | 1.25 | 0.51 | 0.26 |
+| yes/no, true type | 20 | 0.65 | 1.00 | 0.57 | 0.28 |
+| yes/no, wrong type | 20 | 1.00 | 0.02 | 0.00 | 0.02 |
+
+The choice and yes/no-on-true-type answers agree on 19 of 20 pages (12 both
+right, 7 both wrong, 1 right only on yes/no). Saying "no" to a wrong type is
+easy (20/20); recognising the true type is the hard part. Latency p50 0.55 s,
+p95 0.94 s.
+
+**The 8 choice misses, from looking at the pages [C].**
+
+| page | true | model (p) | what the page shows |
+|---|---|---|---|
+| p016 | form | handwritten **0.815** | large hand-lettered "TAC CUSTOMER SERVICES" on a cover sheet; no form fields visible |
+| p045 | handwritten | scientific_report **0.827** | a *handwritten* monthly research report ("Smoke Analyses") on a printed RJR report form; the yes/no "handwritten?" said 0.83 yes |
+| p021 | form | memo 0.381 | fax cover sheet (memo/letter/form all plausible) |
+| p160 | presentation | blank_or_unreadable 0.360 | sideways slide with a title and one line |
+| p106 | file folder | blank_or_unreadable 0.505 | (folder tab; not yet viewed) |
+| p140 | budget | form 0.530 | (not yet viewed) |
+| p054 | advertisement | memo 0.204 | (not yet viewed) |
+| p163 | presentation | specification 0.391 | (not yet viewed) |
+
+The two **confident** misses (0.82–0.83) are not the model being blind: in both,
+its answer is a fair description of the page, and the dataset's single label
+picks a different side of an overlap (handwritten vs. its purpose; a
+hand-lettered cover vs. "form"). This is the label problem from entry 3
+(ambiguous and multi-label pages), seen first-hand. It supports doing the
+hand-check before reading anything into the confident-error numbers.

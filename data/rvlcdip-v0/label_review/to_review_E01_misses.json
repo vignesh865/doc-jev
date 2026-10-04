@@ -1,0 +1,132 @@
+[
+ {
+  "page_id": "p021",
+  "image": "data/rvlcdip-v0/pages/p021.png",
+  "dataset_label": "form"
+ },
+ {
+  "page_id": "p160",
+  "image": "data/rvlcdip-v0/pages/p160.png",
+  "dataset_label": "presentation"
+ },
+ {
+  "page_id": "p016",
+  "image": "data/rvlcdip-v0/pages/p016.png",
+  "dataset_label": "form"
+ },
+ {
+  "page_id": "p045",
+  "image": "data/rvlcdip-v0/pages/p045.png",
+  "dataset_label": "handwritten"
+ },
+ {
+  "page_id": "p054",
+  "image": "data/rvlcdip-v0/pages/p054.png",
+  "dataset_label": "advertisement"
+ },
+ {
+  "page_id": "p106",
+  "image": "data/rvlcdip-v0/pages/p106.png",
+  "dataset_label": "file folder"
+ },
+ {
+  "page_id": "p140",
+  "image": "data/rvlcdip-v0/pages/p140.png",
+  "dataset_label": "budget"
+ },
+ {
+  "page_id": "p163",
+  "image": "data/rvlcdip-v0/pages/p163.png",
+  "dataset_label": "presentation"
+ },
+ {
+  "page_id": "p000",
+  "image": "data/rvlcdip-v0/pages/p000.png",
+  "dataset_label": "letter"
+ },
+ {
+  "page_id": "p013",
+  "image": "data/rvlcdip-v0/pages/p013.png",
+  "dataset_label": "form"
+ },
+ {
+  "page_id": "p069",
+  "image": "data/rvlcdip-v0/pages/p069.png",
+  "dataset_label": "scientific report"
+ },
+ {
+  "page_id": "p072",
+  "image": "data/rvlcdip-v0/pages/p072.png",
+  "dataset_label": "scientific report"
+ },
+ {
+  "page_id": "p094",
+  "image": "data/rvlcdip-v0/pages/p094.png",
+  "dataset_label": "specification"
+ },
+ {
+  "page_id": "p101",
+  "image": "data/rvlcdip-v0/pages/p101.png",
+  "dataset_label": "specification"
+ },
+ {
+  "page_id": "p104",
+  "image": "data/rvlcdip-v0/pages/p104.png",
+  "dataset_label": "file folder"
+ },
+ {
+  "page_id": "p112",
+  "image": "data/rvlcdip-v0/pages/p112.png",
+  "dataset_label": "file folder"
+ },
+ {
+  "page_id": "p114",
+  "image": "data/rvlcdip-v0/pages/p114.png",
+  "dataset_label": "file folder"
+ },
+ {
+  "page_id": "p133",
+  "image": "data/rvlcdip-v0/pages/p133.png",
+  "dataset_label": "budget"
+ },
+ {
+  "page_id": "p134",
+  "image": "data/rvlcdip-v0/pages/p134.png",
+  "dataset_label": "budget"
+ },
+ {
+  "page_id": "p142",
+  "image": "data/rvlcdip-v0/pages/p142.png",
+  "dataset_label": "budget"
+ },
+ {
+  "page_id": "p144",
+  "image": "data/rvlcdip-v0/pages/p144.png",
+  "dataset_label": "invoice"
+ },
+ {
+  "page_id": "p150",
+  "image": "data/rvlcdip-v0/pages/p150.png",
+  "dataset_label": "invoice"
+ },
+ {
+  "page_id": "p158",
+  "image": "data/rvlcdip-v0/pages/p158.png",
+  "dataset_label": "presentation"
+ },
+ {
+  "page_id": "p169",
+  "image": "data/rvlcdip-v0/pages/p169.png",
+  "dataset_label": "questionnaire"
+ },
+ {
+  "page_id": "p182",
+  "image": "data/rvlcdip-v0/pages/p182.png",
+  "dataset_label": "resume"
+ },
+ {
+  "page_id": "p203",
+  "image": "data/rvlcdip-v0/pages/p203.png",
+  "dataset_label": "memo"
+ }
+]

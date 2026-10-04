@@ -508,3 +508,45 @@ on the page, or one of two true answers. On raw labels the model looks
 overconfident; much of that may be the labels. **The hand-check (entry 4) is now
 the most important next step**: without it, the calibration and
 coverage-at-risk numbers measure label noise as much as the model.
+
+---
+
+## 11. Blind label review of E01's 26 choice misses (proposals, not yet decided)
+
+*2026-10-04. A Claude subagent reviewed each missed page from the image and its
+dataset label only, **blind to the model's answer** [U asked for a subagent;
+blind design C]. Output:
+`data/rvlcdip-v0/label_review/claude_blind_review_E01_misses.jsonl` (per page:
+description, every fitting category, best label, verdict, confidence). These
+are an LLM's proposals; the user makes the final call, so test labels stay
+human-decided.*
+
+**Verdicts on the dataset label [C, proposed].** Correct 15, acceptable
+(ambiguous) 3, not visible on the page 4, wrong 4.
+
+- Wrong: p000 letter → memo; p016 form → file folder; p142 budget → invoice;
+  p150 invoice → form.
+- Not visible: p069 (cover showing "1151"), p133 (bare title page), p144
+  (handwritten cover sheet), p182 ("APPENDIX" only).
+- Acceptable: p054, p072, p104 (p104 low confidence).
+
+**Model vs. the blind reviewer [E].** On the 26 misses, the model's answer
+equals the reviewer's best label on 7, and is among the reviewer's fitting
+categories on 15.
+
+**The key pattern.** All 10 *confident* misses (top p ≥ 0.70) have an answer
+the reviewer independently lists as fitting the page. The misses that are
+real errors (dataset label correct, model answer not fitting) are all
+low-confidence: p160 0.36, p054 0.20, p106 0.50, p140 0.53, p163 0.39, p013
+0.28, p094 0.30, p101 0.42, p114 0.40, p133 0.25, p203 0.56. If the review
+holds, the model's high confidence is earned and its real errors come with
+low confidence: the behaviour the project wants.
+
+**What accuracy would become (provisional, 60 pages).** Raw labels: 34/60 =
+0.57. Using the reviewer's best label for the 26 misses: 41/60 = 0.68.
+Counting any fitting category as right: 49/60 = 0.82. The 34 pages the model
+got right were not reviewed.
+
+**Open [U, pending].** (1) Accept, change or reject each proposed label. (2) How
+to score pages where more than one category is true: strict single label, or
+any fitting label.

@@ -605,3 +605,52 @@ pages with real content that Flash misread at low confidence.
 
 **Hosted `confidence` = normalised concentration** held for 27B too (max
 difference 0.00014, rounding).
+
+---
+
+## 13. Content benchmark data set: `cord-v0` (CORD-v2 receipts), built, not yet run
+
+*2026-10-07. Data only; no API calls.*
+
+**Direction [U].** E01/E02 compared Clef-flash and Clef 27B on questions *about
+the document* (what kind of page). Next, the same head-to-head on questions
+*about its content*. CORD first [U]; SROIE, FUNSD and DocILE (invoices, needs
+a token, validation labels public) are later options.
+
+**Source [E].** `naver-clova-ix/cord-v2`, test split (100 receipts),
+CC-BY-4.0, revision `7f0115a4…`, the official parquet (kept in `data/_raw/`,
+git-ignored). Labels are human: every item's name, quantity and price, plus
+subtotal, tax, service, total, cash, change. Shop names and private details
+are already blurred in the images. 95 receipts have a labelled total; 5 are
+skipped.
+
+**Images: one uniform transform [C].** The originals are full-resolution PNG
+photos (median 1.5 MB; **99 of 100 over the API's ~185 KB limit**), so "send
+what fits" (E01's rule) would leave one receipt. Unlike the speckled RVL-CDIP
+scans, these are photos, which JPEG compresses well. Measured: JPEG q85 at
+native size still leaves 20 over; **longest side ≤ 1024 px at JPEG q85 fits all
+(median 73 KB, max 170 KB)**. The most shrunk receipts (2304×4096 → 576×1024)
+were checked by eye: totals and line amounts are still readable. The view
+the model gets is recorded in the manifest (original and sent size per receipt).
+
+**Questions, version c1 [U approved the design; wording C].** All answers come
+from CORD labels:
+
+| kind | question | answer source | count |
+|---|---|---|---|
+| choice | "Which of these amounts is the total on this receipt?" | options = total + up to 3 other distinct amounts *labelled on the same receipt*; ids a–d, shuffled | 87 (61 with 4 options, 23 with 3, 3 with 2) |
+| noul_true | "Is the total amount on this receipt 31.000?" | the labelled total | 95 |
+| noul_false | the same with **one digit changed** ("31.000" → "31.050"), same format | constructed, so certainly false | 95 |
+
+- 8 receipts have no other labelled amount differing from the total, so they
+  get no choice question.
+- Amounts that equal the total in value (e.g. cash = total) are never used as
+  wrong options, so no wrong option is accidentally right.
+- Amount parsing treats '.' and ',' as thousands separators unless followed by
+  exactly two final digits (Indonesian receipts).
+
+**Pipeline.** `prepare_cord.py` builds `data/cord-v0/` (manifest, items,
+pages/*.jpg, git-ignored). `run_clef.py` now reads each page's image path and
+type from the manifest, so it handles JPEG and the existing PNG sets alike
+(E01/E02 dry runs unchanged: 0 calls). Planned: **E03 = Clef-flash, E04 =
+Clef 27B** on cord-v0, small batch first.

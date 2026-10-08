@@ -48,7 +48,8 @@ def encode_image(path: Path, jpeg_quality: int | None) -> tuple[str, str]:
     length (about 4 characters per token), so large PNGs are refused (JOURNAL entry
     7); JPEG keeps them under the limit. Returns (content_type, base64)."""
     if jpeg_quality is None:
-        return "image/png", base64.b64encode(path.read_bytes()).decode()
+        content_type = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg"}[path.suffix.lower()]
+        return content_type, base64.b64encode(path.read_bytes()).decode()
     buf = io.BytesIO()
     Image.open(path).convert("L").save(buf, "JPEG", quality=jpeg_quality)
     return "image/jpeg", base64.b64encode(buf.getvalue()).decode()
@@ -114,12 +115,13 @@ def main() -> None:
     manifest = json.loads((root / "manifest.json").read_text())
     if manifest["questions"]["version"] != config["question_version"]:
         raise SystemExit("data questions changed since this experiment was created; start a new experiment id")
+    image_of = {p["page_id"]: p.get("image", f"pages/{p['page_id']}.png") for p in manifest["pages"]}
     images: dict[str, tuple[str, str]] = {}
     chosen, skipped = [], []
     for page_id in manifest["page_order"]:
         if len(chosen) == args.pages:
             break
-        image = f"pages/{page_id}.png"
+        image = image_of[page_id]
         images[image] = encode_image(root / image, config["jpeg_quality"])
         size_kb = len(images[image][1]) * 3 / 4 / 1024
         if config["max_image_kb"] is not None and size_kb > config["max_image_kb"]:
@@ -139,7 +141,7 @@ def main() -> None:
 
     if args.dry_run:
         for page_id in chosen:
-            kb = len(images[f"pages/{page_id}.png"][1]) * 3 / 4 / 1024
+            kb = len(images[image_of[page_id]][1]) * 3 / 4 / 1024
             gold = next(i["gold_label"] for i in items if i["page_id"] == page_id)
             left = sum(1 for i in todo if i["page_id"] == page_id)
             print(f"  {page_id}  {gold:24s} {kb:6.1f} KB  calls to make: {left}")

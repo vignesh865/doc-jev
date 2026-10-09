@@ -844,3 +844,28 @@ calibrated. Of 7 raw errors, 2 were our bug, 3 are label or question problems,
 and 2 are real model errors (a layout slip and a chart reading). The 1024 px
 downscale did not visibly hurt the table questions (table/list 1.00 on all
 three kinds).
+
+---
+
+## 18. Findings written up as a blog draft; E06 dropped
+
+*2026-10-09.*
+
+- **E06 dropped [U].** Clef 27B on DocVQA stopped at 230 of 360 replies when the
+  account's **daily free Workers AI allocation (10,000 neurons)** ran out:
+  the account is on the free plan, so every run so far cost nothing; the
+  journal's dollar figures are list prices. The user ran 27B only for symmetry,
+  and Flash is already at 95%+ on content, so E06 is not finished. Its partial
+  output stays in `outputs/E06.jsonl`. `run_clef.py` now stops at once on the
+  daily-cap error (code 4006) instead of retrying.
+- **Blog [U].** For general tech readers, as Markdown in the repo, using
+  27B results from E02 and E04 only: `docs/blog/clef-on-documents.md`. Every
+  quoted number and all three figures come from `results/make_blog.py`
+  (writes `docs/blog/numbers.json` and `docs/blog/figures/*.png`), never typed by
+  hand. Figure style follows the dataviz reference palette and was restyled
+  "modern" at the user's request [U].
+- **Story of the post [C, outline agreed].** (1) Content works: ~99% on
+  receipts and business pages, calibrated. (2) The 57% page-type score is
+  mostly labels; every answer at ≥70% confidence matched or fitted the page.
+  (3) The bigger model accepts near-miss totals (8/95 vs 1/95). Plus practical
+  gotchas and a fine-print section.

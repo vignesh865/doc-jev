@@ -68,11 +68,32 @@ def kind(answer: str) -> str:
     return f"words:{length_band(s)}"  # word answers only compete with similar-length ones
 
 
+MONTH_NUM = {m: i + 1 for i, m in enumerate(MONTHS.split("|"))}
+
+
+def date_key(s: str) -> tuple[int, int, int] | None:
+    """(yy, month, day) for common date spellings, so '6-2-97' == 'June 2, 1997'.
+    Added after d2389 in docvqa-v0 (see data/docvqa-v0/errata.json)."""
+    s = s.lower().strip()
+    m = re.search(rf"\b({MONTHS})[a-z]*\.?\s+(\d{{1,2}}),?\s+(\d{{2,4}})", s)
+    if m:
+        return int(m.group(3)) % 100, MONTH_NUM[m.group(1)], int(m.group(2))
+    m = re.search(rf"\b(\d{{1,2}})\s+({MONTHS})[a-z]*\.?,?\s+(\d{{2,4}})", s)
+    if m:
+        return int(m.group(3)) % 100, MONTH_NUM[m.group(2)], int(m.group(1))
+    m = re.fullmatch(r"(\d{1,2})[/.-](\d{1,2})[/.-](\d{2,4})", s)
+    if m:
+        return int(m.group(3)) % 100, int(m.group(1)), int(m.group(2))
+    return None
+
+
 def clashes(a: str, others: list[str]) -> bool:
     na = norm(a)
     for b in others:
         nb = norm(b)
         if not na or not nb or na == nb or na in nb or nb in na or SequenceMatcher(None, na, nb).ratio() > 0.8:
+            return True
+        if date_key(a) is not None and date_key(a) == date_key(b):
             return True
     return False
 

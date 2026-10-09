@@ -39,6 +39,10 @@ MEASURES = {
 def load(data: str, predictions: Path) -> list[dict]:
     """One row per item with a successful reply: probabilities, label index, kind."""
     items = {i["item_id"]: i for i in map(json.loads, (Path("data") / data / "items.jsonl").open())}
+    errata = Path("data") / data / "errata.json"
+    if errata.exists():  # our own construction mistakes; excluded from scoring
+        for e in json.loads(errata.read_text())["items"]:
+            items.pop(e["item_id"], None)
     replies = {}
     for r in map(json.loads, predictions.open()):
         if r["status"] == 200 and r["response"].get("success"):
@@ -153,8 +157,10 @@ def main() -> None:
     manifest = json.loads((Path("data") / config["data"] / "manifest.json").read_text())
     rows = load(config["data"], predictions)
     sent_pages = {json.loads(l)["page_id"] for l in predictions.open()}
+    errata_path = Path("data") / config["data"] / "errata.json"
+    errata = {e["item_id"] for e in json.loads(errata_path.read_text())["items"]} if errata_path.exists() else set()
     n_items = sum(1 for i in map(json.loads, (Path("data") / config["data"] / "items.jsonl").open())
-                  if i["page_id"] in sent_pages)
+                  if i["page_id"] in sent_pages and i["item_id"] not in errata)
     metrics = summarize(rows, n_items)
     record = jsonable({
         "exp": args.exp,
@@ -166,6 +172,7 @@ def main() -> None:
         "config": config,
         "data": {"name": config["data"], "source": manifest["source"], "labels_checked": manifest["labels_checked"]},
         "p_floor": P_FLOOR,
+        "excluded_errata": sorted(errata),
         "metrics": metrics,
     })
     print(json.dumps({k: {m: round(v, 4) if isinstance(v, float) else v for m, v in g.items() if m != "by_measure"}

@@ -793,3 +793,54 @@ skill (listed in the manifest). Small table text at 1024 px is the main risk
 to readability.
 
 **Planned.** E05 = Clef-flash, E06 = Clef 27B on docvqa-v0; 360 calls each.
+
+---
+
+## 17. E05: Clef-flash on DocVQA, ~98–99%; one construction bug found and excluded
+
+*2026-10-09. `E05`: Clef-flash, `docvqa-v0` (questions d1), 120 pages; 5
+first and then the rest [U]. 360 replies (one call retried, see below);
+336,999 input tokens (≈ $0.030). p50 latency 0.55 s.*
+
+**A second, smaller token limit [E].** One call (d6134 choice, 154 KB image)
+returned 413: "estimated 52,939 tokens exceeded this model context window
+limit (**24,576**)". The two yes/no calls on the same image succeeded, and
+the retry succeeded. So the hosted service sometimes routes to an instance
+with a smaller window; with the base64 estimate (entry 7), images over ~70 KB
+can fail there. Resuming re-sends only failures, so it costs one retry.
+
+**Construction bug [E], excluded via errata.** On d2389 the wrong option
+"June 2, 1997" is the same date as the true answer "6-2-97": the
+near-duplicate check compared text, not dates. Both affected items (choice,
+noul_false) are listed in `data/docvqa-v0/errata.json` and excluded by
+`evaluate.py` (reported under `excluded_errata`). A scan of all 360 items
+found no other date clash. The data set stays frozen. `prepare_docvqa.py` now
+compares dates by meaning for any future version.
+
+**Results, errata excluded [E].**
+
+| group | n | accuracy | NLL | Brier | ECE |
+|---|---|---|---|---|---|
+| choice (3–4 same-page options) | 119 | 0.992 | 0.055 | — | 0.032 |
+| yes/no, true answer | 120 | 0.975 | 0.113 | — | 0.041 |
+| yes/no, same-page wrong answer | 119 | 0.992 | 0.055 | — | 0.022 |
+
+(Brier is in `experiments/E05/metrics.json`.) Every skill scored 0.90–1.00 on
+every question kind. 118 of 120 choice answers had top p ≥ 0.85, and 99% of
+those were right.
+
+**The remaining 5 errors, all viewed [C].**
+
+| page | skill | what happened | verdict |
+|---|---|---|---|
+| d763 | figure | said *no* (0.23) to "first step = 'Prioritization Process Steps'" | **label wrong**: that is the chart's title banner, not a step |
+| d1911 ×2 | handwritten | "To whom is Terry Whitson delivering?" → picked Ronnie Hurd (0.87), label Phipps Bend | **question ambiguous**: the form lists Point of Delivery = Phipps Bend (a place), Grower = Ronnie Hurd (a person) |
+| d12658 | layout | said yes (0.94) to "Other Topics" as what follows "Case Report Forms"; label Risk Analysis | **real error**: "Risk Analysis" is the next row; "Other Topics" is the next heading |
+| d2012 | figure | said *no* (0.07) to "strongest brand = Camel Lights"; the choice for the same page was right | **real error**: Camel Lights sits on the Strength side of the chart; the two question styles disagree |
+
+**Reading [C].** On harder, real business pages, with wrong options that are
+other true strings from the same page, Clef-flash stays at ~98–99% and well
+calibrated. Of 7 raw errors, 2 were our bug, 3 are label or question problems,
+and 2 are real model errors (a layout slip and a chart reading). The 1024 px
+downscale did not visibly hurt the table questions (table/list 1.00 on all
+three kinds).

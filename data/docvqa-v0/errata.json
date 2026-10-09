@@ -1,0 +1,7 @@
+{
+ "note": "Construction mistakes in this data set (ours, not DocVQA's). evaluate.py excludes these items and reports how many. Label doubts about DocVQA's own answers belong in label_review/, not here.",
+ "items": [
+  {"item_id": "d2389-choice", "problem": "wrong option 'June 2, 1997' is the same date as the true answer '6-2-97'; the near-duplicate check compared text, not dates", "found": "2026-10-09, E05"},
+  {"item_id": "d2389-noul_false", "problem": "asks 'June 2, 1997', which is the true date written differently, so the correct answer is yes, not no", "found": "2026-10-09, E05"}
+ ]
+}

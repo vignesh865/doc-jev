@@ -1,0 +1,15 @@
+{
+ "exp": "E03",
+ "data": "cord-v0",
+ "model": "clef-flash",
+ "jpeg_quality": null,
+ "max_image_kb": 185,
+ "question_version": "c1",
+ "endpoint": "https://api.cloudflare.com/client/v4/accounts/<account>/ai/run/@cf/cloudflare/clef-flash",
+ "model_version": "hosted Workers AI; not pinnable",
+ "one_request_per_question": true,
+ "created_at": "2026-10-09T09:13:45+00:00",
+ "git_commit": "53b76d9",
+ "outputs": "outputs/E03.jsonl",
+ "note": "clef-flash zero-shot on CORD receipts; content questions about the total"
+}

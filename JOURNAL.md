@@ -654,3 +654,47 @@ pages/*.jpg, git-ignored). `run_clef.py` now reads each page's image path and
 type from the manifest, so it handles JPEG and the existing PNG sets alike
 (E01/E02 dry runs unchanged: 0 calls). Planned: **E03 = Clef-flash, E04 =
 Clef 27B** on cord-v0, small batch first.
+
+---
+
+## 14. E03: Clef-flash reads receipt totals almost perfectly
+
+*2026-10-09. `E03`: Clef-flash, data `cord-v0` (questions c1), all 95 receipts,
+5 first and then the rest [U]. 277 calls, all succeeded; 212,035 input tokens
+(≈ $0.019). p50 latency 0.37 s.*
+
+**Results [E].**
+
+| group | n | accuracy | NLL | Brier | ECE |
+|---|---|---|---|---|---|
+| choice ("which amount is the total?", 2–4 options) | 87 | 0.989 | 0.059 | 0.019 | 0.037 |
+| yes/no, true total | 95 | 1.000 | 0.049 | 0.010 | 0.045 |
+| yes/no, one digit changed | 95 | 0.989 | 0.046 | 0.020 | 0.031 |
+
+Yes/no as a detector: precision 0.99, recall 1.00 (95 hits, 0 misses, 1 false
+alarm, 94 correct rejections). These negatives are *hard* (one digit
+changed), unlike E01's random wrong types. Choice and yes/no agree on 86 of 87
+receipts. Coverage at ≤1% error (oracle): choice 0.98, yes/no 1.00.
+
+**The two errors, viewed [C].**
+
+- **c085, yes/no:** "Is the total 197.050?" (true total 197.450) got P(yes)
+  0.78. The digits are clear in the sent image ("197.450" in large print), so
+  this is a **real reading error**, and a fairly confident one. One digit in
+  the middle was changed (4 → 0).
+- **c095, choice:** picked 56,181 (0.84) over the labelled 61,799 (0.14). The
+  receipt prints **"TOTAL 56,181"** (before tax) and **"GRAND TOTAL 61,799"**.
+  The model chose the amount printed next to the word "TOTAL"; the label means
+  the grand total. **The question is ambiguous**, not the model blind. A later
+  question version could say "the final amount to pay".
+
+**Reading [C].** On content (finding and reading one labelled amount), Clef-flash
+is far stronger than on page-type classification (E01: 0.57 raw), and its
+probabilities are well calibrated on this set (ECE 0.03–0.05). The task is
+also cleaner: one unambiguous human label per question, so label noise does
+not cloud the numbers the way it did on RVL-CDIP.
+
+**Note on image size [E].** Token use varies with the original photo: c091
+(228×336 px, the smallest) used 231–261 tokens, against ~830 for 1024 px
+receipts. It was also the least confident receipt (0.79 on the true total,
+0.23 on the changed one), and still right.

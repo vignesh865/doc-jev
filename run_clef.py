@@ -165,7 +165,9 @@ def main() -> None:
                 except (requests.RequestException, ValueError) as e:
                     status, response = -1, {"success": False, "errors": [str(e)]}
                 latency = time.time() - t0
-                if status == 200 or status in (400, 401, 403, 413):
+                daily_cap = status == 429 and any(isinstance(e, dict) and e.get("code") == 4006
+                                                  for e in response.get("errors", []))
+                if status == 200 or status in (400, 401, 403, 413) or daily_cap:
                     break
                 time.sleep(2 ** attempt)
             f.write(json.dumps({
@@ -185,6 +187,8 @@ def main() -> None:
                 print(f"  {n}/{len(todo)} latency={latency:.2f}s", flush=True)
             if status in (401, 403):
                 raise SystemExit("auth error; stopping")
+            if daily_cap:
+                raise SystemExit("daily free allocation used up (Workers AI 4006); re-run after the daily reset to resume")
     print(f"done: {len(todo) - failures} sent ok, {failures} failed (re-run to retry failures)")
 
 

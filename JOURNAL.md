@@ -742,3 +742,54 @@ confidence. Flash behaves more like a digit-by-digit check. For IDP this
 matters: catching an OCR-style one-digit slip is exactly the job of a
 verifier, and there **the smaller model is the safer one** on this set. 8 of
 95 is a small count; the size-of-change pattern is the more telling part.
+
+---
+
+## 16. Harder content data set: `docvqa-v0` (DocVQA validation), built, not yet run
+
+*2026-10-09. Data only; no API calls.*
+
+**Why [U].** After receipt totals (E03/E04, ~99%), harder content from a
+different dataset. DocVQA was chosen [U] over DocILE (invoices; needs a token,
+later). Real business pages (letters, forms, tables, charts, handwriting),
+human questions and answers, and each question tagged with the skill it needs.
+
+**Source [E].** `lmms-lab-encoder/DocVQA`, validation split, revision
+`539088ef…` (Apache-2.0 tag on HF; DocVQA's own terms apply). 5,349
+questions on 1,286 pages; 6 parquet files (1.06 GB) in `data/_raw/docvqa/`,
+git-ignored.
+
+**Turning open answers into typed questions [C, design agreed with U].** For one
+question per page, the wrong options are the human answers to *other*
+questions about the *same page*, so every option is a real string from that
+page:
+
+- **choice:** the DocVQA question itself; options = true answer + 2–3
+  same-page answers.
+- **noul_true:** `Question about this page: "<q>" Is the answer "<true>"?`
+- **noul_false:** the same, with a same-page answer.
+
+Rules for wrong options: the same *kind* as the true answer (number / date /
+code with digits / words), and for words a similar length (1, 2–3 or 4+
+words). The length rule was added after the first build showed giveaways
+like "g" next to "nutrient content of the supplements per cup". A wrong option
+is never a near-duplicate of any accepted answer (normalised equality,
+containment, or similarity > 0.8): one DocVQA chart page has "…mortality rate"
+and "…mortality rate canada" as answers to different questions.
+
+**Sample.** 20 questions for each of 6 skills (table/list, layout, form,
+free_text, handwritten, figure/diagram), each from a different page; questions
+need at least 2 same-kind wrong options. 120 pages, 360 questions; choices
+have 3 options (63) or 4 (57). Answer kinds: number 44, words 63, code 11,
+date 2.
+
+**Images [C].** Pages are large greyscale scans (median longest side ~2,200
+px, ~490 KB). Measured on 80 pages: PNG at 1024 px leaves 48/80 over the API
+limit; JPEG q75 at 1024 px leaves 2/80; 1280 px q65 leaves 6/80 (sharper). A
+dense table page checked by eye at 1280 px is readable; **chosen: greyscale,
+longest side ≤ 1024 px, JPEG q75**, the same 1024 px as cord-v0. 6 sampled
+pages were still over 180 KB and were replaced by another page of the same
+skill (listed in the manifest). Small table text at 1024 px is the main risk
+to readability.
+
+**Planned.** E05 = Clef-flash, E06 = Clef 27B on docvqa-v0; 360 calls each.

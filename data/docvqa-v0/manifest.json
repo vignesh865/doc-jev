@@ -1,0 +1,2009 @@
+{
+ "name": "docvqa-v0",
+ "source": {
+  "repo": "lmms-lab-encoder/DocVQA",
+  "revision": "539088ef8a8ada01ac8e2e6d4e372586748a265e",
+  "split": "validation",
+  "files_sha256": {
+   "validation-00000-of-00006.parquet": "a31507f0b700ac64",
+   "validation-00001-of-00006.parquet": "ce63ba45f11bfb4e",
+   "validation-00002-of-00006.parquet": "2d580a39996ad052",
+   "validation-00003-of-00006.parquet": "588a587567d1548a",
+   "validation-00004-of-00006.parquet": "b43b8aa3e28a1b0f",
+   "validation-00005-of-00006.parquet": "5bba6d5f7b8e6ee0"
+  },
+  "license": "Apache-2.0 (HF tag); DocVQA terms apply"
+ },
+ "seed": 0,
+ "sampling": {
+  "per_skill": 20,
+  "skills": [
+   "table/list",
+   "layout",
+   "form",
+   "free_text",
+   "handwritten",
+   "figure/diagram"
+  ],
+  "one_question_per_page": true,
+  "min_same_kind_distractors": 2
+ },
+ "image_transform": "greyscale, longest side <= 1024 px (LANCZOS), JPEG quality 75",
+ "max_kb": 180,
+ "replaced_too_big": [
+  {
+   "skill": "table/list",
+   "docId": 1877,
+   "kb": 244.3
+  },
+  {
+   "skill": "form",
+   "docId": 11835,
+   "kb": 240.4
+  },
+  {
+   "skill": "form",
+   "docId": 11952,
+   "kb": 260.9
+  },
+  {
+   "skill": "form",
+   "docId": 12421,
+   "kb": 253.5
+  },
+  {
+   "skill": "free_text",
+   "docId": 5638,
+   "kb": 186.5
+  },
+  {
+   "skill": "free_text",
+   "docId": 5149,
+   "kb": 185.0
+  }
+ ],
+ "page_order": [
+  "d13057",
+  "d12536",
+  "d14589",
+  "d763",
+  "d2384",
+  "d4800",
+  "d10149",
+  "d10495",
+  "d4978",
+  "d7887",
+  "d9265",
+  "d4953",
+  "d9385",
+  "d5597",
+  "d12393",
+  "d2050",
+  "d2187",
+  "d7757",
+  "d7867",
+  "d12869",
+  "d12658",
+  "d310",
+  "d13939",
+  "d2134",
+  "d2263",
+  "d1911",
+  "d1266",
+  "d5487",
+  "d2120",
+  "d245",
+  "d6134",
+  "d4806",
+  "d9253",
+  "d14780",
+  "d5732",
+  "d9679",
+  "d12414",
+  "d4803",
+  "d5605",
+  "d10159",
+  "d14179",
+  "d10189",
+  "d10794",
+  "d2758",
+  "d10756",
+  "d377",
+  "d9214",
+  "d2389",
+  "d13581",
+  "d7314",
+  "d281",
+  "d5931",
+  "d5801",
+  "d7232",
+  "d2834",
+  "d7886",
+  "d4692",
+  "d6160",
+  "d4847",
+  "d14742",
+  "d5315",
+  "d6561",
+  "d2817",
+  "d13402",
+  "d7470",
+  "d330",
+  "d5164",
+  "d6095",
+  "d5201",
+  "d1009",
+  "d3706",
+  "d5694",
+  "d12512",
+  "d8920",
+  "d7730",
+  "d1039",
+  "d6982",
+  "d14184",
+  "d1840",
+  "d2124",
+  "d7178",
+  "d14791",
+  "d14575",
+  "d4719",
+  "d13464",
+  "d2668",
+  "d7069",
+  "d1985",
+  "d6238",
+  "d4413",
+  "d8230",
+  "d6551",
+  "d5305",
+  "d12994",
+  "d12882",
+  "d5668",
+  "d2396",
+  "d11955",
+  "d10680",
+  "d13352",
+  "d12048",
+  "d12570",
+  "d7525",
+  "d1768",
+  "d8056",
+  "d14284",
+  "d2012",
+  "d14741",
+  "d14281",
+  "d5691",
+  "d5137",
+  "d11221",
+  "d14795",
+  "d7763",
+  "d7827",
+  "d13650",
+  "d9095",
+  "d10877",
+  "d11562",
+  "d12541"
+ ],
+ "pages": [
+  {
+   "page_id": "d1840",
+   "image": "pages/d1840.jpg",
+   "skill": "table/list",
+   "question_id": "5422",
+   "original_size": [
+    1716,
+    2220
+   ],
+   "sent_size": [
+    792,
+    1024
+   ],
+   "kb": 64.1
+  },
+  {
+   "page_id": "d12048",
+   "image": "pages/d12048.jpg",
+   "skill": "table/list",
+   "question_id": "42299",
+   "original_size": [
+    2000,
+    1500
+   ],
+   "sent_size": [
+    1024,
+    768
+   ],
+   "kb": 102.4
+  },
+  {
+   "page_id": "d12570",
+   "image": "pages/d12570.jpg",
+   "skill": "table/list",
+   "question_id": "43796",
+   "original_size": [
+    2200,
+    1700
+   ],
+   "sent_size": [
+    1024,
+    791
+   ],
+   "kb": 49.1
+  },
+  {
+   "page_id": "d6160",
+   "image": "pages/d6160.jpg",
+   "skill": "table/list",
+   "question_id": "56936",
+   "original_size": [
+    1695,
+    2200
+   ],
+   "sent_size": [
+    789,
+    1024
+   ],
+   "kb": 95.7
+  },
+  {
+   "page_id": "d9265",
+   "image": "pages/d9265.jpg",
+   "skill": "table/list",
+   "question_id": "32890",
+   "original_size": [
+    2284,
+    1786
+   ],
+   "sent_size": [
+    1024,
+    801
+   ],
+   "kb": 74.7
+  },
+  {
+   "page_id": "d7867",
+   "image": "pages/d7867.jpg",
+   "skill": "table/list",
+   "question_id": "28066",
+   "original_size": [
+    1750,
+    2196
+   ],
+   "sent_size": [
+    816,
+    1024
+   ],
+   "kb": 60.1
+  },
+  {
+   "page_id": "d10794",
+   "image": "pages/d10794.jpg",
+   "skill": "table/list",
+   "question_id": "37471",
+   "original_size": [
+    2285,
+    1786
+   ],
+   "sent_size": [
+    1024,
+    800
+   ],
+   "kb": 68.9
+  },
+  {
+   "page_id": "d10149",
+   "image": "pages/d10149.jpg",
+   "skill": "table/list",
+   "question_id": "64304",
+   "original_size": [
+    1720,
+    2198
+   ],
+   "sent_size": [
+    801,
+    1024
+   ],
+   "kb": 73.0
+  },
+  {
+   "page_id": "d4692",
+   "image": "pages/d4692.jpg",
+   "skill": "table/list",
+   "question_id": "57141",
+   "original_size": [
+    1446,
+    2031
+   ],
+   "sent_size": [
+    729,
+    1024
+   ],
+   "kb": 129.2
+  },
+  {
+   "page_id": "d5931",
+   "image": "pages/d5931.jpg",
+   "skill": "table/list",
+   "question_id": "59263",
+   "original_size": [
+    1768,
+    2265
+   ],
+   "sent_size": [
+    799,
+    1024
+   ],
+   "kb": 91.6
+  },
+  {
+   "page_id": "d2187",
+   "image": "pages/d2187.jpg",
+   "skill": "table/list",
+   "question_id": "6206",
+   "original_size": [
+    1692,
+    2245
+   ],
+   "sent_size": [
+    772,
+    1024
+   ],
+   "kb": 119.2
+  },
+  {
+   "page_id": "d4803",
+   "image": "pages/d4803.jpg",
+   "skill": "table/list",
+   "question_id": "57283",
+   "original_size": [
+    1811,
+    2520
+   ],
+   "sent_size": [
+    736,
+    1024
+   ],
+   "kb": 84.2
+  },
+  {
+   "page_id": "d13402",
+   "image": "pages/d13402.jpg",
+   "skill": "table/list",
+   "question_id": "45840",
+   "original_size": [
+    5367,
+    7184
+   ],
+   "sent_size": [
+    765,
+    1024
+   ],
+   "kb": 56.7
+  },
+  {
+   "page_id": "d5605",
+   "image": "pages/d5605.jpg",
+   "skill": "table/list",
+   "question_id": "59840",
+   "original_size": [
+    1692,
+    2245
+   ],
+   "sent_size": [
+    772,
+    1024
+   ],
+   "kb": 106.5
+  },
+  {
+   "page_id": "d2050",
+   "image": "pages/d2050.jpg",
+   "skill": "table/list",
+   "question_id": "52469",
+   "original_size": [
+    2201,
+    1701
+   ],
+   "sent_size": [
+    1024,
+    791
+   ],
+   "kb": 42.0
+  },
+  {
+   "page_id": "d5315",
+   "image": "pages/d5315.jpg",
+   "skill": "table/list",
+   "question_id": "58444",
+   "original_size": [
+    1712,
+    2204
+   ],
+   "sent_size": [
+    795,
+    1024
+   ],
+   "kb": 65.4
+  },
+  {
+   "page_id": "d5305",
+   "image": "pages/d5305.jpg",
+   "skill": "table/list",
+   "question_id": "58372",
+   "original_size": [
+    1710,
+    2202
+   ],
+   "sent_size": [
+    795,
+    1024
+   ],
+   "kb": 112.5
+  },
+  {
+   "page_id": "d14281",
+   "image": "pages/d14281.jpg",
+   "skill": "table/list",
+   "question_id": "49187",
+   "original_size": [
+    850,
+    1644
+   ],
+   "sent_size": [
+    529,
+    1024
+   ],
+   "kb": 75.2
+  },
+  {
+   "page_id": "d245",
+   "image": "pages/d245.jpg",
+   "skill": "table/list",
+   "question_id": "50509",
+   "original_size": [
+    1603,
+    2103
+   ],
+   "sent_size": [
+    781,
+    1024
+   ],
+   "kb": 171.7
+  },
+  {
+   "page_id": "d13581",
+   "image": "pages/d13581.jpg",
+   "skill": "table/list",
+   "question_id": "45743",
+   "original_size": [
+    1706,
+    2286
+   ],
+   "sent_size": [
+    764,
+    1024
+   ],
+   "kb": 121.0
+  },
+  {
+   "page_id": "d6095",
+   "image": "pages/d6095.jpg",
+   "skill": "layout",
+   "question_id": "57835",
+   "original_size": [
+    1800,
+    2300
+   ],
+   "sent_size": [
+    801,
+    1024
+   ],
+   "kb": 152.7
+  },
+  {
+   "page_id": "d7314",
+   "image": "pages/d7314.jpg",
+   "skill": "layout",
+   "question_id": "25685",
+   "original_size": [
+    1784,
+    2284
+   ],
+   "sent_size": [
+    800,
+    1024
+   ],
+   "kb": 104.6
+  },
+  {
+   "page_id": "d13352",
+   "image": "pages/d13352.jpg",
+   "skill": "layout",
+   "question_id": "46238",
+   "original_size": [
+    1722,
+    2212
+   ],
+   "sent_size": [
+    797,
+    1024
+   ],
+   "kb": 74.1
+  },
+  {
+   "page_id": "d9385",
+   "image": "pages/d9385.jpg",
+   "skill": "layout",
+   "question_id": "63685",
+   "original_size": [
+    1790,
+    2285
+   ],
+   "sent_size": [
+    802,
+    1024
+   ],
+   "kb": 47.4
+  },
+  {
+   "page_id": "d12994",
+   "image": "pages/d12994.jpg",
+   "skill": "layout",
+   "question_id": "45133",
+   "original_size": [
+    848,
+    1103
+   ],
+   "sent_size": [
+    787,
+    1024
+   ],
+   "kb": 77.3
+  },
+  {
+   "page_id": "d12658",
+   "image": "pages/d12658.jpg",
+   "skill": "layout",
+   "question_id": "44271",
+   "original_size": [
+    1709,
+    2270
+   ],
+   "sent_size": [
+    771,
+    1024
+   ],
+   "kb": 77.6
+  },
+  {
+   "page_id": "d12869",
+   "image": "pages/d12869.jpg",
+   "skill": "layout",
+   "question_id": "44786",
+   "original_size": [
+    1654,
+    2339
+   ],
+   "sent_size": [
+    724,
+    1024
+   ],
+   "kb": 112.9
+  },
+  {
+   "page_id": "d7232",
+   "image": "pages/d7232.jpg",
+   "skill": "layout",
+   "question_id": "60597",
+   "original_size": [
+    3042,
+    1164
+   ],
+   "sent_size": [
+    1024,
+    392
+   ],
+   "kb": 62.2
+  },
+  {
+   "page_id": "d12414",
+   "image": "pages/d12414.jpg",
+   "skill": "layout",
+   "question_id": "43120",
+   "original_size": [
+    1711,
+    2209
+   ],
+   "sent_size": [
+    793,
+    1024
+   ],
+   "kb": 62.1
+  },
+  {
+   "page_id": "d7763",
+   "image": "pages/d7763.jpg",
+   "skill": "layout",
+   "question_id": "61390",
+   "original_size": [
+    1708,
+    2236
+   ],
+   "sent_size": [
+    782,
+    1024
+   ],
+   "kb": 151.5
+  },
+  {
+   "page_id": "d13650",
+   "image": "pages/d13650.jpg",
+   "skill": "layout",
+   "question_id": "47530",
+   "original_size": [
+    2248,
+    1752
+   ],
+   "sent_size": [
+    1024,
+    798
+   ],
+   "kb": 57.9
+  },
+  {
+   "page_id": "d7827",
+   "image": "pages/d7827.jpg",
+   "skill": "layout",
+   "question_id": "61601",
+   "original_size": [
+    894,
+    1753
+   ],
+   "sent_size": [
+    522,
+    1024
+   ],
+   "kb": 69.8
+  },
+  {
+   "page_id": "d7470",
+   "image": "pages/d7470.jpg",
+   "skill": "layout",
+   "question_id": "26657",
+   "original_size": [
+    1794,
+    2286
+   ],
+   "sent_size": [
+    804,
+    1024
+   ],
+   "kb": 50.5
+  },
+  {
+   "page_id": "d330",
+   "image": "pages/d330.jpg",
+   "skill": "layout",
+   "question_id": "52180",
+   "original_size": [
+    1600,
+    2100
+   ],
+   "sent_size": [
+    780,
+    1024
+   ],
+   "kb": 32.9
+  },
+  {
+   "page_id": "d10756",
+   "image": "pages/d10756.jpg",
+   "skill": "layout",
+   "question_id": "65149",
+   "original_size": [
+    1686,
+    2188
+   ],
+   "sent_size": [
+    789,
+    1024
+   ],
+   "kb": 77.1
+  },
+  {
+   "page_id": "d6561",
+   "image": "pages/d6561.jpg",
+   "skill": "layout",
+   "question_id": "59607",
+   "original_size": [
+    782,
+    1446
+   ],
+   "sent_size": [
+    554,
+    1024
+   ],
+   "kb": 109.7
+  },
+  {
+   "page_id": "d8230",
+   "image": "pages/d8230.jpg",
+   "skill": "layout",
+   "question_id": "62097",
+   "original_size": [
+    890,
+    1791
+   ],
+   "sent_size": [
+    509,
+    1024
+   ],
+   "kb": 74.8
+  },
+  {
+   "page_id": "d11221",
+   "image": "pages/d11221.jpg",
+   "skill": "layout",
+   "question_id": "39196",
+   "original_size": [
+    1536,
+    2015
+   ],
+   "sent_size": [
+    781,
+    1024
+   ],
+   "kb": 38.7
+  },
+  {
+   "page_id": "d5164",
+   "image": "pages/d5164.jpg",
+   "skill": "layout",
+   "question_id": "56084",
+   "original_size": [
+    1695,
+    2200
+   ],
+   "sent_size": [
+    789,
+    1024
+   ],
+   "kb": 87.8
+  },
+  {
+   "page_id": "d5801",
+   "image": "pages/d5801.jpg",
+   "skill": "layout",
+   "question_id": "19148",
+   "original_size": [
+    1692,
+    2245
+   ],
+   "sent_size": [
+    772,
+    1024
+   ],
+   "kb": 55.9
+  },
+  {
+   "page_id": "d12536",
+   "image": "pages/d12536.jpg",
+   "skill": "form",
+   "question_id": "43719",
+   "original_size": [
+    1706,
+    2201
+   ],
+   "sent_size": [
+    794,
+    1024
+   ],
+   "kb": 58.7
+  },
+  {
+   "page_id": "d5694",
+   "image": "pages/d5694.jpg",
+   "skill": "form",
+   "question_id": "58697",
+   "original_size": [
+    1695,
+    2167
+   ],
+   "sent_size": [
+    801,
+    1024
+   ],
+   "kb": 61.4
+  },
+  {
+   "page_id": "d5732",
+   "image": "pages/d5732.jpg",
+   "skill": "form",
+   "question_id": "18764",
+   "original_size": [
+    1695,
+    2170
+   ],
+   "sent_size": [
+    800,
+    1024
+   ],
+   "kb": 158.9
+  },
+  {
+   "page_id": "d6982",
+   "image": "pages/d6982.jpg",
+   "skill": "form",
+   "question_id": "24421",
+   "original_size": [
+    1750,
+    2270
+   ],
+   "sent_size": [
+    789,
+    1024
+   ],
+   "kb": 72.0
+  },
+  {
+   "page_id": "d14791",
+   "image": "pages/d14791.jpg",
+   "skill": "form",
+   "question_id": "56473",
+   "original_size": [
+    1752,
+    1443
+   ],
+   "sent_size": [
+    1024,
+    843
+   ],
+   "kb": 114.4
+  },
+  {
+   "page_id": "d6134",
+   "image": "pages/d6134.jpg",
+   "skill": "form",
+   "question_id": "59375",
+   "original_size": [
+    1547,
+    2142
+   ],
+   "sent_size": [
+    740,
+    1024
+   ],
+   "kb": 154.9
+  },
+  {
+   "page_id": "d6551",
+   "image": "pages/d6551.jpg",
+   "skill": "form",
+   "question_id": "59589",
+   "original_size": [
+    1757,
+    2244
+   ],
+   "sent_size": [
+    802,
+    1024
+   ],
+   "kb": 115.6
+  },
+  {
+   "page_id": "d9679",
+   "image": "pages/d9679.jpg",
+   "skill": "form",
+   "question_id": "64136",
+   "original_size": [
+    1786,
+    2286
+   ],
+   "sent_size": [
+    800,
+    1024
+   ],
+   "kb": 118.4
+  },
+  {
+   "page_id": "d2834",
+   "image": "pages/d2834.jpg",
+   "skill": "form",
+   "question_id": "8117",
+   "original_size": [
+    1692,
+    2245
+   ],
+   "sent_size": [
+    772,
+    1024
+   ],
+   "kb": 113.3
+  },
+  {
+   "page_id": "d2389",
+   "image": "pages/d2389.jpg",
+   "skill": "form",
+   "question_id": "6978",
+   "original_size": [
+    1692,
+    2245
+   ],
+   "sent_size": [
+    772,
+    1024
+   ],
+   "kb": 95.7
+  },
+  {
+   "page_id": "d1768",
+   "image": "pages/d1768.jpg",
+   "skill": "form",
+   "question_id": "5220",
+   "original_size": [
+    1699,
+    2214
+   ],
+   "sent_size": [
+    786,
+    1024
+   ],
+   "kb": 69.6
+  },
+  {
+   "page_id": "d7757",
+   "image": "pages/d7757.jpg",
+   "skill": "form",
+   "question_id": "61435",
+   "original_size": [
+    1788,
+    2275
+   ],
+   "sent_size": [
+    805,
+    1024
+   ],
+   "kb": 107.2
+  },
+  {
+   "page_id": "d2263",
+   "image": "pages/d2263.jpg",
+   "skill": "form",
+   "question_id": "52599",
+   "original_size": [
+    1692,
+    2245
+   ],
+   "sent_size": [
+    772,
+    1024
+   ],
+   "kb": 111.3
+  },
+  {
+   "page_id": "d281",
+   "image": "pages/d281.jpg",
+   "skill": "form",
+   "question_id": "50718",
+   "original_size": [
+    2103,
+    1603
+   ],
+   "sent_size": [
+    1024,
+    781
+   ],
+   "kb": 166.6
+  },
+  {
+   "page_id": "d310",
+   "image": "pages/d310.jpg",
+   "skill": "form",
+   "question_id": "5465",
+   "original_size": [
+    1706,
+    2198
+   ],
+   "sent_size": [
+    795,
+    1024
+   ],
+   "kb": 126.8
+  },
+  {
+   "page_id": "d8920",
+   "image": "pages/d8920.jpg",
+   "skill": "form",
+   "question_id": "62995",
+   "original_size": [
+    1752,
+    2250
+   ],
+   "sent_size": [
+    797,
+    1024
+   ],
+   "kb": 115.8
+  },
+  {
+   "page_id": "d10159",
+   "image": "pages/d10159.jpg",
+   "skill": "form",
+   "question_id": "64369",
+   "original_size": [
+    1700,
+    2200
+   ],
+   "sent_size": [
+    791,
+    1024
+   ],
+   "kb": 123.6
+  },
+  {
+   "page_id": "d7525",
+   "image": "pages/d7525.jpg",
+   "skill": "form",
+   "question_id": "26599",
+   "original_size": [
+    1787,
+    2285
+   ],
+   "sent_size": [
+    801,
+    1024
+   ],
+   "kb": 92.9
+  },
+  {
+   "page_id": "d2668",
+   "image": "pages/d2668.jpg",
+   "skill": "form",
+   "question_id": "7624",
+   "original_size": [
+    1692,
+    2245
+   ],
+   "sent_size": [
+    772,
+    1024
+   ],
+   "kb": 125.0
+  },
+  {
+   "page_id": "d2817",
+   "image": "pages/d2817.jpg",
+   "skill": "form",
+   "question_id": "8049",
+   "original_size": [
+    1692,
+    2245
+   ],
+   "sent_size": [
+    772,
+    1024
+   ],
+   "kb": 78.2
+  },
+  {
+   "page_id": "d7178",
+   "image": "pages/d7178.jpg",
+   "skill": "free_text",
+   "question_id": "60486",
+   "original_size": [
+    3042,
+    1164
+   ],
+   "sent_size": [
+    1024,
+    392
+   ],
+   "kb": 70.8
+  },
+  {
+   "page_id": "d2758",
+   "image": "pages/d2758.jpg",
+   "skill": "free_text",
+   "question_id": "53515",
+   "original_size": [
+    1692,
+    2245
+   ],
+   "sent_size": [
+    772,
+    1024
+   ],
+   "kb": 79.9
+  },
+  {
+   "page_id": "d4719",
+   "image": "pages/d4719.jpg",
+   "skill": "free_text",
+   "question_id": "57246",
+   "original_size": [
+    1700,
+    2384
+   ],
+   "sent_size": [
+    730,
+    1024
+   ],
+   "kb": 114.6
+  },
+  {
+   "page_id": "d14184",
+   "image": "pages/d14184.jpg",
+   "skill": "free_text",
+   "question_id": "49257",
+   "original_size": [
+    1768,
+    2266
+   ],
+   "sent_size": [
+    799,
+    1024
+   ],
+   "kb": 102.7
+  },
+  {
+   "page_id": "d6238",
+   "image": "pages/d6238.jpg",
+   "skill": "free_text",
+   "question_id": "59484",
+   "original_size": [
+    1762,
+    2248
+   ],
+   "sent_size": [
+    803,
+    1024
+   ],
+   "kb": 120.2
+  },
+  {
+   "page_id": "d12541",
+   "image": "pages/d12541.jpg",
+   "skill": "free_text",
+   "question_id": "43784",
+   "original_size": [
+    1700,
+    2200
+   ],
+   "sent_size": [
+    791,
+    1024
+   ],
+   "kb": 50.7
+  },
+  {
+   "page_id": "d7886",
+   "image": "pages/d7886.jpg",
+   "skill": "free_text",
+   "question_id": "61776",
+   "original_size": [
+    1779,
+    2221
+   ],
+   "sent_size": [
+    820,
+    1024
+   ],
+   "kb": 131.7
+  },
+  {
+   "page_id": "d13464",
+   "image": "pages/d13464.jpg",
+   "skill": "free_text",
+   "question_id": "46624",
+   "original_size": [
+    670,
+    901
+   ],
+   "sent_size": [
+    670,
+    901
+   ],
+   "kb": 19.4
+  },
+  {
+   "page_id": "d1009",
+   "image": "pages/d1009.jpg",
+   "skill": "free_text",
+   "question_id": "2293",
+   "original_size": [
+    1705,
+    2218
+   ],
+   "sent_size": [
+    787,
+    1024
+   ],
+   "kb": 104.7
+  },
+  {
+   "page_id": "d2384",
+   "image": "pages/d2384.jpg",
+   "skill": "free_text",
+   "question_id": "6971",
+   "original_size": [
+    1692,
+    2245
+   ],
+   "sent_size": [
+    772,
+    1024
+   ],
+   "kb": 92.0
+  },
+  {
+   "page_id": "d9214",
+   "image": "pages/d9214.jpg",
+   "skill": "free_text",
+   "question_id": "63313",
+   "original_size": [
+    3224,
+    2166
+   ],
+   "sent_size": [
+    1024,
+    688
+   ],
+   "kb": 93.4
+  },
+  {
+   "page_id": "d4806",
+   "image": "pages/d4806.jpg",
+   "skill": "free_text",
+   "question_id": "57418",
+   "original_size": [
+    1701,
+    2386
+   ],
+   "sent_size": [
+    730,
+    1024
+   ],
+   "kb": 98.0
+  },
+  {
+   "page_id": "d11562",
+   "image": "pages/d11562.jpg",
+   "skill": "free_text",
+   "question_id": "40613",
+   "original_size": [
+    1792,
+    2296
+   ],
+   "sent_size": [
+    799,
+    1024
+   ],
+   "kb": 114.9
+  },
+  {
+   "page_id": "d4800",
+   "image": "pages/d4800.jpg",
+   "skill": "free_text",
+   "question_id": "15164",
+   "original_size": [
+    1811,
+    2497
+   ],
+   "sent_size": [
+    743,
+    1024
+   ],
+   "kb": 117.9
+  },
+  {
+   "page_id": "d7069",
+   "image": "pages/d7069.jpg",
+   "skill": "free_text",
+   "question_id": "59911",
+   "original_size": [
+    1690,
+    2184
+   ],
+   "sent_size": [
+    792,
+    1024
+   ],
+   "kb": 65.0
+  },
+  {
+   "page_id": "d8056",
+   "image": "pages/d8056.jpg",
+   "skill": "free_text",
+   "question_id": "61772",
+   "original_size": [
+    1783,
+    2285
+   ],
+   "sent_size": [
+    799,
+    1024
+   ],
+   "kb": 113.9
+  },
+  {
+   "page_id": "d9253",
+   "image": "pages/d9253.jpg",
+   "skill": "free_text",
+   "question_id": "32879",
+   "original_size": [
+    1791,
+    2289
+   ],
+   "sent_size": [
+    801,
+    1024
+   ],
+   "kb": 67.1
+  },
+  {
+   "page_id": "d5668",
+   "image": "pages/d5668.jpg",
+   "skill": "free_text",
+   "question_id": "18516",
+   "original_size": [
+    1711,
+    2212
+   ],
+   "sent_size": [
+    792,
+    1024
+   ],
+   "kb": 106.6
+  },
+  {
+   "page_id": "d4847",
+   "image": "pages/d4847.jpg",
+   "skill": "free_text",
+   "question_id": "57529",
+   "original_size": [
+    1701,
+    2386
+   ],
+   "sent_size": [
+    730,
+    1024
+   ],
+   "kb": 95.7
+  },
+  {
+   "page_id": "d4413",
+   "image": "pages/d4413.jpg",
+   "skill": "free_text",
+   "question_id": "56036",
+   "original_size": [
+    1582,
+    2135
+   ],
+   "sent_size": [
+    759,
+    1024
+   ],
+   "kb": 163.7
+  },
+  {
+   "page_id": "d1985",
+   "image": "pages/d1985.jpg",
+   "skill": "handwritten",
+   "question_id": "4744",
+   "original_size": [
+    2226,
+    1733
+   ],
+   "sent_size": [
+    1024,
+    797
+   ],
+   "kb": 130.5
+  },
+  {
+   "page_id": "d14589",
+   "image": "pages/d14589.jpg",
+   "skill": "handwritten",
+   "question_id": "50364",
+   "original_size": [
+    1749,
+    2251
+   ],
+   "sent_size": [
+    796,
+    1024
+   ],
+   "kb": 94.2
+  },
+  {
+   "page_id": "d10189",
+   "image": "pages/d10189.jpg",
+   "skill": "handwritten",
+   "question_id": "64322",
+   "original_size": [
+    1700,
+    2200
+   ],
+   "sent_size": [
+    791,
+    1024
+   ],
+   "kb": 113.7
+  },
+  {
+   "page_id": "d5691",
+   "image": "pages/d5691.jpg",
+   "skill": "handwritten",
+   "question_id": "18611",
+   "original_size": [
+    1695,
+    2167
+   ],
+   "sent_size": [
+    801,
+    1024
+   ],
+   "kb": 54.7
+  },
+  {
+   "page_id": "d11955",
+   "image": "pages/d11955.jpg",
+   "skill": "handwritten",
+   "question_id": "42223",
+   "original_size": [
+    1705,
+    2267
+   ],
+   "sent_size": [
+    770,
+    1024
+   ],
+   "kb": 96.4
+  },
+  {
+   "page_id": "d14795",
+   "image": "pages/d14795.jpg",
+   "skill": "handwritten",
+   "question_id": "56457",
+   "original_size": [
+    1786,
+    2262
+   ],
+   "sent_size": [
+    809,
+    1024
+   ],
+   "kb": 126.4
+  },
+  {
+   "page_id": "d14179",
+   "image": "pages/d14179.jpg",
+   "skill": "handwritten",
+   "question_id": "49081",
+   "original_size": [
+    1267,
+    821
+   ],
+   "sent_size": [
+    1024,
+    664
+   ],
+   "kb": 63.2
+  },
+  {
+   "page_id": "d2124",
+   "image": "pages/d2124.jpg",
+   "skill": "handwritten",
+   "question_id": "5962",
+   "original_size": [
+    1722,
+    2218
+   ],
+   "sent_size": [
+    795,
+    1024
+   ],
+   "kb": 88.7
+  },
+  {
+   "page_id": "d2396",
+   "image": "pages/d2396.jpg",
+   "skill": "handwritten",
+   "question_id": "7028",
+   "original_size": [
+    1692,
+    2245
+   ],
+   "sent_size": [
+    772,
+    1024
+   ],
+   "kb": 95.7
+  },
+  {
+   "page_id": "d3706",
+   "image": "pages/d3706.jpg",
+   "skill": "handwritten",
+   "question_id": "54603",
+   "original_size": [
+    1692,
+    2245
+   ],
+   "sent_size": [
+    772,
+    1024
+   ],
+   "kb": 123.6
+  },
+  {
+   "page_id": "d13939",
+   "image": "pages/d13939.jpg",
+   "skill": "handwritten",
+   "question_id": "47081",
+   "original_size": [
+    1764,
+    2253
+   ],
+   "sent_size": [
+    802,
+    1024
+   ],
+   "kb": 77.7
+  },
+  {
+   "page_id": "d2120",
+   "image": "pages/d2120.jpg",
+   "skill": "handwritten",
+   "question_id": "5942",
+   "original_size": [
+    1714,
+    2210
+   ],
+   "sent_size": [
+    794,
+    1024
+   ],
+   "kb": 80.1
+  },
+  {
+   "page_id": "d5597",
+   "image": "pages/d5597.jpg",
+   "skill": "handwritten",
+   "question_id": "58336",
+   "original_size": [
+    1692,
+    2245
+   ],
+   "sent_size": [
+    772,
+    1024
+   ],
+   "kb": 110.5
+  },
+  {
+   "page_id": "d7730",
+   "image": "pages/d7730.jpg",
+   "skill": "handwritten",
+   "question_id": "61492",
+   "original_size": [
+    1753,
+    2255
+   ],
+   "sent_size": [
+    796,
+    1024
+   ],
+   "kb": 137.3
+  },
+  {
+   "page_id": "d14575",
+   "image": "pages/d14575.jpg",
+   "skill": "handwritten",
+   "question_id": "50315",
+   "original_size": [
+    891,
+    1140
+   ],
+   "sent_size": [
+    800,
+    1024
+   ],
+   "kb": 90.8
+  },
+  {
+   "page_id": "d1911",
+   "image": "pages/d1911.jpg",
+   "skill": "handwritten",
+   "question_id": "5675",
+   "original_size": [
+    1716,
+    2213
+   ],
+   "sent_size": [
+    794,
+    1024
+   ],
+   "kb": 49.1
+  },
+  {
+   "page_id": "d14284",
+   "image": "pages/d14284.jpg",
+   "skill": "handwritten",
+   "question_id": "51329",
+   "original_size": [
+    2181,
+    1678
+   ],
+   "sent_size": [
+    1024,
+    788
+   ],
+   "kb": 90.2
+  },
+  {
+   "page_id": "d2134",
+   "image": "pages/d2134.jpg",
+   "skill": "handwritten",
+   "question_id": "5997",
+   "original_size": [
+    1774,
+    2259
+   ],
+   "sent_size": [
+    804,
+    1024
+   ],
+   "kb": 158.8
+  },
+  {
+   "page_id": "d1266",
+   "image": "pages/d1266.jpg",
+   "skill": "handwritten",
+   "question_id": "51694",
+   "original_size": [
+    1725,
+    2232
+   ],
+   "sent_size": [
+    791,
+    1024
+   ],
+   "kb": 49.8
+  },
+  {
+   "page_id": "d9095",
+   "image": "pages/d9095.jpg",
+   "skill": "handwritten",
+   "question_id": "63167",
+   "original_size": [
+    1428,
+    1918
+   ],
+   "sent_size": [
+    762,
+    1024
+   ],
+   "kb": 121.4
+  },
+  {
+   "page_id": "d10877",
+   "image": "pages/d10877.jpg",
+   "skill": "figure/diagram",
+   "question_id": "65314",
+   "original_size": [
+    1786,
+    2287
+   ],
+   "sent_size": [
+    800,
+    1024
+   ],
+   "kb": 78.9
+  },
+  {
+   "page_id": "d763",
+   "image": "pages/d763.jpg",
+   "skill": "figure/diagram",
+   "question_id": "51212",
+   "original_size": [
+    1700,
+    2200
+   ],
+   "sent_size": [
+    791,
+    1024
+   ],
+   "kb": 72.1
+  },
+  {
+   "page_id": "d10680",
+   "image": "pages/d10680.jpg",
+   "skill": "figure/diagram",
+   "question_id": "65059",
+   "original_size": [
+    1786,
+    2284
+   ],
+   "sent_size": [
+    801,
+    1024
+   ],
+   "kb": 59.7
+  },
+  {
+   "page_id": "d7887",
+   "image": "pages/d7887.jpg",
+   "skill": "figure/diagram",
+   "question_id": "61638",
+   "original_size": [
+    1758,
+    2252
+   ],
+   "sent_size": [
+    799,
+    1024
+   ],
+   "kb": 83.5
+  },
+  {
+   "page_id": "d10495",
+   "image": "pages/d10495.jpg",
+   "skill": "figure/diagram",
+   "question_id": "64731",
+   "original_size": [
+    2292,
+    1790
+   ],
+   "sent_size": [
+    1024,
+    800
+   ],
+   "kb": 45.4
+  },
+  {
+   "page_id": "d5137",
+   "image": "pages/d5137.jpg",
+   "skill": "figure/diagram",
+   "question_id": "56349",
+   "original_size": [
+    2162,
+    1695
+   ],
+   "sent_size": [
+    1024,
+    803
+   ],
+   "kb": 47.2
+  },
+  {
+   "page_id": "d13057",
+   "image": "pages/d13057.jpg",
+   "skill": "figure/diagram",
+   "question_id": "63831",
+   "original_size": [
+    848,
+    1095
+   ],
+   "sent_size": [
+    793,
+    1024
+   ],
+   "kb": 135.9
+  },
+  {
+   "page_id": "d14780",
+   "image": "pages/d14780.jpg",
+   "skill": "figure/diagram",
+   "question_id": "56361",
+   "original_size": [
+    1651,
+    2150
+   ],
+   "sent_size": [
+    786,
+    1024
+   ],
+   "kb": 58.7
+  },
+  {
+   "page_id": "d5487",
+   "image": "pages/d5487.jpg",
+   "skill": "figure/diagram",
+   "question_id": "58619",
+   "original_size": [
+    2214,
+    1695
+   ],
+   "sent_size": [
+    1024,
+    784
+   ],
+   "kb": 48.7
+  },
+  {
+   "page_id": "d377",
+   "image": "pages/d377.jpg",
+   "skill": "figure/diagram",
+   "question_id": "50770",
+   "original_size": [
+    1522,
+    3909
+   ],
+   "sent_size": [
+    399,
+    1024
+   ],
+   "kb": 76.1
+  },
+  {
+   "page_id": "d4978",
+   "image": "pages/d4978.jpg",
+   "skill": "figure/diagram",
+   "question_id": "58304",
+   "original_size": [
+    2204,
+    1711
+   ],
+   "sent_size": [
+    1024,
+    795
+   ],
+   "kb": 46.9
+  },
+  {
+   "page_id": "d1039",
+   "image": "pages/d1039.jpg",
+   "skill": "figure/diagram",
+   "question_id": "2177",
+   "original_size": [
+    1690,
+    2182
+   ],
+   "sent_size": [
+    793,
+    1024
+   ],
+   "kb": 119.4
+  },
+  {
+   "page_id": "d12512",
+   "image": "pages/d12512.jpg",
+   "skill": "figure/diagram",
+   "question_id": "43641",
+   "original_size": [
+    2341,
+    1656
+   ],
+   "sent_size": [
+    1024,
+    724
+   ],
+   "kb": 37.4
+  },
+  {
+   "page_id": "d14742",
+   "image": "pages/d14742.jpg",
+   "skill": "figure/diagram",
+   "question_id": "50839",
+   "original_size": [
+    1492,
+    2236
+   ],
+   "sent_size": [
+    683,
+    1024
+   ],
+   "kb": 55.0
+  },
+  {
+   "page_id": "d2012",
+   "image": "pages/d2012.jpg",
+   "skill": "figure/diagram",
+   "question_id": "4445",
+   "original_size": [
+    2216,
+    1721
+   ],
+   "sent_size": [
+    1024,
+    795
+   ],
+   "kb": 32.9
+  },
+  {
+   "page_id": "d5201",
+   "image": "pages/d5201.jpg",
+   "skill": "figure/diagram",
+   "question_id": "56905",
+   "original_size": [
+    1695,
+    2167
+   ],
+   "sent_size": [
+    801,
+    1024
+   ],
+   "kb": 72.9
+  },
+  {
+   "page_id": "d4953",
+   "image": "pages/d4953.jpg",
+   "skill": "figure/diagram",
+   "question_id": "58054",
+   "original_size": [
+    2207,
+    1716
+   ],
+   "sent_size": [
+    1024,
+    796
+   ],
+   "kb": 51.7
+  },
+  {
+   "page_id": "d14741",
+   "image": "pages/d14741.jpg",
+   "skill": "figure/diagram",
+   "question_id": "50843",
+   "original_size": [
+    1516,
+    2240
+   ],
+   "sent_size": [
+    693,
+    1024
+   ],
+   "kb": 60.9
+  },
+  {
+   "page_id": "d12882",
+   "image": "pages/d12882.jpg",
+   "skill": "figure/diagram",
+   "question_id": "44830",
+   "original_size": [
+    2200,
+    1700
+   ],
+   "sent_size": [
+    1024,
+    791
+   ],
+   "kb": 32.1
+  },
+  {
+   "page_id": "d12393",
+   "image": "pages/d12393.jpg",
+   "skill": "figure/diagram",
+   "question_id": "43077",
+   "original_size": [
+    2200,
+    1700
+   ],
+   "sent_size": [
+    1024,
+    791
+   ],
+   "kb": 31.6
+  }
+ ],
+ "questions": {
+  "version": "d1",
+  "state": "A scanned document page.",
+  "choice": "the DocVQA question; options = true answer + up to 3 same-page answers of the same kind; ids a-d shuffled",
+  "noul": "Question about this page: \"<q>\" Is the answer \"<value>\"?",
+  "noul_false": "a same-page answer of the same kind (never a near-duplicate of an accepted answer)"
+ },
+ "counts": {
+  "pages": 120,
+  "items": 360,
+  "by_skill": {
+   "table/list": 20,
+   "layout": 20,
+   "form": 20,
+   "free_text": 20,
+   "handwritten": 20,
+   "figure/diagram": 20
+  }
+ },
+ "labels_checked": false
+}

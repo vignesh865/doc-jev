@@ -698,3 +698,47 @@ not cloud the numbers the way it did on RVL-CDIP.
 (228×336 px, the smallest) used 231–261 tokens, against ~830 for 1024 px
 receipts. It was also the least confident receipt (0.79 on the true total,
 0.23 on the changed one), and still right.
+
+---
+
+## 15. E04: Clef 27B on receipts; better at choosing, worse at catching a changed digit
+
+*2026-10-09. `E04`: Clef 27B, the same as E03 except model; all 95 receipts
+straight through [U]. 277 calls, all succeeded; 212,035 input tokens
+(≈ $0.051). p50 latency 0.53 s (Flash 0.37 s).*
+
+**Results, paired with E03 [E].**
+
+| group | E03 Flash acc | E04 27B acc | Flash NLL / ECE | 27B NLL / ECE |
+|---|---|---|---|---|
+| choice ("which amount is the total?") | 0.989 | **1.000** | 0.059 / 0.037 | 0.014 / 0.014 |
+| yes/no, true total | 1.000 | 1.000 | 0.049 / 0.045 | 0.013 / 0.013 |
+| yes/no, one digit changed | **0.989** | 0.916 | 0.046 / 0.031 | 0.219 / 0.045 |
+
+- **27B fixes c095** (the TOTAL vs GRAND TOTAL ambiguity) and is sharper
+  wherever it is right (NLL 0.013–0.014).
+- **27B says "yes" to 8 changed totals; Flash to 1.** Both miss c085. The other
+  7 are 27B-only: c005 31.100 vs 31.000 (0.84), c007 111,090 vs 111,000
+  (0.57), c013 51.200 vs 51.300 (0.76), c014 281,445 vs 281,435 (0.62), c044
+  30.900 vs 30.000 (**0.95**), c097 55.800 vs 55.000 (**0.97**), c098 250,670
+  vs 250,690 (0.83).
+- **Labels checked by eye** for c044 ("TOTAL 30.000") and c097 ("TOTAL
+  55.000"): both are clearly printed. These are real model errors, some very
+  confident.
+
+**The errors depend on how small the change is [E].** False yeses by the
+relative size of the changed total:
+
+| change vs true total | questions | Flash wrongly yes | 27B wrongly yes |
+|---|---|---|---|
+| < 1% | 55 | 1 | 6 |
+| 1–3% | 5 | 0 | 1 |
+| 3–10% | 10 | 0 | 1 |
+| ≥ 10% | 25 | 0 | 0 |
+
+**Reading [C].** 27B behaves as if it checks the value *approximately*: a total
+that is close to the printed one gets accepted, sometimes with high
+confidence. Flash behaves more like a digit-by-digit check. For IDP this
+matters: catching an OCR-style one-digit slip is exactly the job of a
+verifier, and there **the smaller model is the safer one** on this set. 8 of
+95 is a small count; the size-of-change pattern is the more telling part.

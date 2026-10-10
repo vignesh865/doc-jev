@@ -136,15 +136,15 @@
 <main>
 <header>
   <div class="kicker">Field test · Decision models</div>
-  <h1>Can Cloudflare's Clef read your documents without writing a word?</h1>
-  <p class="hook">Everyone is talking about Jev. Two weeks later, almost nobody noticed that a decision model which can <em>see</em> had shipped. We pointed it at scans, receipts and business pages. It read them so well that we went looking for the trick.</p>
+  <h1>Jev, now with vision support: meet Clef, and watch it read documents</h1>
+  <p class="hook">Jev brought decision models into the spotlight in September: a model that answers each question with a probability for every allowed answer, and writes no text. Jev reads text only. Two weeks later Cloudflare released Clef, a decision model built on the same idea that also accepts images. It has received far less attention. We tested it on documents.</p>
   <div class="byline"><span>October 2026</span><a href="https://github.com/vignesh865/doc-jev">Code, raw replies and research journal</a></div>
 </header>
 
 <div class="short">
   <h3>The short version</h3>
   <ul>
-    <li><strong>A vision decision model is here.</strong> Cloudflare's open Clef answers fixed-choice questions about an image with a probability for every answer, and writes nothing.</li>
+    <li><strong>Jev, now with vision support.</strong> Cloudflare's open Clef answers Jev-style questions about an image with a probability for every answer, and writes nothing.</li>
     <li><strong>About the document:</strong> asked what kind of page it was looking at, it scored __E01_ACC__% against the dataset's labels. Most of its “mistakes” were label problems, and its confident answers held up.</li>
     <li><strong>About the content:</strong> asked what the page says, it scored __CORD_ACC__% on receipt totals and __DOC_ACC__% on questions about business pages.</li>
     <li><strong>It is reading, not remembering.</strong> Asked to confirm a true value, it said yes __CR_REAL__% of the time with the receipt and __CR_BLANK__% with a blank page.</li>
@@ -152,11 +152,20 @@
   </ul>
 </div>
 
-<h2>Wait, a decision model that can see?</h2>
-<p class="lead">This is the background: what a decision model is, and what Clef adds.</p>
-<p>Most AI models you have used are talkers. You ask, they write. That is great for conversation and awkward for paperwork. When you only want to know <em>is this an invoice?</em> or <em>is this the right total?</em>, a written reply is slow, costs money, sometimes arrives in the wrong format, and gives no honest signal of how sure the model is.</p>
-<p><strong>Decision models</strong> skip the writing. You send some input and a few questions with fixed answers, and you get back a probability for every allowed answer, say for <em>invoice</em>, <em>receipt</em> and <em>letter</em>. Jev made the idea popular in September, but Jev reads text only.</p>
-<p>On 1 October 2026 Cloudflare released two open models of the same kind, <strong>Clef</strong> (27 billion parameters) and the faster <strong>Clef-flash</strong> (9 billion), and these can look at <strong>images</strong>. Cloudflare's own results cover more than forty benchmarks, all text. None of them uses a document, and none says whether the probabilities can be trusted. So we tried.</p>
+<h2>What is Clef?</h2>
+<p class="lead">This is the introduction: the decision-model idea that Jev made popular, extended to images.</p>
+<p>Most AI models in use today are generative: you ask, and they write an answer. That suits conversation, but much routine work is not conversation. When the question is <em>is this an invoice?</em> or <em>is this the right total?</em>, a written reply is slower and costlier than it needs to be, may arrive in an unexpected format, and gives no reliable signal of how sure the model is.</p>
+<p><strong>Decision models</strong> take a different approach. You send some input and a set of questions with fixed answers, and the model returns a probability for every allowed answer, for example for <em>invoice</em>, <em>receipt</em> and <em>letter</em>. Nothing is generated. Jev brought this approach to wide attention in September 2026, but Jev accepts text only.</p>
+<p>On 1 October 2026 Cloudflare released <strong>Clef</strong>. It uses the same question types as Jev and accepts the same requests, its weights are open, and it comes in two sizes: <strong>Clef-flash</strong> (9 billion parameters) and <strong>Clef</strong> (27 billion). The difference is that Clef also accepts <strong>images</strong>. Cloudflare reports results on more than forty benchmarks, all of them text. None uses a document, and none reports whether the probabilities can be trusted.</p>
+
+<h2>What changes when a decision model can see?</h2>
+<p class="lead">This is why vision matters. The decision can be made from the page itself.</p>
+<ul class="plain">
+  <li><strong>No text extraction step.</strong> A text-only model needs the page converted to text first, usually by OCR. Each conversion loses something: layout, table structure, ticks, stamps, handwriting. A model that sees decides from the page as it is.</li>
+  <li><strong>Questions text cannot carry.</strong> Is the form signed? Is the box ticked? Is the page blank? Is this a scan or a photograph? These depend on what the page looks like, not only on its words.</li>
+  <li><strong>One request per page.</strong> The image goes in, typed answers come out, and each answer can drive an action directly: route the document, accept a value, or send the page to a person.</li>
+  <li><strong>Beyond documents.</strong> The same applies to screenshots, product photos and identity documents. We did not test those here.</li>
+</ul>
 
 <h2>Why point it at documents?</h2>
 <p class="lead">This is why the task fits. Most document work is deciding, not writing.</p>

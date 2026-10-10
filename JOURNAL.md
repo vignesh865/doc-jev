@@ -1058,3 +1058,20 @@ E06 and the contamination test are done.*
   number is unused** as well as if any placeholder is unfilled (this caught one
   missing number during the rewrite). 2,908 answered calls in total, $0.34 at
   list price, $0 paid. PNGs: 5 charts and 6 boxes.
+
+---
+
+## 25. Blog opening: Jev with vision
+
+*2026-10-10.*
+
+- **Framing [U].** Jev is the term readers know, so the post introduces Clef
+  as Jev with vision. Title chosen by the user: *"Jev, now with vision support:
+  meet Clef, and watch it read documents"*. Tone: measured, not colloquial
+  [U].
+- **New opening sections [U, wording by C].** "What is Clef?" (the
+  decision-model idea through Jev; same question types and requests; open
+  weights; 9B and 27B; images) and "What changes when a decision model can
+  see?" (no text-extraction step; questions text cannot carry, such as
+  signatures, ticks, blank pages, scan or photo; one request per page drives an
+  action; beyond documents, untested). The rest of the post is unchanged.

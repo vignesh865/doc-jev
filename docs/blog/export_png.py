@@ -16,10 +16,11 @@ CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
 # chart id -> (drawing function, width, height in CSS pixels)
 CHARTS = {
-    "chart-tasks": ("drawTasks", 1000, 440),
+    "chart-overview": ("drawOverview", 1000, 420),
     "chart-confidence": ("drawConfidence", 1000, 480),
-    "chart-skills": ("drawSkills", 1000, 420),
+    "chart-skills": ("drawSkills", 1000, 560),
     "chart-fooled": ("drawFooled", 1000, 480),
+    "chart-contam": ("drawContam", 1000, 520),
 }
 # box class -> (image name, width, height in CSS pixels)
 BOXES = {
@@ -49,7 +50,7 @@ def main():
     out.mkdir(exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
         for chart, (fn, w, h) in CHARTS.items():
-            only = scripts.replace("drawTasks(t); drawConfidence(t); drawSkills(t); drawFooled(t);", f"{fn}(t);")
+            only = scripts.replace("drawOverview(t); drawConfidence(t); drawSkills(t); drawFooled(t); drawContam(t);", f"{fn}(t);")
             assert only != scripts, "drawing call not found"
             html = (f'<!doctype html><html data-theme="light"><head><meta charset="utf-8">{style}'
                     f'<style>body{{padding:0;margin:0}}#{chart}{{width:{w}px;height:{h}px;margin:0}}</style>'

@@ -1035,3 +1035,26 @@ identical: the model sees a page of the right size with nothing on it.)
 true?" section can now be answered: mostly no. The receipt and yes/no results
 are reading; part of the DocVQA multiple-choice score comes from guessable
 options.
+
+---
+
+## 24. Blog rewritten from scratch with the full story
+
+*2026-10-10. Asked for by the user [U]: a rewrite for better flow, now that
+E06 and the contamination test are done.*
+
+- **Flow:** hook → short version → background → why documents fit (two kinds
+  of decision) → how we tested (test map; both models on every test; one real
+  call; at-a-glance chart) → **Part 1 · About the document** → **Part 2 · About
+  the content** (plus "Is the bigger model safer?") → **Part 3 · The doubt: "Is
+  99% too good to be true?"**, now answered with the contamination check →
+  what tripped us up → cost → what's next → notes on method. The doubt is
+  raised and tested straight after the results it questions, as the playbook
+  asks.
+- **New in the post:** Clef 27B on business pages (E06); the contamination
+  chart (real / blank / another page, chance marked); the skill chart with
+  both models; the "tighter options" item in What's next, from entry 23.
+- `build.py` rewritten to cover E01–E10. It now **fails if any computed
+  number is unused** as well as if any placeholder is unfilled (this caught one
+  missing number during the rewrite). 2,908 answered calls in total, $0.34 at
+  list price, $0 paid. PNGs: 5 charts and 6 boxes.

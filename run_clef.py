@@ -36,7 +36,7 @@ import requests
 from PIL import Image
 
 ENDPOINT = "https://api.cloudflare.com/client/v4/accounts/{account}/ai/run/@cf/cloudflare/{model}"
-FROZEN = ("data", "model", "jpeg_quality", "max_image_kb", "question_version")
+FROZEN = ("data", "model", "jpeg_quality", "max_image_kb", "question_version", "image_mode")
 
 
 def load_env(path: str = ".env") -> dict[str, str]:
@@ -55,6 +55,35 @@ def encode_image(path: Path, jpeg_quality: int | None) -> tuple[str, str]:
     return "image/jpeg", base64.b64encode(buf.getvalue()).decode()
 
 
+def blank_like(path: Path) -> tuple[str, str]:
+    """A plain white image with the same size and format as the page (contamination control)."""
+    im = Image.open(path)
+    fmt = "PNG" if path.suffix.lower() == ".png" else "JPEG"
+    buf = io.BytesIO()
+    Image.new(im.mode if im.mode in ("L", "RGB") else "RGB", im.size, "white").save(buf, fmt)
+    return ("image/png" if fmt == "PNG" else "image/jpeg"), base64.b64encode(buf.getvalue()).decode()
+
+
+def swap_map(manifest: dict, items: list[dict]) -> dict[str, str]:
+    """Each page gets another page's image from the same set (contamination control).
+
+    Pages are rotated by half the page order, so no page keeps its own image. A
+    swap is skipped forward when the other page has the same true answer as any
+    question on this page, so the swapped image cannot accidentally hold it.
+    """
+    order = manifest["page_order"]
+    truth: dict[str, set] = {}
+    for i in items:
+        truth.setdefault(i["page_id"], set()).add(str(i["gold_label"]).strip().lower())
+    n, out = len(order), {}
+    for k, page in enumerate(order):
+        shift = n // 2
+        while order[(k + shift) % n] == page or truth.get(order[(k + shift) % n], set()) & truth.get(page, set()):
+            shift += 1
+        out[page] = order[(k + shift) % n]
+    return out
+
+
 def load_config(args: argparse.Namespace) -> dict:
     """Create the experiment's config on first use; afterwards refuse any change to it."""
     folder = Path("experiments") / args.exp
@@ -63,7 +92,7 @@ def load_config(args: argparse.Namespace) -> dict:
         config = json.loads(path.read_text())
         for key in FROZEN:
             given = getattr(args, key, None)
-            if given is not None and given != config[key]:
+            if given is not None and given != config.get(key):
                 raise SystemExit(f"{args.exp} was created with {key}={config[key]!r}; "
                                  f"start a new experiment id to change it")
         return config
@@ -73,6 +102,7 @@ def load_config(args: argparse.Namespace) -> dict:
     config = {
         "exp": args.exp, "data": args.data, "model": args.model, "jpeg_quality": args.jpeg_quality,
         "max_image_kb": args.max_image_kb,
+        "image_mode": args.image_mode,
         "question_version": manifest["questions"]["version"],
         "endpoint": ENDPOINT.format(account="<account>", model=args.model),
         "model_version": "hosted Workers AI; not pinnable",
@@ -101,6 +131,8 @@ def main() -> None:
     ap.add_argument("--model", choices=["clef-flash", "clef"])
     ap.add_argument("--jpeg-quality", type=int, default=None)
     ap.add_argument("--max-image-kb", type=int, default=None, help="skip pages whose encoded image is larger")
+    ap.add_argument("--image-mode", choices=["real", "blank", "swap"], default=None,
+                    help="contamination controls: send a blank image or another page's image (default real)")
     ap.add_argument("--pages", type=int, required=True, help="run the first N pages of the fixed page order")
     ap.add_argument("--note", default="")
     ap.add_argument("--dry-run", action="store_true", help="show what would be sent; make no calls")
@@ -131,7 +163,10 @@ def main() -> None:
     folder = Path("experiments") / config["exp"]
     (folder / "skipped_pages.json").write_text(json.dumps(skipped, indent=1) + "\n")
     pages = set(chosen)
-    items = [i for i in map(json.loads, (root / "items.jsonl").open()) if i["page_id"] in pages]
+    all_items = [json.loads(line) for line in (root / "items.jsonl").open()]
+    items = [i for i in all_items if i["page_id"] in pages]
+    mode = config.get("image_mode") or "real"
+    swaps = swap_map(manifest, all_items) if mode == "swap" else {}
     out = Path(config["outputs"])
     out.parent.mkdir(exist_ok=True)
     skip = done_ids(out)
@@ -152,9 +187,11 @@ def main() -> None:
     failures = 0
     with out.open("a") as f:
         for n, item in enumerate(todo, 1):
-            if item["image"] not in images:
-                images[item["image"]] = encode_image(root / item["image"], config["jpeg_quality"])
-            content_type, b64 = images[item["image"]]
+            sent = item["image"] if mode != "swap" else image_of[swaps[item["page_id"]]]
+            key = f"{mode}:{sent}"
+            if key not in images:
+                images[key] = blank_like(root / sent) if mode == "blank" else encode_image(root / sent, config["jpeg_quality"])
+            content_type, b64 = images[key]
             body = {"model": config["model"], "state": item["state"], "questions": {"q": item["question"]}}
             payload = {**body, "images": [{"content_type": content_type, "base64": b64}]}
             for attempt in range(5):
@@ -174,7 +211,8 @@ def main() -> None:
                 "exp": config["exp"], "item_id": item["item_id"], "page_id": item["page_id"],
                 "model": config["model"], "data": config["data"],
                 "sent_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                "request": body, "image": item["image"], "image_type": content_type,
+                "request": body, "image": item["image"], "image_mode": mode, "image_sent": "blank" if mode == "blank" else sent,
+                "image_type": content_type,
                 "jpeg_quality": config["jpeg_quality"], "image_bytes": len(b64) * 3 // 4,
                 "status": status, "latency_s": round(latency, 3), "attempts": attempt + 1,
                 "response": response,

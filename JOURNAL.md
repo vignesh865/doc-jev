@@ -949,3 +949,40 @@ choice probabilities are better calibrated. The receipts' "close enough"
 weakness (entry 15) does not show here: DocVQA's wrong options are different
 strings, not near-miss numbers. 27B's errors here lean towards being too
 *cautious* (saying no to the right answer).
+
+---
+
+## 22. Contamination test planned: Flash only, blank and swapped images
+
+*2026-10-10. Plan only; no calls yet.*
+
+**Question [U].** Are the ~99% content scores reading or memory? CORD and
+DocVQA are public, so Clef may have seen them.
+
+**Decisions.**
+
+- **Clef-flash only [U].** 27B is not tested for contamination; one model is
+  enough to make the point.
+- **Same questions, different image [C, agreed].** Twins of E03 and E05 where
+  only the image changes. `run_clef.py` has a frozen `--image-mode`:
+
+  | exp | data | image sent | twin of |
+  |---|---|---|---|
+  | E07 | cord-v0 | blank (white, same size and format) | E03 |
+  | E08 | cord-v0 | another receipt | E03 |
+  | E09 | docvqa-v0 | blank | E05 |
+  | E10 | docvqa-v0 | another business page | E05 |
+
+  Swaps rotate the page order by half; no page keeps its own image, and a
+  swap is skipped forward when the other page shares a true answer with this
+  page. Each output line records `image_mode` and `image_sent`.
+- **Reading the result [C].** A reading model should fall towards the
+  "options-only" level on blank and swapped pages; a remembering model should
+  stay high. The options alone can carry signal (on receipts the total is
+  often the largest amount), so the **blank run measures that options-only
+  level**, and the drop is judged against it, not against chance.
+- **Variant, later [proposed by C, U to confirm].** A "not shown on this page"
+  option on choice questions, run on real, blank and swapped images so the
+  option has its own baseline.
+- About 1,274 calls; blank images are tiny, so it should fit one day's free
+  allowance. Small batch first.

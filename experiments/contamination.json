@@ -1,0 +1,98 @@
+{
+ "cord-v0": {
+  "choice": {
+   "n": 87,
+   "real": {
+    "accuracy": 0.989,
+    "mean_p_correct": 0.955
+   },
+   "blank": {
+    "accuracy": 0.184,
+    "mean_p_correct": 0.237
+   },
+   "swapped": {
+    "accuracy": 0.253,
+    "mean_p_correct": 0.255
+   },
+   "chance": 0.281
+  },
+  "noul_true": {
+   "n": 95,
+   "real": {
+    "accuracy": 1.0,
+    "mean_p_correct": 0.955
+   },
+   "blank": {
+    "accuracy": 0.0,
+    "mean_p_correct": 0.028
+   },
+   "swapped": {
+    "accuracy": 0.0,
+    "mean_p_correct": 0.026
+   }
+  },
+  "noul_false": {
+   "n": 95,
+   "real": {
+    "accuracy": 0.989,
+    "mean_p_correct": 0.964
+   },
+   "blank": {
+    "accuracy": 1.0,
+    "mean_p_correct": 0.977
+   },
+   "swapped": {
+    "accuracy": 1.0,
+    "mean_p_correct": 0.979
+   }
+  }
+ },
+ "docvqa-v0": {
+  "choice": {
+   "n": 119,
+   "real": {
+    "accuracy": 0.992,
+    "mean_p_correct": 0.958
+   },
+   "blank": {
+    "accuracy": 0.546,
+    "mean_p_correct": 0.488
+   },
+   "swapped": {
+    "accuracy": 0.437,
+    "mean_p_correct": 0.447
+   },
+   "chance": 0.293
+  },
+  "noul_true": {
+   "n": 120,
+   "real": {
+    "accuracy": 0.975,
+    "mean_p_correct": 0.921
+   },
+   "blank": {
+    "accuracy": 0.067,
+    "mean_p_correct": 0.163
+   },
+   "swapped": {
+    "accuracy": 0.017,
+    "mean_p_correct": 0.059
+   }
+  },
+  "noul_false": {
+   "n": 119,
+   "real": {
+    "accuracy": 0.992,
+    "mean_p_correct": 0.962
+   },
+   "blank": {
+    "accuracy": 0.992,
+    "mean_p_correct": 0.897
+   },
+   "swapped": {
+    "accuracy": 0.992,
+    "mean_p_correct": 0.957
+   }
+  }
+ }
+}

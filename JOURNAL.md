@@ -986,3 +986,52 @@ DocVQA are public, so Clef may have seen them.
   option has its own baseline.
 - About 1,274 calls; blank images are tiny, so it should fit one day's free
   allowance. Small batch first.
+
+---
+
+## 23. Contamination test: Clef-flash is reading the page, not remembering it
+
+*2026-10-10. E07–E10 (Flash; twins of E03 and E05 with only the image
+changed), 5 pages each first, then all [U]. 1,274 calls, all succeeded.
+Comparison by `contamination.py` → `experiments/contamination.json`;
+each run is also scored in `experiments/E07…E10/metrics.json`.*
+
+**Results [E]** (accuracy; mean probability given to the correct answer):
+
+| data | question | real | blank | swapped | chance |
+|---|---|---|---|---|---|
+| receipts | choice | 0.99 (0.95) | **0.18** (0.24) | **0.25** (0.26) | 0.28 |
+| receipts | yes/no, true total | 1.00 (0.95) | **0.00** (0.03) | **0.00** (0.03) | |
+| receipts | yes/no, changed total | 0.99 | 1.00 | 1.00 | |
+| business pages | choice | 0.99 (0.96) | **0.55** (0.49) | **0.44** (0.45) | 0.29 |
+| business pages | yes/no, true answer | 0.97 (0.92) | **0.07** (0.16) | **0.02** (0.06) | |
+| business pages | yes/no, wrong answer | 0.99 | 0.99 | 0.99 | |
+
+(Blank images are the same size as the real ones, so token counts are
+identical: the model sees a page of the right size with nothing on it.)
+
+**Reading [C].**
+
+1. **No sign of memory.** Asked "is the answer X?" with the true X, Clef-flash
+   says yes 95–100% of the time with the real page and almost never without
+   it (0–7%). A model that remembered these public pages would keep saying yes.
+   This is the cleanest test, because the question gives nothing away.
+2. **Receipts:** without the page, the choice falls to *below* chance
+   (0.18–0.25 vs 0.28). The "the total is the largest amount" shortcut is not
+   used; the 99% is reading.
+3. **Business pages: the question and options alone answer about half the
+   choice questions** (0.55 blank vs 0.29 chance). This is common sense, not
+   memory: e.g. "smoking or non-smoking room?" with options NON-SMOKING /
+   united / delta, or "corrected *dinner* time?" with one evening time.
+   Without the page it is right on 39/63 word answers but only 19/44 numbers;
+   by skill most often on layout (15/20) and forms (14/19), least on charts
+   (5/20). This is a weakness of our *test design*: the same-page wrong options
+   are often of a different kind of thing than the question asks for. The
+   choice score on DocVQA overstates reading; the yes/no-true score does not.
+4. Yes/no on a *wrong* answer stays at ~99% in every run: without the page the
+   model says no to everything, so that row says nothing about reading.
+
+**Consequence for the blog [C, to propose].** The "Is 99% too good to be
+true?" section can now be answered: mostly no. The receipt and yes/no results
+are reading; part of the DocVQA multiple-choice score comes from guessable
+options.

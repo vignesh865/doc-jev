@@ -1124,3 +1124,24 @@ ASD-STE100 pages rewritten, still one to one.*
   lists the content tests first.
 - Box PNGs renamed to match: `applications.png`, `test-families.png`; the old
   `test-map.png` and `why-it-fits.png` were removed from both image folders.
+
+---
+
+## 28. Blog trimmed: one storyline and a simple conclusion
+
+*2026-10-10. Asked for by the user [U]; main and STE pages.*
+
+- **Removed** "Is the bigger model safer?" (receipt box, near-miss chart,
+  summary bullet), "What tripped us up?" and "What's next?" [U]. The 27B
+  near-miss finding stays in the journal (entry 15) but is not in the post.
+- **Added** a short conclusion, "So, can Clef read documents?": content is
+  read correctly about 99% of the time, the contamination check shows reading
+  rather than memory, page types are harder but the confidence is trustworthy,
+  and so one model can automate the sure cases. It closes: "Jev made decision
+  models popular. Clef lets them see." Its numbers are build placeholders.
+- **Chart fixes:** the skill chart is taller, bar percentages sit inside the
+  bars (no spill on narrow screens), and charts draw after at most 1.5 s even
+  if web fonts are slow.
+- `build.py` dropped the numbers that only the removed section used (the
+  strict check caught them), and the near-miss table left `tables.md`. Images
+  in both folders: 4 charts and 5 boxes.

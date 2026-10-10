@@ -16,8 +16,6 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-sys.path.insert(0, str(ROOT))
-from prepare_cord import amount_value  # noqa: E402
 
 PRICE = {"clef-flash": 0.09e-6, "clef": 0.24e-6}  # list price per input token, Workers AI
 ALL_RUNS = ("E01", "E02", "E03", "E04", "E05", "E06", "E07", "E08", "E09", "E10")
@@ -100,17 +98,8 @@ def main() -> None:
                 for v in ("correct", "acceptable", "not_visible", "wrong")}
     high = {k: sum(conf[b][k] for b in ("70 to 85%", "85% and up")) for k in ("right", "fits", "wrong")}
 
-    # Part 2: receipts, a changed total accepted, by size of change (E03 Flash, E04 27B).
-    size_bands = [(0, .01, "under 1%"), (.01, .10, "1 to 10%"), (.10, 100, "10% or more")]
-    fooled = {b[2]: {"n": 0, "flash": 0, "big": 0} for b in size_bands}
-    for iid, i in ci.items():
-        if i["kind"] != "noul_false":
-            continue
-        rel = abs(amount_value(i["asked_value"]) - amount_value(i["gold_label"])) / amount_value(i["gold_label"])
-        b = next(b[2] for b in size_bands if b[0] <= rel < b[1])
-        fooled[b]["n"] += 1
-        fooled[b]["flash"] += answer(R["E03"][iid])["noul"] > .5
-        fooled[b]["big"] += answer(R["E04"][iid])["noul"] > .5
+    # Part 1: receipts, how often Clef-flash said yes to a total with one digit changed.
+    fooled_flash = sum(answer(R["E03"][k])["noul"] > .5 for k, i in ci.items() if i["kind"] == "noul_false")
     ex_q, near = ci["c044-noul_false"], ci["c052-noul_false"]
 
     # Part 2: business pages by skill, both models, all three question kinds.
@@ -120,7 +109,6 @@ def main() -> None:
         s["flash"] += right(di[iid], answer(R["E05"][iid]))
         s["big"] += right(di[iid], answer(R["E06"][iid]))
         s["n"] += 1
-    big_no_true = A("E06", "noul_true")[1] - A("E06", "noul_true")[0]
 
     # Part 3: contamination (real E03/E05 vs blank E07/E09 vs swapped E08/E10).
     def chance(data: str) -> float:
@@ -128,13 +116,13 @@ def main() -> None:
         return sum(1 / its[data][k]["n_options"] for k in ids) / len(ids)
 
     contam = [
-        {"name": "Receipts · multiple choice", "real": P("E03", "choice"), "blank": P("E07", "choice"),
+        {"name": "Receipts · multiple choice", "short": "Receipts<br>choice", "real": P("E03", "choice"), "blank": P("E07", "choice"),
          "swapped": P("E08", "choice"), "chance": chance("cord-v0")},
-        {"name": "Receipts · is the total X? (true X)", "real": P("E03", "noul_true"),
+        {"name": "Receipts · is the total X? (true X)", "short": "Receipts<br>true total?", "real": P("E03", "noul_true"),
          "blank": P("E07", "noul_true"), "swapped": P("E08", "noul_true"), "chance": None},
-        {"name": "Business pages · multiple choice", "real": P("E05", "choice"), "blank": P("E09", "choice"),
+        {"name": "Business pages · multiple choice", "short": "Business<br>choice", "real": P("E05", "choice"), "blank": P("E09", "choice"),
          "swapped": P("E10", "choice"), "chance": chance("docvqa-v0")},
-        {"name": "Business pages · is the answer X? (true X)", "real": P("E05", "noul_true"),
+        {"name": "Business pages · is the answer X? (true X)", "short": "Business<br>true answer?", "real": P("E05", "noul_true"),
          "blank": P("E09", "noul_true"), "swapped": P("E10", "noul_true"), "chance": None},
     ]
     leak = defaultdict(lambda: [0, 0])
@@ -163,18 +151,6 @@ def main() -> None:
     flash_lat.sort()
     contam_calls = sum(1 for e in CONTAM for r in jl(ROOT / "outputs" / f"{e}.jsonl") if r["status"] == 200)
 
-    # The receipt box: CORD's own labels for receipt c044 (row 44 of the test split).
-    import pyarrow.parquet as pq
-    gt = json.loads(pq.read_table(ROOT / "data/_raw/cord-v2-test.parquet", columns=["ground_truth"])
-                    .to_pylist()[int(ex_q["page_id"][1:])]["ground_truth"])["gt_parse"]
-    menu = gt["menu"] if isinstance(gt["menu"], list) else [gt["menu"]]
-    tot = gt["total"]
-    assert tot["total_price"] == ex_q["gold_label"]
-    lines = [f'<div class="line"><span>{x.get("cnt", "")} {x["nm"]}</span><span>{x["price"]}</span></div>' for x in menu]
-    lines.append(f'<div class="line total"><span>TOTAL</span><span>{tot["total_price"]}</span></div>')
-    for key, label in (("cashprice", "CASH"), ("changeprice", "CHANGE")):
-        if key in tot:
-            lines.append(f'<div class="line"><span>{label}</span><span>{tot[key]}</span></div>')
     box = R["E03"]["c044-noul_false"]
 
     data = {
@@ -186,7 +162,6 @@ def main() -> None:
         "confidence": [{"band": b[2], **conf[b[2]]} for b in bands],
         "skills": [{"name": SKILL_NAMES[k], "flash": s["flash"] / s["n"], "big": s["big"] / s["n"], "n": s["n"]}
                    for k, s in skill.items()],
-        "fooled": [{"band": b[2], **fooled[b[2]]} for b in size_bands],
         "contam": contam,
     }
     cr, cd = contam[1], contam[3]
@@ -208,20 +183,13 @@ def main() -> None:
         "__CORD_RIGHT__": str(A("E03", "choice")[0]),
         "__CORD_CHOICE_N__": str(A("E03", "choice")[1]),
         "__CORD_ACC__": pct(P("E03", "choice")),
-        "__BIG_CORD_ACC__": pct(P("E04", "choice")),
-        "__FOOLED_FLASH__": str(sum(f["flash"] for f in fooled.values())),
-        "__FOOLED_BIG__": str(sum(f["big"] for f in fooled.values())),
-        "__FOOLED_N__": str(sum(f["n"] for f in fooled.values())),
+        "__FOOLED_FLASH__": str(fooled_flash),
         "__DOC_PAGES__": str(m["E05"]["pages"]),
         "__DOC_RIGHT__": str(A("E05", "choice")[0]),
         "__DOC_N__": str(A("E05", "choice")[1]),
         "__DOC_ACC__": pct(P("E05", "choice")),
         "__DOC_BIG_ACC__": pct(P("E06", "choice")),
-        "__BIG_NO_TRUE__": str(big_no_true),
-        "__EX_LINES__": "\n    ".join(lines),
         "__EX_ASKED__": ex_q["asked_value"],
-        "__EX_FLASH_NO__": pct(1 - answer(R["E03"]["c044-noul_false"])["noul"]),
-        "__EX_BIG_YES__": pct(answer(R["E04"]["c044-noul_false"])["noul"]),
         "__NEAR_ASKED__": near["asked_value"],
         "__NEAR_TRUE__": near["gold_label"],
         "__NEAR_NO__": pct(1 - answer(R["E03"]["c052-noul_false"])["noul"]),
@@ -271,9 +239,6 @@ def main() -> None:
     t += ["", "## Page type: answers by the model's confidence (Clef-flash)", "",
           "| confidence | matches the label | different, but fits the page | really wrong |", "|---|---|---|---|"]
     t += [f"| {c['band']} | {c['right']} | {c['fits']} | {c['wrong']} |" for c in data["confidence"]]
-    t += ["", "## Receipts: changed totals accepted as true", "",
-          "| wrong total is off by | questions | Clef-flash said yes | Clef 27B said yes |", "|---|---|---|---|"]
-    t += [f"| {f['band']} | {f['n']} | {f['flash']} | {f['big']} |" for f in data["fooled"]]
     t += ["", "## Business pages by skill (all three question kinds)", "",
           "| skill | questions | Clef-flash right | Clef 27B right |", "|---|---|---|---|"]
     t += [f"| {SKILL_NAMES[k]} | {s['n']} | {s['flash']} | {s['big']} |" for k, s in skill.items()]

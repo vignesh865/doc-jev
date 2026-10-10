@@ -21,8 +21,7 @@ CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 CHARTS = {
     "chart-overview": ("drawOverview", 1000, 420),
     "chart-confidence": ("drawConfidence", 1000, 480),
-    "chart-skills": ("drawSkills", 1000, 560),
-    "chart-fooled": ("drawFooled", 1000, 480),
+    "chart-skills": ("drawSkills", 1000, 620),
     "chart-contam": ("drawContam", 1000, 520),
 }
 # box class -> (image name, width, height in CSS pixels)
@@ -31,7 +30,6 @@ BOXES = {
     "umbrellas": ("test-families", 760, 330),
     "fit": ("applications", 760, 560),
     "readout": ("clef-request", 760, 340),
-    "receipts": ("near-miss-receipt", 760, 230),
     "stats": ("cost", 760, 150),
 }
 
@@ -74,7 +72,7 @@ def render(page_name, out_name, same_as=None):
             # The data and the chart code decide the image; both pages share them.
             if unchanged(lambda p: p[p.index('<script src="https://cdnjs'):], name):
                 continue
-            only = scripts.replace("drawOverview(t); drawConfidence(t); drawSkills(t); drawFooled(t); drawContam(t);", f"{fn}(t);")
+            only = scripts.replace("drawOverview(t); drawConfidence(t); drawSkills(t); drawContam(t);", f"{fn}(t);")
             assert only != scripts, "drawing call not found"
             html = (f'<!doctype html><html data-theme="light"><head><meta charset="utf-8">{style}'
                     f'<style>body{{padding:0;margin:0}}#{chart}{{width:{w}px;height:{h}px;margin:0}}</style>'

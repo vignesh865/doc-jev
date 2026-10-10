@@ -69,6 +69,7 @@
 
   .chart { width: 100%; height: 400px; margin: 22px 0 6px; }
   .chart.tall { height: 430px; }
+  .chart.xtall { height: 600px; }
   .caption { font-family: var(--display); font-size: .86rem; color: var(--muted); margin: 0 0 26px; }
 
   .fit { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--rule); border-radius: 12px;
@@ -143,6 +144,7 @@
     .readout > div:first-child { border-bottom: 1px solid var(--rule); }
     .stats { grid-template-columns: 1fr; }
     .chart, .chart.tall { height: 360px; }
+    .chart.xtall { height: 560px; }
   }
 </style>
 
@@ -161,7 +163,6 @@
     <li><strong>Questions about the content:</strong> Clef-flash got 99% on receipt totals and 99% on questions about business pages.</li>
     <li><strong>Clef reads the page. It does not use memory.</strong> We asked it to confirm the true total of a receipt. With the receipt, it said yes in 100% of the questions. With a blank page, it said yes in 0%.</li>
     <li><strong>Questions about the document:</strong> Clef-flash identified the page type correctly in 57% of the pages. Most of its errors were label errors. Its answers with high confidence were correct.</li>
-    <li><strong>A larger model is not always safer.</strong> Clef 27B accepted 8 receipt totals with one incorrect digit. Clef-flash accepted 1.</li>
   </ul>
 </div>
 
@@ -247,32 +248,9 @@
 <h2>Can Clef read the content of the page?</h2>
 <p class="lead">This is the content test. The results of the two models were better than we expected.</p>
 <p>For receipts, Clef-flash selected the correct total in 86 of 87 questions. For business pages, it gave the correct answer to 118 of 119 multiple-choice questions. Clef 27B also got 99%. The type of content on the page had almost no effect:</p>
-<div id="chart-skills" class="chart" role="img" aria-label="Accuracy on business pages by the skill that the question needs, two models"></div>
+<div id="chart-skills" class="chart xtall" role="img" aria-label="Accuracy on business pages by the skill that the question needs, two models"></div>
 <p class="caption">Business pages: the percentage of all questions (multiple choice and yes or no) with a correct answer, by the skill that the question needs.</p>
 <p>The yes or no questions are more difficult, because the incorrect value can be almost correct. One receipt shows the total 40.000. We asked Clef-flash if the total is <strong>40.001</strong>. It said no, with 98% confidence. On all 95 receipts, Clef-flash accepted a changed digit only 1 time. Also, its confidence agreed with its results: answers with very high confidence were almost always correct. Thus, a machine can do the sure cases, and a person can do the other cases.</p>
-
-<h2>Is the larger model safer?</h2>
-<p class="lead">This section compares Clef 27B with Clef-flash. In the most difficult receipt test, Clef 27B was less safe.</p>
-<p>Clef 27B selected the correct receipt total in 100% of the questions. This is slightly better than Clef-flash. Then we did the one-digit test:</p>
-<div class="receipts">
-  <div class="receipt">
-    <div class="r-head">The receipt shows</div>
-    <div class="line"><span>1 Combo 1</span><span>30.000</span></div>
-    <div class="line total"><span>TOTAL</span><span>30.000</span></div>
-    <div class="line"><span>CASH</span><span>50.000</span></div>
-    <div class="line"><span>CHANGE</span><span>20.000</span></div>
-  </div>
-  <div class="receipt">
-    <div class="r-head">We ask</div>
-    <div class="ask">“Is the total amount on this receipt 30.900?”</div>
-    <div class="verdict good"><span>Clef-flash</span><span>no, 99%</span></div>
-    <div class="verdict bad"><span>Clef 27B</span><span>yes, 95%</span></div>
-  </div>
-</div>
-<div id="chart-fooled" class="chart tall" role="img" aria-label="How often each model accepted a total with one digit changed"></div>
-<p class="caption">Receipts: how often each model said yes to a total with one changed digit, by the difference from the true total.</p>
-<p>Clef 27B accepted 8 incorrect totals of 95. Clef-flash accepted 1. Almost all the errors of Clef 27B were <strong>near misses</strong>: the incorrect total was within a few percent of the true total. Clef-flash examines each digit. Clef 27B accepts a value that is approximately correct. On business pages, the incorrect answers were different text, not near-miss numbers. There, the two models had the same result. The few errors of Clef 27B were of the opposite type: it said no to 4 correct answers.</p>
-<p>To examine extracted values is a frequent task in document work. For this task, <strong>the smaller model was the safer model</strong>, and it is also faster and cheaper. The numbers are small. Thus, this result is a strong indication, not a proof.</p>
 
 <div class="part">Part 2 · The doubt</div>
 <h2>Is 99% too good to be correct?</h2>
@@ -298,14 +276,6 @@
 <p class="caption">Page-type answers of Clef-flash on 60 pages, in groups by confidence. “Fits the page” means that the reviewer found the answer of the model correct for the page.</p>
 <p>The model gave 39 answers with a confidence of 70% or more. Of these answers, <strong>0 were really incorrect</strong>. All the really incorrect answers had low confidence. With the examined labels, the result increases to 68%. If each answer that fits the page is correct, the result is 82%. The page type is more difficult than a value on the page. But here also, the confidence shows which answers you can use.</p>
 
-<h2>What problems did we find?</h2>
-<p class="lead">This section gives practical information for other users.</p>
-<ul class="plain">
-  <li><strong>Large images are not accepted.</strong> The service calculates the size of an image from its encoded text. It does not accept images larger than approximately 185 KB. We decreased the pages to 1,024 pixels on the long side.</li>
-  <li><strong>The “confidence” field is not the probability of the answer.</strong> The <code>confidence</code> field of the hosted API shows how much the probabilities are in one answer. Use the probabilities to set thresholds.</li>
-  <li><strong>Test sets also have errors.</strong> Old datasets have incorrect labels. Our tool also gave “6-2-97” and “June 2, 1997” as two different answers. Examine the errors before you use a result.</li>
-</ul>
-
 <h2>What was the cost?</h2>
 <p class="lead">The cost was zero. All requests were in the free daily limit of Cloudflare.</p>
 <div class="stats">
@@ -314,14 +284,10 @@
   <div class="stat"><div class="n">486 ms</div><div class="d">usual time for one answer from Clef-flash</div></div>
 </div>
 
-<h2>What will we do next?</h2>
-<p class="lead">Each item comes from a result of this test.</p>
-<ul class="plain">
-  <li><strong>More difficult content.</strong> Line items, counts, and a check that the numbers on a page add up.</li>
-  <li><strong>Real invoices.</strong> Business documents that are not well-known public test sets.</li>
-  <li><strong>Better incorrect options.</strong> Incorrect answers of the same type as the correct answer, so that the question does not show the answer.</li>
-  <li><strong>Approximately correct values.</strong> More near-miss values, to find if the problem of Clef 27B continues.</li>
-</ul>
+<h2>Can Clef read documents?</h2>
+<p class="lead">This section gives the conclusion.</p>
+<p>Yes. Clef read the content of pages well. It got 99% correct on receipt totals and 99% correct on questions about business pages. The contamination test shows that Clef reads the page. It does not use memory. Clef got a lower result for the page type. But its answers with high confidence were correct, and its answers with low confidence showed the difficult pages.</p>
+<p>Document work needs this: one model that examines the page, answers fixed questions and shows how sure it is. Thus, a machine can do the sure cases, and a person can do the other cases. Jev made decision models popular. Clef gives them vision.</p>
 
 <section class="notes">
   <h2>Notes on the method</h2>
@@ -332,7 +298,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/4.1.1/plotly-basic.min.js"></script>
 <script>
-const DATA = {"overview": [{"name": "Content \u00b7 receipt totals", "flash": 0.9885057471264368, "big": 1.0}, {"name": "Content \u00b7 business pages", "flash": 0.9915966386554622, "big": 0.9915966386554622}, {"name": "Document \u00b7 page type", "flash": 0.5666666666666667, "big": 0.6333333333333333}], "confidence": [{"band": "under 50%", "right": 4, "fits": 1, "wrong": 8}, {"band": "50 to 70%", "right": 1, "fits": 4, "wrong": 3}, {"band": "70 to 85%", "right": 9, "fits": 7, "wrong": 0}, {"band": "85% and up", "right": 20, "fits": 3, "wrong": 0}], "skills": [{"name": "forms", "flash": 1.0, "big": 0.9827586206896551, "n": 58}, {"name": "running text", "flash": 1.0, "big": 1.0, "n": 60}, {"name": "handwriting", "flash": 0.9666666666666667, "big": 0.95, "n": 60}, {"name": "charts and diagrams", "flash": 0.9666666666666667, "big": 0.9666666666666667, "n": 60}, {"name": "tables and lists", "flash": 1.0, "big": 1.0, "n": 60}, {"name": "page layout", "flash": 0.9833333333333333, "big": 1.0, "n": 60}], "fooled": [{"band": "under 1%", "n": 55, "flash": 1, "big": 6}, {"band": "1 to 10%", "n": 15, "flash": 0, "big": 2}, {"band": "10% or more", "n": 25, "flash": 0, "big": 0}], "contam": [{"name": "Receipts \u00b7 multiple choice", "real": 0.9885057471264368, "blank": 0.1839080459770115, "swapped": 0.25287356321839083, "chance": 0.2806513409961686}, {"name": "Receipts \u00b7 is the total X? (true X)", "real": 1.0, "blank": 0.0, "swapped": 0.0, "chance": null}, {"name": "Business pages \u00b7 multiple choice", "real": 0.9915966386554622, "blank": 0.5462184873949579, "swapped": 0.4369747899159664, "chance": 0.29341736694677867}, {"name": "Business pages \u00b7 is the answer X? (true X)", "real": 0.975, "blank": 0.06666666666666667, "swapped": 0.016666666666666666, "chance": null}]};
+const DATA = {"overview": [{"name": "Content \u00b7 receipt totals", "flash": 0.9885057471264368, "big": 1.0}, {"name": "Content \u00b7 business pages", "flash": 0.9915966386554622, "big": 0.9915966386554622}, {"name": "Document \u00b7 page type", "flash": 0.5666666666666667, "big": 0.6333333333333333}], "confidence": [{"band": "under 50%", "right": 4, "fits": 1, "wrong": 8}, {"band": "50 to 70%", "right": 1, "fits": 4, "wrong": 3}, {"band": "70 to 85%", "right": 9, "fits": 7, "wrong": 0}, {"band": "85% and up", "right": 20, "fits": 3, "wrong": 0}], "skills": [{"name": "forms", "flash": 1.0, "big": 0.9827586206896551, "n": 58}, {"name": "running text", "flash": 1.0, "big": 1.0, "n": 60}, {"name": "handwriting", "flash": 0.9666666666666667, "big": 0.95, "n": 60}, {"name": "charts and diagrams", "flash": 0.9666666666666667, "big": 0.9666666666666667, "n": 60}, {"name": "tables and lists", "flash": 1.0, "big": 1.0, "n": 60}, {"name": "page layout", "flash": 0.9833333333333333, "big": 1.0, "n": 60}], "contam": [{"name": "Receipts \u00b7 multiple choice", "short": "Receipts<br>choice", "real": 0.9885057471264368, "blank": 0.1839080459770115, "swapped": 0.25287356321839083, "chance": 0.2806513409961686}, {"name": "Receipts \u00b7 is the total X? (true X)", "short": "Receipts<br>true total?", "real": 1.0, "blank": 0.0, "swapped": 0.0, "chance": null}, {"name": "Business pages \u00b7 multiple choice", "short": "Business<br>choice", "real": 0.9915966386554622, "blank": 0.5462184873949579, "swapped": 0.4369747899159664, "chance": 0.29341736694677867}, {"name": "Business pages \u00b7 is the answer X? (true X)", "short": "Business<br>true answer?", "real": 0.975, "blank": 0.06666666666666667, "swapped": 0.016666666666666666, "chance": null}]};
 
 function tokens() {
   const s = getComputedStyle(document.documentElement);
@@ -353,14 +319,15 @@ function base(t, extra) {
   }, extra);
 }
 const CONFIG = { responsive: true, displayModeBar: false };
-const PCT = { range: [0, 112], gridcolor: "", zeroline: false, tickvals: [0, 25, 50, 75, 100], ticktext: ["0%", "25%", "50%", "75%", "100%"] };
+const PCT = { range: [0, 101], gridcolor: "", zeroline: false, tickvals: [0, 25, 50, 75, 100], ticktext: ["0%", "25%", "50%", "75%", "100%"] };
 
 function pairBars(rows, keys, t) {
   return keys.map(([key, name, color]) => ({
     type: "bar", orientation: "h", name, y: rows.map(r => r.name), x: rows.map(r => 100 * r[key]),
     marker: { color, cornerradius: 5 },
-    text: rows.map(r => Math.round(100 * r[key]) + "%"), textposition: "outside", cliponaxis: false,
-    textfont: { color: t.ink, size: 12.5 },
+    // Labels sit inside the bar end, so they never spill past a narrow screen.
+    text: rows.map(r => Math.round(100 * r[key]) + "%"), textposition: "inside", insidetextanchor: "end",
+    textfont: { color: "#ffffff", size: 12.5 }, constraintext: "none",
     hovertemplate: "%{y}<br>" + name + ": %{x:.1f}%<extra></extra>"
   }));
 }
@@ -393,36 +360,22 @@ function drawConfidence(t) {
 function drawSkills(t) {
   const rows = DATA.skills.slice().sort((a, b) => a.flash - b.flash);
   Plotly.react("chart-skills", pairBars(rows, [["big", "Clef (27B)", t.big], ["flash", "Clef-flash (9B)", t.flash]], t),
-    base(t, { barmode: "group", bargroupgap: 0.08, margin: { l: 150, r: 48, t: 48, b: 40 },
+    base(t, { barmode: "group", bargap: 0.28, bargroupgap: 0.06, margin: { l: 150, r: 52, t: 48, b: 40 },
       legend: { orientation: "h", x: 0, y: 1.1, traceorder: "reversed", font: { color: t.ink, size: 13 } },
       xaxis: Object.assign({}, PCT, { gridcolor: t.rule }),
       yaxis: { tickfont: { color: t.ink, size: 13.5 }, automargin: true, showgrid: false } }), CONFIG);
 }
 
-function drawFooled(t) {
-  const x = DATA.fooled.map(r => "off by " + r.band);
-  const mk = (key, name, color) => ({
-    type: "bar", name, x, y: DATA.fooled.map(r => 100 * r[key] / r.n),
-    marker: { color, cornerradius: 6 },
-    text: DATA.fooled.map(r => r[key] + " of " + r.n), textposition: "outside", cliponaxis: false,
-    textfont: { color: t.ink, size: 13 },
-    hovertemplate: name + "<br>%{x}: %{y:.1f}% said yes<extra></extra>"
-  });
-  Plotly.react("chart-fooled", [mk("flash", "Clef-flash (9B)", t.flash), mk("big", "Clef (27B)", t.big)],
-    base(t, { barmode: "group", bargroupgap: 0.12,
-      yaxis: { title: { text: "said yes to the wrong total" }, ticksuffix: "%", gridcolor: t.rule, zeroline: false, rangemode: "tozero" },
-      xaxis: { tickfont: { color: t.ink, size: 13.5 }, showgrid: false } }), CONFIG);
-}
-
 function drawContam(t) {
   const rows = DATA.contam;
-  const x = rows.map(r => r.name.replace(" · ", "<br>"));
+  const x = rows.map(r => r.short);
   const mk = (key, name, color) => ({
     type: "bar", name, x, y: rows.map(r => 100 * r[key]),
     marker: { color, cornerradius: 5 },
     text: rows.map(r => Math.round(100 * r[key]) + "%"), textposition: "outside", cliponaxis: false,
     textfont: { color: t.ink, size: 12.5 },
-    hovertemplate: name + "<br>%{x}: %{y:.1f}% right<extra></extra>"
+    customdata: rows.map(r => r.name),
+    hovertemplate: name + "<br>%{customdata}: %{y:.1f}% right<extra></extra>"
   });
   const shapes = rows.map((r, i) => r.chance == null ? null : {
     type: "line", xref: "x", yref: "y", x0: i - 0.42, x1: i + 0.42, y0: 100 * r.chance, y1: 100 * r.chance,
@@ -433,9 +386,11 @@ function drawContam(t) {
       xaxis: { tickfont: { color: t.ink, size: 12.5 }, showgrid: false } }), CONFIG);
 }
 
-function drawAll() { const t = tokens(); drawOverview(t); drawConfidence(t); drawSkills(t); drawFooled(t); drawContam(t); }
+function drawAll() { const t = tokens(); drawOverview(t); drawConfidence(t); drawSkills(t); drawContam(t); }
 // Draw after the web fonts load, so Plotly measures labels in the font it shows.
-(document.fonts ? document.fonts.ready : Promise.resolve()).then(drawAll);
+// Never wait more than 1.5 s, in case a viewer holds the fonts back.
+const fontsReady = document.fonts ? Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 1500))]) : Promise.resolve();
+fontsReady.then(drawAll);
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", drawAll);
 new MutationObserver(drawAll).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 </script>

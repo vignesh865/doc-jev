@@ -897,3 +897,22 @@ three kinds).
   `clef-on-documents.md`) is removed in favour of this single source.
 - Totals over the reported experiments (E01–E05): 1,274 answered questions,
   $0.16 at list price, $0 paid (free tier).
+
+---
+
+## 20. Blog restructured around the two umbrellas
+
+*2026-10-09. Restructure asked for by the user [U].*
+
+- The post is now organised by the project's two kinds of question:
+  **about the document** (what kind of page: RVL-CDIP, E01 Flash and E02
+  27B) and **about the content** (what the page says: CORD receipts, E03 Flash
+  and E04 27B; DocVQA business pages, E05 Flash). A test map table places each
+  experiment under its umbrella, and the parts are labelled "Part 1 · About
+  the document" and "Part 2 · About the content".
+- **"Is 99% too good to be true?" moved to the end**, just before "What's
+  next?", so the contamination test reads as the natural next step [U].
+- Added: an at-a-glance chart (labelled by umbrella) in the setup, and a chart
+  of business-page accuracy by skill in Part 2. PNG exports now: 4 charts and
+  6 boxes (short version, why it fits, test map, request/response, near-miss
+  receipt, cost).

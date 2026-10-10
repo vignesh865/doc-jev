@@ -18,11 +18,13 @@ CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 CHARTS = {
     "chart-tasks": ("drawTasks", 1000, 440),
     "chart-confidence": ("drawConfidence", 1000, 480),
+    "chart-skills": ("drawSkills", 1000, 420),
     "chart-fooled": ("drawFooled", 1000, 480),
 }
 # box class -> (image name, width, height in CSS pixels)
 BOXES = {
-    "short": ("short-version", 760, 430),
+    "short": ("short-version", 760, 470),
+    "map-wrap": ("test-map", 760, 400),
     "fit": ("why-it-fits", 760, 400),
     "readout": ("clef-request", 760, 340),
     "receipts": ("near-miss-receipt", 760, 230),
@@ -47,7 +49,7 @@ def main():
     out.mkdir(exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
         for chart, (fn, w, h) in CHARTS.items():
-            only = scripts.replace("drawTasks(t); drawConfidence(t); drawFooled(t);", f"{fn}(t);")
+            only = scripts.replace("drawTasks(t); drawConfidence(t); drawSkills(t); drawFooled(t);", f"{fn}(t);")
             assert only != scripts, "drawing call not found"
             html = (f'<!doctype html><html data-theme="light"><head><meta charset="utf-8">{style}'
                     f'<style>body{{padding:0;margin:0}}#{chart}{{width:{w}px;height:{h}px;margin:0}}</style>'
@@ -56,7 +58,7 @@ def main():
             src.write_text(html)
             shoot(src, out / f"{chart.removeprefix('chart-')}.png", w, h)
         for cls, (name, w, h) in BOXES.items():
-            box = re.search(rf'<div class="{cls}"[^>]*>.*?\n</div>\n', page, re.S).group(0)
+            box = re.search(rf'<div class="{cls}"><table.*?</table></div>|<div class="{cls}"[^>]*>.*?\n</div>\n', page, re.S).group(0)
             html = (f'<!doctype html><html data-theme="light"><head><meta charset="utf-8">{style}'
                     f'<style>body{{padding:24px;margin:0}}.{cls}{{margin:0}}</style>'
                     f'</head><body>{box}</body></html>')

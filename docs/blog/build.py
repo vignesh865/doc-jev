@@ -18,7 +18,9 @@ sys.path.insert(0, str(ROOT))
 from prepare_cord import amount_value  # noqa: E402
 
 PRICE = {"clef-flash": 0.09e-6, "clef": 0.24e-6}  # list price per input token, Workers AI
-REPORTED = ("E01", "E02", "E03", "E04", "E05")   # E06 was stopped by the daily cap; not reported
+REPORTED = ("E01", "E02", "E03", "E04", "E05")
+SKILL_NAMES = {"table/list": "tables and lists", "layout": "page layout", "form": "forms",
+               "free_text": "running text", "handwritten": "handwriting", "figure/diagram": "charts and diagrams"}   # E06 was stopped by the daily cap; not reported
 
 
 def jl(path: Path) -> list[dict]:
@@ -151,11 +153,12 @@ def main() -> None:
 
     data = {
         "tasks": [
-            {"name": "Page type, dataset labels", "acc": g["E01"]["choice"]["accuracy"]},
-            {"name": "Page type, labels checked", "acc": best / n_e01},
-            {"name": "Receipt totals", "acc": g["E03"]["choice"]["accuracy"]},
-            {"name": "Business-page questions", "acc": g["E05"]["choice"]["accuracy"]},
+            {"name": "Document · page type, dataset labels", "acc": g["E01"]["choice"]["accuracy"]},
+            {"name": "Document · page type, labels checked", "acc": best / n_e01},
+            {"name": "Content · receipt totals", "acc": g["E03"]["choice"]["accuracy"]},
+            {"name": "Content · business pages", "acc": g["E05"]["choice"]["accuracy"]},
         ],
+        "skills": [{"name": SKILL_NAMES[k], "acc": v[0] / v[1], "n": v[1]} for k, v in skill.items()],
         "confidence": [{"band": b[2], **conf[b[2]]} for b in bands],
         "fooled": [{"band": b[2], **fooled[b[2]]} for b in size_bands],
     }
@@ -185,8 +188,6 @@ def main() -> None:
         "__DOC_RIGHT__": str(sum(doc_choice)),
         "__DOC_N__": str(len(doc_choice)),
         "__DOC_ACC__": pct(sum(doc_choice) / len(doc_choice)),
-        "__SKILL_MIN__": pct(min(skill_acc.values())),
-        "__SKILL_MAX__": pct(max(skill_acc.values())),
         "__EX_ASKED__": ex_q["asked_value"],
         "__EX_LINES__": "\n    ".join(lines),
         "__EX_FLASH_NO__": pct(1 - ex["E03"]),
@@ -204,8 +205,10 @@ def main() -> None:
         "__BOX_TOKENS__": str(box["response"]["result"]["usage"]["input_tokens"]),
     }
     html = (HERE / "template.html").read_text()
+    unused = [k for k in v if k not in html]
+    if unused:
+        print("computed but not used in the page:", ", ".join(unused))
     for key, value in v.items():
-        assert key in html, key
         html = html.replace(key, value)
     assert "__" not in html, [w for w in html.split() if "__" in w][:5]
     (HERE / "clef-docs.html").write_text(html)

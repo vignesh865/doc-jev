@@ -916,3 +916,36 @@ three kinds).
   of business-page accuracy by skill in Part 2. PNG exports now: 4 charts and
   6 boxes (short version, why it fits, test map, request/response, near-miss
   receipt, cost).
+
+---
+
+## 21. E06 finished: Clef 27B on DocVQA matches Flash
+
+*2026-10-10. The free allocation had not reset at 00:00 UTC (still 429 at
+01:22 UTC); it was available again by 18:48 UTC, about 26 hours after the
+cap was hit (16:26 UTC on Oct 9). The reset rule is still unclear. The
+remaining 130 calls were sent [U]; E06 is complete: 360 replies, errata
+excluded as for E05. 27B latency p50 1.16 s, p95 4.3 s, max 23.9 s.*
+
+**Paired with E05 [E].**
+
+| group | E05 Flash | E06 27B | ECE Flash → 27B |
+|---|---|---|---|
+| choice | 0.992 | 0.992 | 0.032 → 0.011 |
+| yes/no, true answer | 0.975 | 0.967 | 0.041 → 0.024 |
+| yes/no, same-page wrong answer | 0.992 | 0.992 | 0.022 → 0.032 |
+
+By skill (right out of n, Flash / 27B): tables 60/60, running text 60/60,
+layout 59/60, forms 58/57 (of 58), handwriting 58/57, charts 58/58.
+
+**Where they differ.** 27B fixes 3 of Flash's misses (d12658 layout slip,
+d2012 chart, d763 title banner) and makes 5 of its own. Four of those are a
+*no* to the true answer (d14791 "PM SERVICE" 0.16, d14795 "research" 0.20,
+d9095 "1.38" 0.37, d10680 "1" 0.06); one is a *yes* to a wrong answer (d7887,
+0.61). Both models pick "Ronnie Hurd" on the ambiguous d1911.
+
+**Reading [C].** On DocVQA the two models are equal in accuracy, and 27B's
+choice probabilities are better calibrated. The receipts' "close enough"
+weakness (entry 15) does not show here: DocVQA's wrong options are different
+strings, not near-miss numbers. 27B's errors here lean towards being too
+*cautious* (saying no to the right answer).

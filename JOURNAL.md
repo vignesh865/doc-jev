@@ -1075,3 +1075,26 @@ E06 and the contamination test are done.*
   see?" (no text-extraction step; questions text cannot carry, such as
   signatures, ticks, blank pages, scan or photo; one request per page drives an
   action; beyond documents, untested). The rest of the post is unchanged.
+
+---
+
+## 26. ASD-STE100 version of the blog
+
+*2026-10-10. Asked for by the user [U]; the conventions follow the user's
+playbook and the earlier Jev and Laya STE page.*
+
+- `docs/blog/template-ste.html` → `clef-docs-ste.html`: the same structure,
+  charts and numbers as the main post, rewritten in ASD-STE100 Simplified
+  Technical English. That means short sentences, active voice, approved words
+  with one meaning (for example "incorrect", "approximately", "decrease"), and
+  one topic per sentence. The kicker reads "· ASD-STE100 version", "The short
+  version" becomes "Summary", and the notes on method say which standard the
+  text follows. The main post stays in normal plain English.
+- `build.py` fills both pages from the same numbers. It fails if either page
+  leaves a number unused or a placeholder unfilled.
+- `export_png.py` writes `images_ste/` one to one with `images/`. The 5 charts
+  and the request box are copied, since their source is identical; 5 boxes are
+  rendered from the STE wording.
+- Check: 265 sentences in the STE page. None of the prose is over 25 words;
+  the only longer runs are table and box fragments. The remaining "-ing" words
+  are nouns or prepositions.

@@ -179,9 +179,9 @@ def main() -> None:
 
     data = {
         "overview": [
-            {"name": "Page type", "flash": P("E01", "choice"), "big": P("E02", "choice")},
-            {"name": "Receipt totals", "flash": P("E03", "choice"), "big": P("E04", "choice")},
-            {"name": "Business pages", "flash": P("E05", "choice"), "big": P("E06", "choice")},
+            {"name": "Content · receipt totals", "flash": P("E03", "choice"), "big": P("E04", "choice")},
+            {"name": "Content · business pages", "flash": P("E05", "choice"), "big": P("E06", "choice")},
+            {"name": "Document · page type", "flash": P("E01", "choice"), "big": P("E02", "choice")},
         ],
         "confidence": [{"band": b[2], **conf[b[2]]} for b in bands],
         "skills": [{"name": SKILL_NAMES[k], "flash": s["flash"] / s["n"], "big": s["big"] / s["n"], "n": s["n"]}

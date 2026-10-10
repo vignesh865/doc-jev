@@ -28,8 +28,8 @@ CHARTS = {
 # box class -> (image name, width, height in CSS pixels)
 BOXES = {
     "short": ("short-version", 760, 560),
-    "map-wrap": ("test-map", 760, 400),
-    "fit": ("why-it-fits", 760, 400),
+    "umbrellas": ("test-families", 760, 330),
+    "fit": ("applications", 760, 560),
     "readout": ("clef-request", 760, 340),
     "receipts": ("near-miss-receipt", 760, 230),
     "stats": ("cost", 760, 150),

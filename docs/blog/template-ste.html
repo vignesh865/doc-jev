@@ -122,7 +122,20 @@
   .map .umb { font-family: var(--display); font-weight: 700; font-size: .9rem; color: var(--ink); background: var(--panel); }
   .map .ds { font-family: var(--mono); font-size: .82rem; color: var(--muted); display: block; }
 
+  .umbrellas { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 22px 0 26px; padding: 2px; }
+  .umb-card { border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; background: var(--paper);
+              border-top: 4px solid var(--accent); display: grid; gap: 8px; align-content: start; }
+  .umb-card .tag { font-family: var(--display); font-weight: 500; font-size: .74rem; letter-spacing: .12em;
+                   text-transform: uppercase; color: var(--accent); }
+  .umb-card h3 { font-family: var(--display); font-size: 1.25rem; line-height: 1.2; margin: 0; }
+  .umb-card .q { font-style: italic; color: var(--muted); margin: 0; }
+  .umb-card ul { margin: 4px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  .umb-card li { border-top: 1px solid var(--rule); padding-top: 8px; font-size: .95rem; line-height: 1.4; }
+  .umb-card .ds { font-family: var(--mono); font-size: .8rem; color: var(--muted); display: block; }
+  h3.sub { font-family: var(--display); font-weight: 700; font-size: 1.2rem; margin: 30px 0 8px; }
+
   @media (max-width: 560px) {
+    .umbrellas { grid-template-columns: 1fr; }
     body { font-size: 1.04rem; }
     .fit, .readout, .receipts { grid-template-columns: 1fr; }
     .fit > div:nth-child(odd), .readout > div:first-child { border-right: 0; }
@@ -145,10 +158,10 @@
   <h3>Summary</h3>
   <ul>
     <li><strong>Jev, now with vision support.</strong> Clef is an open model from Cloudflare. It answers Jev-style questions about an image. It gives a probability for each answer, and it does not write text.</li>
-    <li><strong>Questions about the document:</strong> Clef-flash identified the page type correctly in __E01_ACC__% of the pages. Most of its errors were label errors. Its answers with high confidence were correct.</li>
     <li><strong>Questions about the content:</strong> Clef-flash got __CORD_ACC__% on receipt totals and __DOC_ACC__% on questions about business pages.</li>
     <li><strong>Clef reads the page. It does not use memory.</strong> We asked it to confirm the true total of a receipt. With the receipt, it said yes in __CR_REAL__% of the questions. With a blank page, it said yes in __CR_BLANK__%.</li>
-    <li><strong>The larger model was not safer.</strong> Clef 27B accepted __FOOLED_BIG__ receipt totals with one incorrect digit. Clef-flash accepted __FOOLED_FLASH__.</li>
+    <li><strong>Questions about the document:</strong> Clef-flash identified the page type correctly in __E01_ACC__% of the pages. Most of its errors were label errors. Its answers with high confidence were correct.</li>
+    <li><strong>A larger model is not always safer.</strong> Clef 27B accepted __FOOLED_BIG__ receipt totals with one incorrect digit. Clef-flash accepted __FOOLED_FLASH__.</li>
   </ul>
 </div>
 
@@ -158,38 +171,51 @@
 <p><strong>Decision models</strong> use a different method. You send an input and a set of questions. Each question has a fixed set of answers. The model gives a probability for each answer, for example for <em>invoice</em>, <em>receipt</em> and <em>letter</em>. The model does not write text. In September 2026, Jev made this method popular. But Jev reads only text.</p>
 <p>On 1 October 2026, Cloudflare released <strong>Clef</strong>. Clef uses the same question types and the same requests as Jev. Its weights are open. There are two sizes: <strong>Clef-flash</strong> (9 billion parameters) and <strong>Clef</strong> (27 billion parameters). Clef also reads <strong>images</strong>. Cloudflare gives results for more than forty benchmarks. All of these benchmarks use only text. No benchmark uses a document. No result shows if the probabilities are reliable.</p>
 
-<h2>What changes when a decision model can see?</h2>
-<p class="lead">This section tells why vision is important. The model can make the decision from the page.</p>
-<ul class="plain">
-  <li><strong>No text extraction step.</strong> A text-only model needs the text of the page first. Usually, OCR supplies this text. Each step loses some data, for example the layout, the table structure, ticks, stamps and handwriting. A model with vision makes the decision from the page.</li>
-  <li><strong>Questions that text cannot answer.</strong> Is the form signed? Is the box ticked? Is the page blank? Is it a scan or a photograph? The answers to these questions are in the appearance of the page, not only in its words.</li>
-  <li><strong>One request for each page.</strong> You send the image, and you get typed answers. Each answer can start an action: send the document to the correct team, accept a value, or send the page to a person.</li>
-  <li><strong>Other images.</strong> This also applies to screenshots, product photos and identity documents. We did not test these.</li>
-</ul>
-
-<h2>Why use documents for the test?</h2>
-<p class="lead">This section tells why the task is a good match. Most work with documents is decisions, not writing.</p>
-<p>Each document process includes many small decisions. There are two types. Some decisions are <strong>about the document</strong>: what type of page is this? Other decisions are <strong>about the content</strong>: what does the page say, and is the extracted value correct? Each decision agrees with a question type of a decision model:</p>
+<h2>What can a decision model do when it can see?</h2>
+<p class="lead">This section gives applications. Each application is a decision that uses the content of a page or an image.</p>
+<p>Work with documents includes many small decisions. There are two types. Some decisions are <strong>about the document</strong>: what is this page, and is it complete? Other decisions are <strong>about the content</strong>: what does the page say, and is the extracted value correct? A decision model with vision changes each decision into one question about the page:</p>
 <div class="fit">
   <div class="head">The decision</div><div class="head">The Clef question</div>
-  <div>What type of page is this?</div><div>Select one of the page types<span class="qt">about the document · choice</span></div>
+  <div>Send the page to the correct team: is it an invoice, a receipt or a letter?</div><div>Select one of the page types<span class="qt">about the document · choice</span></div>
+  <div>Is the page blank, or is the scan unreadable?</div><div>Yes or no, with a probability<span class="qt">about the document · noul</span></div>
+  <div>Is the form signed? Is the box ticked?</div><div>Yes or no, with a probability<span class="qt">about the document · noul</span></div>
   <div>Which number on this receipt is the total?</div><div>Select one of the amounts on the receipt<span class="qt">about the content · choice</span></div>
   <div>The extraction tool gives the total as __EX_ASKED__. Is this correct?</div><div>Yes or no, with a probability<span class="qt">about the content · noul</span></div>
   <div>Can a machine approve this, or must a person examine it?</div><div>Do the action only when the probability is sufficiently high<span class="qt">a threshold</span></div>
 </div>
+<p>The same method applies to other images. Examples: is this screenshot an error screen? Does this product photo agree with the product description? Does this identity document show the photo page? We did not test these.</p>
+
+<h3 class="sub">Why not use OCR and send the text to Jev?</h3>
+<p>Jev is available, so this is a good question. For many of these decisions, text is not sufficient.</p>
+<ul class="plain">
+  <li><strong>OCR keeps the words and loses other data.</strong> OCR can lose the layout, ticks, stamps, signatures, handwriting and the column of a number.</li>
+  <li><strong>OCR errors become facts for the model.</strong> Sometimes OCR reads 30.000 as 30.900. Then a text model compares one OCR result with another OCR result. Only a model with vision can compare the value with the page.</li>
+  <li><strong>Two systems, not one.</strong> You must operate, adjust and pay for the OCR tool and for the text model. Their errors add together.</li>
+</ul>
+<p>Thus, the important question is this: can a decision model with vision read documents sufficiently well for these decisions? We did tests to find the answer.</p>
 
 <h2>How did we do the test?</h2>
-<p class="lead">This section gives the test setup: two types of question, three public document sets and two models with no changes.</p>
-<div class="map-wrap"><table class="map">
-  <thead><tr><th>Test</th><th>Documents</th><th>Question styles</th></tr></thead>
-  <tbody>
-    <tr><td class="umb" colspan="3">About the document</td></tr>
-    <tr><td>What type of page is this? 16 page types, and <em>blank or unreadable</em><span class="ds">RVL-CDIP</span></td><td class="n">__E01_PAGES__ scanned office pages</td><td>choice, yes or no</td></tr>
-    <tr><td class="umb" colspan="3">About the content</td></tr>
-    <tr><td>What is the total on this receipt?<span class="ds">CORD</span></td><td class="n">__CORD_N__ receipt photos</td><td>choice, yes or no</td></tr>
-    <tr><td>What does this business page say?<span class="ds">DocVQA</span></td><td class="n">__DOC_PAGES__ letters, forms, tables, charts</td><td>choice, yes or no</td></tr>
-  </tbody>
-</table></div>
+<p class="lead">This section gives the test setup: two families of questions, three public document sets and two models with no changes.</p>
+<p>The tests agree with the two types of decision:</p>
+<div class="umbrellas">
+  <div class="umb-card">
+    <span class="tag">Test family 1</span>
+    <h3>Questions about the content</h3>
+    <p class="q">What does the page say?</p>
+    <ul>
+      <li>What is the total on this receipt?<span class="ds">CORD · __CORD_N__ receipt photos</span></li>
+      <li>What does this business page say?<span class="ds">DocVQA · __DOC_PAGES__ letters, forms, tables, charts</span></li>
+    </ul>
+  </div>
+  <div class="umb-card">
+    <span class="tag">Test family 2</span>
+    <h3>Questions about the document</h3>
+    <p class="q">What is this page?</p>
+    <ul>
+      <li>What type of page is this? 16 page types, and <em>blank or unreadable</em><span class="ds">RVL-CDIP · __E01_PAGES__ scanned office pages</span></li>
+    </ul>
+  </div>
+</div>
 <p>We used Clef-flash and Clef 27B in each test. We asked each question two times: one time as a multiple choice and one time as a yes or no question. The incorrect answers were always realistic. For receipts, they were the other amounts on the same receipt. We also used the true total with <strong>one digit changed</strong>. For business pages, the incorrect answers were text from the same page. The correct answers come from human labels. We did not train the models, and we did not change the prompts. This is one real request:</p>
 <div class="readout">
   <div><div class="label">We send</div><pre>{
@@ -217,21 +243,7 @@
 <div id="chart-overview" class="chart" role="img" aria-label="Multiple choice accuracy for each test, Clef-flash and Clef 27B"></div>
 <p class="caption">Summary: the percentage of multiple-choice questions with a correct answer, for each test.</p>
 
-<div class="part">Part 1 · About the document</div>
-<h2>Can Clef identify the page type?</h2>
-<p class="lead">This is the document test. The result was low at first. Then we examined the labels.</p>
-<p>Clef-flash identified the page type correctly in __E01_ACC__% of the pages. Clef 27B got __E02_ACC__%. Then we examined the pages with an incorrect answer from Clef-flash:</p>
-<ul class="plain">
-  <li>One page has the label <em>letter</em>. Its heading, in large letters, is <strong>Interoffice Memorandum</strong>. The model said memo.</li>
-  <li>One page has the label <em>resume</em>. The page has only one word: <strong>APPENDIX</strong>. The model said blank or unreadable.</li>
-  <li>One page has the label <em>handwritten</em>. It is a handwritten <strong>research report</strong>. The model said scientific report. Both answers are correct.</li>
-</ul>
-<p>A different reviewer examined each page with an incorrect answer. The reviewer <strong>did not see the answer of the model</strong>. There were __MISSES__ incorrect answers. In __LABEL_PROBLEMS__ of them, the label had a problem. __LBL_WRONG__ labels were incorrect. In __LBL_NOTVIS__ pages, the label was not visible on the page. __LBL_AMBIG__ pages had two correct answers.</p>
-<div id="chart-confidence" class="chart tall" role="img" aria-label="Page type answers in groups by the confidence of the model"></div>
-<p class="caption">Page-type answers of Clef-flash on __E01_PAGES__ pages, in groups by confidence. “Fits the page” means that the reviewer found the answer of the model correct for the page.</p>
-<p>This is the important result. The model gave __HIGH_N__ answers with a confidence of 70% or more. Of these answers, <strong>__HIGH_WRONG__ were really incorrect</strong>. All the really incorrect answers had low confidence. With the examined labels, the result increases to __E01_CHECKED__%. If each answer that fits the page is correct, the result is __E01_FITS__%. Thus, the confidence shows which answers you can use.</p>
-
-<div class="part">Part 2 · About the content</div>
+<div class="part">Part 1 · Questions about the content</div>
 <h2>Can Clef read the content of the page?</h2>
 <p class="lead">This is the content test. The results of the two models were better than we expected.</p>
 <p>For receipts, Clef-flash selected the correct total in __CORD_RIGHT__ of __CORD_CHOICE_N__ questions. For business pages, it gave the correct answer to __DOC_RIGHT__ of __DOC_N__ multiple-choice questions. Clef 27B also got __DOC_BIG_ACC__%. The type of content on the page had almost no effect:</p>
@@ -259,15 +271,29 @@
 <p>Clef 27B accepted __FOOLED_BIG__ incorrect totals of __FOOLED_N__. Clef-flash accepted __FOOLED_FLASH__. Almost all the errors of Clef 27B were <strong>near misses</strong>: the incorrect total was within a few percent of the true total. Clef-flash examines each digit. Clef 27B accepts a value that is approximately correct. On business pages, the incorrect answers were different text, not near-miss numbers. There, the two models had the same result. The few errors of Clef 27B were of the opposite type: it said no to __BIG_NO_TRUE__ correct answers.</p>
 <p>To examine extracted values is a frequent task in document work. For this task, <strong>the smaller model was the safer model</strong>, and it is also faster and cheaper. The numbers are small. Thus, this result is a strong indication, not a proof.</p>
 
-<div class="part">Part 3 · The doubt</div>
+<div class="part">Part 2 · The doubt</div>
 <h2>Is __DOC_ACC__% too good to be correct?</h2>
-<p class="lead">This is a contamination test. Clef reads the page. It does not use memory.</p>
-<p>The high content results caused a doubt. The three test sets are public, and they have been on the internet for many years. Thus, the model possibly saw these pages during its training. If this is true, the model can use memory, not the page.</p>
+<p class="lead">This is a contamination test of the content results. Clef reads the page. It does not use memory.</p>
+<p>We must examine results that are this high. The three test sets are public, and they have been on the internet for many years. Thus, the model possibly saw these pages during its training. If this is true, the model can use memory, not the page.</p>
 <p>We asked Clef-flash the same __CONTAM_CALLS__ questions again. We changed only the image. One time, we sent a <strong>blank page</strong> of the same size. One time, we sent <strong>a different document</strong> from the same set. If the model reads the page, its results must decrease. If the model uses memory, its results must stay high.</p>
 <div id="chart-contam" class="chart tall" role="img" aria-label="Accuracy with the real page, a blank page and a different page"></div>
 <p class="caption">Clef-flash: the same questions with the real page, a blank page and a different page. The dotted lines show the random result for the multiple-choice questions.</p>
 <p>The best test is the yes or no question with the true value, because the question does not show the answer. With the real receipt, Clef-flash said yes in __CR_REAL__% of the questions. With a blank page, it said yes in __CR_BLANK__%. With a different receipt, it said yes in __CR_SWAP__%. The business pages gave the same result: __CD_REAL__%, then __CD_BLANK__% and __CD_SWAP__%. <strong>Clef reads the page.</strong></p>
 <p>For receipts, without the real page, the multiple-choice result decreased to __CRC_BLANK__% and __CRC_SWAP__%. A random selection gives __CRC_CHANCE__%. For business pages, the result was __CDC_BLANK__% with a blank page and __CDC_SWAP__% with a different page. A random selection gives __CDC_CHANCE__%. This is not memory. Some of our questions show the answer: <em>which room, smoking or non-smoking?</em> had only one option that is a type of room. <em>The corrected dinner time</em> had only one evening time. Without the page, the model was correct on __LEAK_WORDS__ answers that are words, but only on __LEAK_NUMS__ answers that are numbers. Thus, the multiple-choice result for business pages is slightly too high. The yes or no results are correct.</p>
+
+<div class="part">Part 3 · Questions about the document</div>
+<h2>Can Clef identify the page type?</h2>
+<p class="lead">This is the document test. The result was low at first. Then we examined the labels.</p>
+<p>Clef-flash identified the page type correctly in __E01_ACC__% of the pages. Clef 27B got __E02_ACC__%. Then we examined the pages with an incorrect answer from Clef-flash:</p>
+<ul class="plain">
+  <li>One page has the label <em>letter</em>. Its heading, in large letters, is <strong>Interoffice Memorandum</strong>. The model said memo.</li>
+  <li>One page has the label <em>resume</em>. The page has only one word: <strong>APPENDIX</strong>. The model said blank or unreadable.</li>
+  <li>One page has the label <em>handwritten</em>. It is a handwritten <strong>research report</strong>. The model said scientific report. Both answers are correct.</li>
+</ul>
+<p>A different reviewer examined each page with an incorrect answer. The reviewer <strong>did not see the answer of the model</strong>. There were __MISSES__ incorrect answers. In __LABEL_PROBLEMS__ of them, the label had a problem. __LBL_WRONG__ labels were incorrect. In __LBL_NOTVIS__ pages, the label was not visible on the page. __LBL_AMBIG__ pages had two correct answers.</p>
+<div id="chart-confidence" class="chart tall" role="img" aria-label="Page type answers in groups by the confidence of the model"></div>
+<p class="caption">Page-type answers of Clef-flash on __E01_PAGES__ pages, in groups by confidence. “Fits the page” means that the reviewer found the answer of the model correct for the page.</p>
+<p>The model gave __HIGH_N__ answers with a confidence of 70% or more. Of these answers, <strong>__HIGH_WRONG__ were really incorrect</strong>. All the really incorrect answers had low confidence. With the examined labels, the result increases to __E01_CHECKED__%. If each answer that fits the page is correct, the result is __E01_FITS__%. The page type is more difficult than a value on the page. But here also, the confidence shows which answers you can use.</p>
 
 <h2>What problems did we find?</h2>
 <p class="lead">This section gives practical information for other users.</p>
@@ -339,7 +365,7 @@ function pairBars(rows, keys, t) {
 function drawOverview(t) {
   const rows = DATA.overview.slice().reverse();
   Plotly.react("chart-overview", pairBars(rows, [["big", "Clef (27B)", t.big], ["flash", "Clef-flash (9B)", t.flash]], t),
-    base(t, { barmode: "group", bargroupgap: 0.1, margin: { l: 130, r: 48, t: 48, b: 40 },
+    base(t, { barmode: "group", bargroupgap: 0.1, margin: { l: 200, r: 48, t: 48, b: 40 },
       legend: { orientation: "h", x: 0, y: 1.14, traceorder: "reversed", font: { color: t.ink, size: 13 } },
       xaxis: Object.assign({}, PCT, { gridcolor: t.rule }),
       yaxis: { tickfont: { color: t.ink, size: 13.5 }, automargin: true, showgrid: false } }), CONFIG);

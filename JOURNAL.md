@@ -1098,3 +1098,29 @@ playbook and the earlier Jev and Laya STE page.*
 - Check: 265 sentences in the STE page. None of the prose is over 25 words;
   the only longer runs are table and box fragments. The remaining "-ing" words
   are nouns or prepositions.
+
+---
+
+## 27. Blog restructured again: applications, the OCR question, content first
+
+*2026-10-10. Restructure asked for by the user [U]; both the main and the
+ASD-STE100 pages rewritten, still one to one.*
+
+- **"What can a decision model do when it can see?"** is now an
+  applications section. It covers decisions about the document (route by type;
+  blank or unreadable; signed or ticked), decisions about the content (pick
+  the total; verify an extracted value), the approve-or-escalate threshold, and
+  one line on uses beyond documents. It ends with **"Why not run OCR and send
+  the text to Jev?"**: OCR drops layout, ticks, stamps and signatures; OCR
+  errors become the model's facts, so only a model that sees can check an
+  extracted value against the page; and two systems mean added errors.
+- **"Why use documents for the test?" removed.** Its table was really about
+  applications and moved into the section above [U].
+- **The two test families now stand out [U]:** "How did we test it?" presents
+  them as two cards, *Test family 1: Questions about the content* and *Test
+  family 2: Questions about the document*.
+- **New order [U]:** Part 1 content (plus "Is the bigger model safer?"),
+  Part 2 the doubt (contamination check), Part 3 document. The overview chart
+  lists the content tests first.
+- Box PNGs renamed to match: `applications.png`, `test-families.png`; the old
+  `test-map.png` and `why-it-fits.png` were removed from both image folders.

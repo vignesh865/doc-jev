@@ -13,8 +13,9 @@ Agreed so far (see JOURNAL.md for detail): a Jev-style typed-decision model for
 document page images (noul / choice / score -> a distribution per question, no
 generation); trustworthy confidence is the core problem; documents first.
 Experiments follow the chain data -> raw outputs (outputs/<exp>.jsonl) ->
-experiments/<exp>/metrics.json + experiments/runs.jsonl. Blog material lives in docs/blog/ and is made only when the user asks; every
-number and figure there comes from results/make_blog.py.
+experiments/<exp>/metrics.json + experiments/runs.jsonl. Blog material lives in docs/blog/ (template.html -> build.py -> clef-docs.html;
+export_png.py -> images/; tables.md), made only when the user asks. Follow the
+user's BLOG_PLAYBOOK.md (uft/system1/blog/). Every number comes from build.py.
 Never type a result by hand. Push to main.
 
 NOT agreed. These are assumptions from an earlier session; raise them for

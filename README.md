@@ -12,7 +12,7 @@ Status: research, early. Inspired by Jev, Laya, CLM and Visual Jev (see
 
 - Research journal (decisions and results): [JOURNAL.md](JOURNAL.md)
 - Learning journal (what we learned, in plain words): [LEARNING.md](LEARNING.md)
-- Blog draft: [docs/blog/clef-on-documents.md](docs/blog/clef-on-documents.md)
+- Blog draft: docs/blog/clef-docs.html (built by docs/blog/build.py; PNGs by export_png.py)
 - Draft research plan: [docs/research_plan.md](docs/research_plan.md)
 - Metrics (accuracy, NLL, Brier, ECE, risk–coverage, temperature fitting): `src/docjev/metrics.py`
 

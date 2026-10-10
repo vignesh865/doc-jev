@@ -869,3 +869,31 @@ three kinds).
   mostly labels; every answer at ≥70% confidence matched or fitted the page.
   (3) The bigger model accepts near-miss totals (8/95 vs 1/95). Plus practical
   gotchas and a fine-print section.
+
+---
+
+## 19. Blog rebuilt to the user's playbook, with a "surprise" framing
+
+*2026-10-09.*
+
+- **Playbook [U].** The user's `BLOG_PLAYBOOK.md` (from the earlier Jev and Laya
+  blog) now governs the post: exploration framing, the obvious doubt raised,
+  one storyline, question headings with a plain-topic first line, a hook and a
+  short-version box, no dashes, Plotly charts on white, every number a build
+  placeholder, PNG exports of charts and of "tables in disguise", `tables.md`.
+- **Story [U].** Most people know Jev and have not noticed that a *vision*
+  decision model has shipped: "hey, a vision decision model is here", told
+  with surprise.
+- **Contamination doubt [U].** The user doubts the ~99% content scores: CORD,
+  DocVQA and RVL-CDIP are public, so Clef may have seen them. The post raises
+  this openly ("Is 99% too good to be true?") and says it is untested. **Next
+  experiment, after the free daily quota resets:** the same questions with a
+  blank image and with another document's image.
+- **Build.** `docs/blog/template.html` → `build.py` → `clef-docs.html` and
+  `tables.md`; `export_png.py` (headless Chrome) → `docs/blog/images/` (3
+  charts; boxes: short version, why it fits, request/response, near-miss
+  receipt, cost). The receipt box is filled from CORD's own label for c044. The
+  matplotlib draft (`results/make_blog.py`, `docs/blog/figures/`,
+  `clef-on-documents.md`) is removed in favour of this single source.
+- Totals over the reported experiments (E01–E05): 1,274 answered questions,
+  $0.16 at list price, $0 paid (free tier).
